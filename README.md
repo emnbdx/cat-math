@@ -23,6 +23,13 @@ l'enfant touche la case où il doit aller.
 - bouton **💡 Aide** : affiche tous les nombres en filigrane dans les cases vides
 - chaque nombre n'est demandé qu'une fois → 100 placements, jusqu'à 100 chats
 
+Bouton **✍️ Écrire** : bascule vers l'écriture au doigt. Là, c'est l'enfant qui
+choisit une case vide, puis **écrit son nombre au doigt** — un cadre par chiffre
+(centaines / dizaines / unités). L'exercice est inversé : il déduit le nombre de
+la position, au lieu de déduire la position du nombre. Les deux façons de
+répondre partagent la même table et la même collection, on peut alterner à tout
+moment.
+
 ### 🎤 Dis le nombre
 
 Le plateau est complet. Une case s'allume en jaune, l'enfant lit le nombre à
@@ -40,6 +47,38 @@ La reconnaissance accepte les chiffres (« 72 »), les lettres
 (« soixante-douze »), les phrases entières (« euh… c'est soixante-douze ! »)
 et les variantes régionales (« septante-deux », « nonante-neuf »).
 Voir `js/fr-numbers.js` et ses tests.
+
+### ✍️ La reconnaissance d'écriture
+
+Un petit réseau de neurones (9 098 paramètres, ~90 Ko) tourne **dans le
+navigateur** : aucun appel réseau, aucune clé API, réponse instantanée. Ce mode
+marche donc même sur un hébergement statique.
+
+Trois choix qui le rendent fiable pour une main d'enfant :
+
+- **un cadre par chiffre.** On ne découpe jamais un gribouillage en plusieurs
+  chiffres : chaque cadre contient un chiffre isolé, exactement le format sur
+  lequel le modèle est bon. Bonus : ça matérialise les dizaines et les unités.
+- **on connaît déjà la réponse.** La question posée au modèle n'est pas « quel
+  chiffre est-ce ? » mais « est-ce que ça peut être un 7 ? ». Un 7 tordu passe
+  s'il arrive en deuxième position avec un score crédible — sans pour autant
+  valider n'importe quoi (voir `checkDigit` dans `js/digits.js`).
+- **entraînement adapté au doigt.** Le modèle est entraîné sur MNIST avec des
+  décalages ±2 px et un épaississement du trait, parce qu'un doigt écrit
+  beaucoup plus gras et beaucoup moins centré qu'un stylo.
+
+Mesuré sur les 10 000 chiffres de test MNIST, avec le seuil retenu (0,15) :
+
+| | chiffre juste rejeté | mauvais chiffre validé |
+|---|---|---|
+| traits normaux | 0,59 % | 0,40 % |
+| traits épaissis (cas « doigt ») | 1,29 % | 0,92 % |
+
+Le seuil penche volontairement du côté indulgent : un refus injustifié coûte un
+chat et décourage, alors qu'une validation un peu généreuse ne casse rien.
+
+Après une validation ratée, seuls les chiffres marqués ✗ sont effacés : l'enfant
+ne recommence pas le travail déjà juste.
 
 ### 📚 La collection
 
@@ -83,6 +122,22 @@ php -S localhost:8000
 fonctionne aussi en local.
 
 ---
+
+## Réentraîner le modèle d'écriture
+
+Le modèle est livré dans `data/digit-model.json` : **rien à faire** pour que le
+jeu fonctionne. Pour le régénérer :
+
+```bash
+pip install numpy
+# récupérer les 4 fichiers .gz de MNIST dans un dossier, puis :
+python3 tools/train-digits.py --data /chemin/vers/mnist
+python3 tools/export-digit-fixture.py --data /chemin/vers/mnist   # référence de test
+node tools/test-digits.mjs
+```
+
+Six époques suffisent (~5 min sur un CPU), et l'entraînement affiche aussi la
+précision sur des traits volontairement épaissis — le cas « doigt ».
 
 ## Générer les 100 chats
 
@@ -152,6 +207,8 @@ js/
   mode-build.js            mode « Construire la table »
   mode-speak.js            mode « Dis le nombre »
   fr-numbers.js            « soixante-douze » → 72
+  digits.js                reconnaissance de chiffres (inférence dans le navigateur)
+  writepad.js              l'ardoise : un cadre de dessin par chiffre
   audio.js                 MediaRecorder + envoi au serveur
   sfx.js                   sons (Web Audio, aucun fichier)
   ui.js                    récompenses, particules, fiche d'un chat
@@ -159,21 +216,29 @@ api/
   transcribe.php           relais vers Whisper (garde la clé côté serveur)
   config.example.php       à copier en config.php
 data/cats.json             les 100 chats (généré, versionné)
+data/digit-model.json      poids du réseau de reconnaissance (généré, versionné)
 assets/cats/               les PNG générés (non versionnés)
 tools/
   build-catalog.mjs        régénère data/cats.json
   generate-cats.mjs        génère les 100 images
+  train-digits.py          entraîne le réseau de chiffres
+  export-digit-fixture.py  référence de test pour l'inférence JS
   test-fr-numbers.mjs      tests du parseur de nombres
+  test-digits.mjs          l'inférence JS == le modèle Python
 ```
 
 ### Tests
 
 ```bash
-node tools/test-fr-numbers.mjs
+node tools/test-fr-numbers.mjs   # 118 cas de reconnaissance de nombres
+node tools/test-digits.mjs       # l'inférence JS reproduit le modèle Python
 ```
 
-118 cas : les 100 nombres écrits en lettres, les phrases avec hésitation, les
-variantes belges/suisses, les homophones fréquents.
+Le premier couvre les 100 nombres écrits en lettres, les phrases avec
+hésitation, les variantes belges/suisses et les homophones fréquents. Le second
+rejoue 20 chiffres MNIST à travers `js/digits.js` et compare aux probabilités
+calculées côté Python : une transposition de poids donnerait des résultats
+plausibles mais faux, et serait attrapée ici.
 
 ---
 
@@ -195,7 +260,9 @@ active défile automatiquement à l'écran. Le mode « construire » ne montre
 inutilisable au doigt.
 
 **Pas de drag & drop.** On tire un nombre, l'enfant touche une case. Une seule
-cible par geste, ça marche aussi bien à la souris qu'au doigt.
+cible par geste, ça marche aussi bien à la souris qu'au doigt. Les cadres
+d'écriture sont en `touch-action: none`, sinon le doigt ferait défiler la page
+au lieu d'écrire.
 
 **Accessibilité.** Navigation au clavier, `aria-label` sur chaque case,
 `prefers-reduced-motion` respecté, cibles tactiles ≥ 38 px, contrastes soutenus.

@@ -461,6 +461,58 @@ main { padding: 0 clamp(10px, 3vw, 22px) 32px; }
 .sheet__name { font-size: 1.5rem; font-weight: 800; margin: 0; }
 .sheet__meta { color: var(--ink-soft); font-size: .9rem; margin: 0; }
 
+/* -------------------------------------------------------------- ardoise -- */
+
+.writepad {
+  border: none;
+  border-radius: 24px;
+  padding: 22px 20px 18px;
+  max-width: 460px;
+  width: calc(100% - 24px);
+  background: #fff;
+  color: var(--ink);
+  text-align: center;
+  box-shadow: 0 18px 50px rgba(74, 59, 69, .25);
+}
+.writepad::backdrop { background: rgba(74, 59, 69, .4); backdrop-filter: blur(2px); }
+.writepad__title { font-size: 1.1rem; margin: 0 26px 14px; }
+
+.writepad__boxes { display: flex; gap: 12px; justify-content: center; }
+
+.writebox { position: relative; display: grid; gap: 4px; justify-items: center; }
+.writebox__label { font-size: .72rem; color: var(--ink-soft); text-transform: lowercase; }
+.writebox__canvas {
+  /* --boxes vaut 1, 2 ou 3 selon le nombre : trois cadres doivent tenir
+     côte à côte même sur un téléphone étroit */
+  width: min(calc((100vw - 72px) / var(--boxes, 2)), 132px);
+  aspect-ratio: 1;
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) center / 100% 33.33%,
+    #fdf4f7;
+  border: 3px dashed var(--pink);
+  border-radius: 16px;
+  cursor: crosshair;
+  /* indispensable : sinon le doigt fait défiler la page au lieu d'écrire */
+  touch-action: none;
+}
+.writebox__mark {
+  position: absolute;
+  right: -4px;
+  bottom: -6px;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.writebox.is-ok .writebox__canvas { border-style: solid; border-color: var(--mint); background: var(--mint-soft); }
+.writebox.is-ok .writebox__mark { color: #2f6b56; }
+.writebox.is-ko .writebox__canvas { border-color: #f78ca2; animation: shake .4s ease; }
+.writebox.is-ko .writebox__mark { color: #b3455f; }
+
+.writepad__feedback { min-height: 2.6em; margin: 10px 0 8px; color: var(--ink-soft); font-size: .95rem; }
+.writepad__feedback.is-ok { color: #2f6b56; font-weight: 700; }
+.writepad__feedback.is-ko, .writepad__feedback.is-warn { color: #b3455f; }
+
+.writepad__tools { display: flex; gap: 10px; justify-content: center; }
+
 /* ----------------------------------------------------------- particules -- */
 
 .particles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 50; }

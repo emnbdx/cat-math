@@ -78,6 +78,7 @@
         <div class="reward" id="build-reward" aria-live="polite"></div>
 
         <div class="mode__tools">
+          <button class="btn btn--ghost btn--small" id="build-write" aria-pressed="false">✍️ Écrire</button>
           <button class="btn btn--ghost btn--small" id="build-help" aria-pressed="false">💡 Aide</button>
           <button class="btn btn--ghost btn--small" id="build-restart">↺ Recommencer</button>
         </div>
@@ -138,6 +139,18 @@
   </section>
 
 </main>
+
+<!-- ardoise : écriture des chiffres au doigt -->
+<dialog class="writepad" id="writepad">
+  <button class="sheet__close btn btn--icon" data-close aria-label="Fermer">✕</button>
+  <h2 class="writepad__title" id="writepad-title">Écris le nombre</h2>
+  <div class="writepad__boxes" id="writepad-boxes"></div>
+  <p class="writepad__feedback" id="writepad-feedback" aria-live="polite"></p>
+  <div class="writepad__tools">
+    <button class="btn btn--ghost btn--small" id="writepad-clear">🧽 Effacer</button>
+    <button class="btn" id="writepad-validate">Valider</button>
+  </div>
+</dialog>
 
 <!-- fiche d'un chat -->
 <dialog class="sheet" id="cat-sheet">
