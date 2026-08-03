@@ -1,0 +1,2006 @@
+{
+  "version": 1,
+  "count": 100,
+  "cats": [
+    {
+      "id": 1,
+      "name": "Mochi",
+      "file": "cat-001.png",
+      "fur": "tigré roux",
+      "expression": "tout joyeux",
+      "accessory": "un nœud papillon pastel",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "tabby",
+        "eyes": 1,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has orange tabby fur with soft stripes. Its face shows: beaming happy smile, eyes closed in joy. It is sitting facing the viewer. It wears a small pastel bow tie."
+    },
+    {
+      "id": 2,
+      "name": "Praline",
+      "file": "cat-002.png",
+      "fur": "tigré gris",
+      "expression": "surpris",
+      "accessory": "une écharpe rayée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "tabby",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey tabby fur with soft stripes. Its face shows: wide surprised eyes, small open mouth. It is peeking with both front paws forward. It wears a striped knitted scarf."
+    },
+    {
+      "id": 3,
+      "name": "Nougat",
+      "file": "cat-003.png",
+      "fur": "blanc neige",
+      "expression": "endormi",
+      "accessory": "des lunettes rondes",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "plain",
+        "eyes": 2,
+        "mouth": 4
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has snow white fluffy fur. Its face shows: sleepy half closed eyes, tiny yawn. It is sitting with one paw raised in a wave. It wears round eyeglasses."
+    },
+    {
+      "id": 4,
+      "name": "Caramel",
+      "file": "cat-004.png",
+      "fur": "noir de jais",
+      "expression": "câlin",
+      "accessory": "un casque d’aviateur",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has jet black fur. Its face shows: soft loving look, cheeks squished. It is lying down with paws tucked under. It wears a leather aviator cap with goggles."
+    },
+    {
+      "id": 5,
+      "name": "Biscuit",
+      "file": "cat-005.png",
+      "fur": "bicolore noir et blanc",
+      "expression": "rieur",
+      "accessory": "un pull tricoté",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "bicolour",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black and white bicolour fur. Its face shows: laughing out loud, mouth wide open. It is sitting with the tail curled around the paws. It wears a cosy knitted sweater."
+    },
+    {
+      "id": 6,
+      "name": "Muffin",
+      "file": "cat-006.png",
+      "fur": "calico tricolore",
+      "expression": "timide",
+      "accessory": "un serre-tête à oreilles de lapin",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "patch",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tricolour calico fur. Its face shows: shy bashful look, looking away. It is standing on all fours, seen from the front. It wears a bunny ear headband."
+    },
+    {
+      "id": 7,
+      "name": "Pistache",
+      "file": "cat-007.png",
+      "fur": "siamois crème",
+      "expression": "curieux",
+      "accessory": "un tout petit sac à dos",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "points",
+        "eyes": 0,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has cream siamese fur with darker face points. Its face shows: curious tilted head, one ear up. It is sitting facing the viewer. It wears a very small backpack."
+    },
+    {
+      "id": 8,
+      "name": "Noisette",
+      "file": "cat-008.png",
+      "fur": "bleu russe",
+      "expression": "fier",
+      "accessory": "une fleur derrière l’oreille",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "plain",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has blue-grey russian fur. Its face shows: proud confident smile, chin up. It is peeking with both front paws forward. It wears a flower tucked behind one ear."
+    },
+    {
+      "id": 9,
+      "name": "Myrtille",
+      "file": "cat-009.png",
+      "fur": "roux et blanc",
+      "expression": "malicieux",
+      "accessory": "un collier à grelot",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "bicolour",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has ginger and white fur. Its face shows: mischievous grin, narrowed eyes. It is sitting with one paw raised in a wave. It wears a collar with a little bell."
+    },
+    {
+      "id": 10,
+      "name": "Framboise",
+      "file": "cat-010.png",
+      "fur": "tacheté bengal",
+      "expression": "tout ému",
+      "accessory": "un bonnet à pompon",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "spots",
+        "eyes": 6,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has spotted bengal fur. Its face shows: teary eyed with emotion, happy tears. It is lying down with paws tucked under. It wears a bobble hat."
+    },
+    {
+      "id": 11,
+      "name": "Cannelle",
+      "file": "cat-011.png",
+      "fur": "angora à longs poils",
+      "expression": "affamé",
+      "accessory": "un béret",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has long haired fluffy white fur. Its face shows: hungry excited eyes, licking lips. It is sitting with the tail curled around the paws. It wears a little beret."
+    },
+    {
+      "id": 12,
+      "name": "Vanille",
+      "file": "cat-012.png",
+      "fur": "chartreux gris",
+      "expression": "rêveur",
+      "accessory": "une cape étoilée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "plain",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has plush grey chartreux fur. Its face shows: dreamy faraway gaze, tiny smile. It is standing on all fours, seen from the front. It wears a tiny cape covered in stars."
+    },
+    {
+      "id": 13,
+      "name": "Chocolat",
+      "file": "cat-013.png",
+      "fur": "écaille de tortue",
+      "expression": "concentré",
+      "accessory": "un bavoir en forme de nuage",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "patch",
+        "eyes": 3,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tortoiseshell fur. Its face shows: focused determined frown, tongue out. It is sitting facing the viewer. It wears a cloud shaped bib."
+    },
+    {
+      "id": 14,
+      "name": "Guimauve",
+      "file": "cat-014.png",
+      "fur": "smoking noir à plastron blanc",
+      "expression": "espiègle",
+      "accessory": "rien du tout",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "bicolour",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with a white chest bib. Its face shows: playful wink and cheeky smile. It is peeking with both front paws forward. It wears no accessory at all."
+    },
+    {
+      "id": 15,
+      "name": "Croissant",
+      "file": "cat-015.png",
+      "fur": "sable clair",
+      "expression": "tendre",
+      "accessory": "un minuscule chapeau melon",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has light sandy beige fur. Its face shows: gentle tender smile, soft eyes. It is sitting with one paw raised in a wave. It wears a tiny bowler hat."
+    },
+    {
+      "id": 16,
+      "name": "Baguette",
+      "file": "cat-016.png",
+      "fur": "gris argenté rayé",
+      "expression": "étonné",
+      "accessory": "une couronne en papier",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "tabby",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has silver striped fur. Its face shows: astonished round mouth, raised brows. It is lying down with paws tucked under. It wears a paper crown."
+    },
+    {
+      "id": 17,
+      "name": "Macaron",
+      "file": "cat-017.png",
+      "fur": "brun chocolat",
+      "expression": "complice",
+      "accessory": "un bandana à pois",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "plain",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has chocolate brown fur. Its face shows: winking with a knowing smile. It is sitting with the tail curled around the paws. It wears a polka dot bandana."
+    },
+    {
+      "id": 18,
+      "name": "Éclair",
+      "file": "cat-018.png",
+      "fur": "blanc à taches rousses",
+      "expression": "boudeur",
+      "accessory": "un casque de musique",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "patch",
+        "eyes": 2,
+        "mouth": 6
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has white fur with ginger patches. Its face shows: cutely sulking, puffed cheeks. It is standing on all fours, seen from the front. It wears oversized headphones."
+    },
+    {
+      "id": 19,
+      "name": "Brioche",
+      "file": "cat-019.png",
+      "fur": "gris moucheté",
+      "expression": "tout excité",
+      "accessory": "un chapeau de paille",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "spots",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey speckled fur. Its face shows: super excited sparkling eyes. It is sitting facing the viewer. It wears a straw sun hat."
+    },
+    {
+      "id": 20,
+      "name": "Madeleine",
+      "file": "cat-020.png",
+      "fur": "noir à chaussettes blanches",
+      "expression": "zen",
+      "accessory": "un ruban au bout de la queue",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "bicolour",
+        "eyes": 1,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with white socks. Its face shows: peaceful serene closed eyes, calm smile. It is peeking with both front paws forward. It wears a ribbon tied on the tail."
+    },
+    {
+      "id": 21,
+      "name": "Pépite",
+      "file": "cat-021.png",
+      "fur": "tigré roux",
+      "expression": "amoureux",
+      "accessory": "un nœud papillon pastel",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "tabby",
+        "eyes": 8,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has orange tabby fur with soft stripes. Its face shows: heart shaped eyes, blissful smile. It is sitting with one paw raised in a wave. It wears a small pastel bow tie."
+    },
+    {
+      "id": 22,
+      "name": "Pompon",
+      "file": "cat-022.png",
+      "fur": "tigré gris",
+      "expression": "pensif",
+      "accessory": "une écharpe rayée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "tabby",
+        "eyes": 5,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey tabby fur with soft stripes. Its face shows: thoughtful look, paw on chin. It is lying down with paws tucked under. It wears a striped knitted scarf."
+    },
+    {
+      "id": 23,
+      "name": "Bouclette",
+      "file": "cat-023.png",
+      "fur": "blanc neige",
+      "expression": "en train de chanter",
+      "accessory": "des lunettes rondes",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "plain",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has snow white fluffy fur. Its face shows: singing with eyes shut and mouth open. It is sitting with the tail curled around the paws. It wears round eyeglasses."
+    },
+    {
+      "id": 24,
+      "name": "Moustache",
+      "file": "cat-024.png",
+      "fur": "noir de jais",
+      "expression": "ébahi",
+      "accessory": "un casque d’aviateur",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "plain",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has jet black fur. Its face shows: amazed starry wide eyes. It is standing on all fours, seen from the front. It wears a leather aviator cap with goggles."
+    },
+    {
+      "id": 25,
+      "name": "Chaussette",
+      "file": "cat-025.png",
+      "fur": "bicolore noir et blanc",
+      "expression": "satisfait",
+      "accessory": "un pull tricoté",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "bicolour",
+        "eyes": 3,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black and white bicolour fur. Its face shows: smug satisfied little smile. It is sitting facing the viewer. It wears a cosy knitted sweater."
+    },
+    {
+      "id": 26,
+      "name": "Réglisse",
+      "file": "cat-026.png",
+      "fur": "calico tricolore",
+      "expression": "tout joyeux",
+      "accessory": "un serre-tête à oreilles de lapin",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "patch",
+        "eyes": 1,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tricolour calico fur. Its face shows: beaming happy smile, eyes closed in joy. It is peeking with both front paws forward. It wears a bunny ear headband."
+    },
+    {
+      "id": 27,
+      "name": "Nuage",
+      "file": "cat-027.png",
+      "fur": "siamois crème",
+      "expression": "surpris",
+      "accessory": "un tout petit sac à dos",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "points",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has cream siamese fur with darker face points. Its face shows: wide surprised eyes, small open mouth. It is sitting with one paw raised in a wave. It wears a very small backpack."
+    },
+    {
+      "id": 28,
+      "name": "Comète",
+      "file": "cat-028.png",
+      "fur": "bleu russe",
+      "expression": "endormi",
+      "accessory": "une fleur derrière l’oreille",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "plain",
+        "eyes": 2,
+        "mouth": 4
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has blue-grey russian fur. Its face shows: sleepy half closed eyes, tiny yawn. It is lying down with paws tucked under. It wears a flower tucked behind one ear."
+    },
+    {
+      "id": 29,
+      "name": "Étoile",
+      "file": "cat-029.png",
+      "fur": "roux et blanc",
+      "expression": "câlin",
+      "accessory": "un collier à grelot",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "bicolour",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has ginger and white fur. Its face shows: soft loving look, cheeks squished. It is sitting with the tail curled around the paws. It wears a collar with a little bell."
+    },
+    {
+      "id": 30,
+      "name": "Lune",
+      "file": "cat-030.png",
+      "fur": "tacheté bengal",
+      "expression": "rieur",
+      "accessory": "un bonnet à pompon",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "spots",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has spotted bengal fur. Its face shows: laughing out loud, mouth wide open. It is standing on all fours, seen from the front. It wears a bobble hat."
+    },
+    {
+      "id": 31,
+      "name": "Soleil",
+      "file": "cat-031.png",
+      "fur": "angora à longs poils",
+      "expression": "timide",
+      "accessory": "un béret",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "plain",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has long haired fluffy white fur. Its face shows: shy bashful look, looking away. It is sitting facing the viewer. It wears a little beret."
+    },
+    {
+      "id": 32,
+      "name": "Orage",
+      "file": "cat-032.png",
+      "fur": "chartreux gris",
+      "expression": "curieux",
+      "accessory": "une cape étoilée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has plush grey chartreux fur. Its face shows: curious tilted head, one ear up. It is peeking with both front paws forward. It wears a tiny cape covered in stars."
+    },
+    {
+      "id": 33,
+      "name": "Brume",
+      "file": "cat-033.png",
+      "fur": "écaille de tortue",
+      "expression": "fier",
+      "accessory": "un bavoir en forme de nuage",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "patch",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tortoiseshell fur. Its face shows: proud confident smile, chin up. It is sitting with one paw raised in a wave. It wears a cloud shaped bib."
+    },
+    {
+      "id": 34,
+      "name": "Flocon",
+      "file": "cat-034.png",
+      "fur": "smoking noir à plastron blanc",
+      "expression": "malicieux",
+      "accessory": "rien du tout",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "bicolour",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with a white chest bib. Its face shows: mischievous grin, narrowed eyes. It is lying down with paws tucked under. It wears no accessory at all."
+    },
+    {
+      "id": 35,
+      "name": "Bourrasque",
+      "file": "cat-035.png",
+      "fur": "sable clair",
+      "expression": "tout ému",
+      "accessory": "un minuscule chapeau melon",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "plain",
+        "eyes": 6,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has light sandy beige fur. Its face shows: teary eyed with emotion, happy tears. It is sitting with the tail curled around the paws. It wears a tiny bowler hat."
+    },
+    {
+      "id": 36,
+      "name": "Tempête",
+      "file": "cat-036.png",
+      "fur": "gris argenté rayé",
+      "expression": "affamé",
+      "accessory": "une couronne en papier",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "tabby",
+        "eyes": 0,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has silver striped fur. Its face shows: hungry excited eyes, licking lips. It is standing on all fours, seen from the front. It wears a paper crown."
+    },
+    {
+      "id": 37,
+      "name": "Zéphyr",
+      "file": "cat-037.png",
+      "fur": "brun chocolat",
+      "expression": "rêveur",
+      "accessory": "un bandana à pois",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "plain",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has chocolate brown fur. Its face shows: dreamy faraway gaze, tiny smile. It is sitting facing the viewer. It wears a polka dot bandana."
+    },
+    {
+      "id": 38,
+      "name": "Ondée",
+      "file": "cat-038.png",
+      "fur": "blanc à taches rousses",
+      "expression": "concentré",
+      "accessory": "un casque de musique",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "patch",
+        "eyes": 3,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has white fur with ginger patches. Its face shows: focused determined frown, tongue out. It is peeking with both front paws forward. It wears oversized headphones."
+    },
+    {
+      "id": 39,
+      "name": "Rosée",
+      "file": "cat-039.png",
+      "fur": "gris moucheté",
+      "expression": "espiègle",
+      "accessory": "un chapeau de paille",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "spots",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey speckled fur. Its face shows: playful wink and cheeky smile. It is sitting with one paw raised in a wave. It wears a straw sun hat."
+    },
+    {
+      "id": 40,
+      "name": "Aurore",
+      "file": "cat-040.png",
+      "fur": "noir à chaussettes blanches",
+      "expression": "tendre",
+      "accessory": "un ruban au bout de la queue",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "bicolour",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with white socks. Its face shows: gentle tender smile, soft eyes. It is lying down with paws tucked under. It wears a ribbon tied on the tail."
+    },
+    {
+      "id": 41,
+      "name": "Filou",
+      "file": "cat-041.png",
+      "fur": "tigré roux",
+      "expression": "étonné",
+      "accessory": "un nœud papillon pastel",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "tabby",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has orange tabby fur with soft stripes. Its face shows: astonished round mouth, raised brows. It is sitting with the tail curled around the paws. It wears a small pastel bow tie."
+    },
+    {
+      "id": 42,
+      "name": "Coquin",
+      "file": "cat-042.png",
+      "fur": "tigré gris",
+      "expression": "complice",
+      "accessory": "une écharpe rayée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "tabby",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey tabby fur with soft stripes. Its face shows: winking with a knowing smile. It is standing on all fours, seen from the front. It wears a striped knitted scarf."
+    },
+    {
+      "id": 43,
+      "name": "Malice",
+      "file": "cat-043.png",
+      "fur": "blanc neige",
+      "expression": "boudeur",
+      "accessory": "des lunettes rondes",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "plain",
+        "eyes": 2,
+        "mouth": 6
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has snow white fluffy fur. Its face shows: cutely sulking, puffed cheeks. It is sitting facing the viewer. It wears round eyeglasses."
+    },
+    {
+      "id": 44,
+      "name": "Fripon",
+      "file": "cat-044.png",
+      "fur": "noir de jais",
+      "expression": "tout excité",
+      "accessory": "un casque d’aviateur",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "plain",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has jet black fur. Its face shows: super excited sparkling eyes. It is peeking with both front paws forward. It wears a leather aviator cap with goggles."
+    },
+    {
+      "id": 45,
+      "name": "Espiègle",
+      "file": "cat-045.png",
+      "fur": "bicolore noir et blanc",
+      "expression": "zen",
+      "accessory": "un pull tricoté",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "bicolour",
+        "eyes": 1,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black and white bicolour fur. Its face shows: peaceful serene closed eyes, calm smile. It is sitting with one paw raised in a wave. It wears a cosy knitted sweater."
+    },
+    {
+      "id": 46,
+      "name": "Câlin",
+      "file": "cat-046.png",
+      "fur": "calico tricolore",
+      "expression": "amoureux",
+      "accessory": "un serre-tête à oreilles de lapin",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "patch",
+        "eyes": 8,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tricolour calico fur. Its face shows: heart shaped eyes, blissful smile. It is lying down with paws tucked under. It wears a bunny ear headband."
+    },
+    {
+      "id": 47,
+      "name": "Doudou",
+      "file": "cat-047.png",
+      "fur": "siamois crème",
+      "expression": "pensif",
+      "accessory": "un tout petit sac à dos",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "points",
+        "eyes": 5,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has cream siamese fur with darker face points. Its face shows: thoughtful look, paw on chin. It is sitting with the tail curled around the paws. It wears a very small backpack."
+    },
+    {
+      "id": 48,
+      "name": "Bisou",
+      "file": "cat-048.png",
+      "fur": "bleu russe",
+      "expression": "en train de chanter",
+      "accessory": "une fleur derrière l’oreille",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "plain",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has blue-grey russian fur. Its face shows: singing with eyes shut and mouth open. It is standing on all fours, seen from the front. It wears a flower tucked behind one ear."
+    },
+    {
+      "id": 49,
+      "name": "Ronron",
+      "file": "cat-049.png",
+      "fur": "roux et blanc",
+      "expression": "ébahi",
+      "accessory": "un collier à grelot",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "bicolour",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has ginger and white fur. Its face shows: amazed starry wide eyes. It is sitting facing the viewer. It wears a collar with a little bell."
+    },
+    {
+      "id": 50,
+      "name": "Patapouf",
+      "file": "cat-050.png",
+      "fur": "tacheté bengal",
+      "expression": "satisfait",
+      "accessory": "un bonnet à pompon",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "spots",
+        "eyes": 3,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has spotted bengal fur. Its face shows: smug satisfied little smile. It is peeking with both front paws forward. It wears a bobble hat."
+    },
+    {
+      "id": 51,
+      "name": "Sushi",
+      "file": "cat-051.png",
+      "fur": "angora à longs poils",
+      "expression": "tout joyeux",
+      "accessory": "un béret",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "plain",
+        "eyes": 1,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has long haired fluffy white fur. Its face shows: beaming happy smile, eyes closed in joy. It is sitting with one paw raised in a wave. It wears a little beret."
+    },
+    {
+      "id": 52,
+      "name": "Wasabi",
+      "file": "cat-052.png",
+      "fur": "chartreux gris",
+      "expression": "surpris",
+      "accessory": "une cape étoilée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has plush grey chartreux fur. Its face shows: wide surprised eyes, small open mouth. It is lying down with paws tucked under. It wears a tiny cape covered in stars."
+    },
+    {
+      "id": 53,
+      "name": "Yuzu",
+      "file": "cat-053.png",
+      "fur": "écaille de tortue",
+      "expression": "endormi",
+      "accessory": "un bavoir en forme de nuage",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "patch",
+        "eyes": 2,
+        "mouth": 4
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tortoiseshell fur. Its face shows: sleepy half closed eyes, tiny yawn. It is sitting with the tail curled around the paws. It wears a cloud shaped bib."
+    },
+    {
+      "id": 54,
+      "name": "Matcha",
+      "file": "cat-054.png",
+      "fur": "smoking noir à plastron blanc",
+      "expression": "câlin",
+      "accessory": "rien du tout",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "bicolour",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with a white chest bib. Its face shows: soft loving look, cheeks squished. It is standing on all fours, seen from the front. It wears no accessory at all."
+    },
+    {
+      "id": 55,
+      "name": "Sakura",
+      "file": "cat-055.png",
+      "fur": "sable clair",
+      "expression": "rieur",
+      "accessory": "un minuscule chapeau melon",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "plain",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has light sandy beige fur. Its face shows: laughing out loud, mouth wide open. It is sitting facing the viewer. It wears a tiny bowler hat."
+    },
+    {
+      "id": 56,
+      "name": "Ramen",
+      "file": "cat-056.png",
+      "fur": "gris argenté rayé",
+      "expression": "timide",
+      "accessory": "une couronne en papier",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "tabby",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has silver striped fur. Its face shows: shy bashful look, looking away. It is peeking with both front paws forward. It wears a paper crown."
+    },
+    {
+      "id": 57,
+      "name": "Onigiri",
+      "file": "cat-057.png",
+      "fur": "brun chocolat",
+      "expression": "curieux",
+      "accessory": "un bandana à pois",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has chocolate brown fur. Its face shows: curious tilted head, one ear up. It is sitting with one paw raised in a wave. It wears a polka dot bandana."
+    },
+    {
+      "id": 58,
+      "name": "Dango",
+      "file": "cat-058.png",
+      "fur": "blanc à taches rousses",
+      "expression": "fier",
+      "accessory": "un casque de musique",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "patch",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has white fur with ginger patches. Its face shows: proud confident smile, chin up. It is lying down with paws tucked under. It wears oversized headphones."
+    },
+    {
+      "id": 59,
+      "name": "Konpeito",
+      "file": "cat-059.png",
+      "fur": "gris moucheté",
+      "expression": "malicieux",
+      "accessory": "un chapeau de paille",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "spots",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey speckled fur. Its face shows: mischievous grin, narrowed eyes. It is sitting with the tail curled around the paws. It wears a straw sun hat."
+    },
+    {
+      "id": 60,
+      "name": "Taiyaki",
+      "file": "cat-060.png",
+      "fur": "noir à chaussettes blanches",
+      "expression": "tout ému",
+      "accessory": "un ruban au bout de la queue",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "bicolour",
+        "eyes": 6,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with white socks. Its face shows: teary eyed with emotion, happy tears. It is standing on all fours, seen from the front. It wears a ribbon tied on the tail."
+    },
+    {
+      "id": 61,
+      "name": "Kiwi",
+      "file": "cat-061.png",
+      "fur": "tigré roux",
+      "expression": "affamé",
+      "accessory": "un nœud papillon pastel",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "tabby",
+        "eyes": 0,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has orange tabby fur with soft stripes. Its face shows: hungry excited eyes, licking lips. It is sitting facing the viewer. It wears a small pastel bow tie."
+    },
+    {
+      "id": 62,
+      "name": "Papaye",
+      "file": "cat-062.png",
+      "fur": "tigré gris",
+      "expression": "rêveur",
+      "accessory": "une écharpe rayée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "tabby",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey tabby fur with soft stripes. Its face shows: dreamy faraway gaze, tiny smile. It is peeking with both front paws forward. It wears a striped knitted scarf."
+    },
+    {
+      "id": 63,
+      "name": "Mangue",
+      "file": "cat-063.png",
+      "fur": "blanc neige",
+      "expression": "concentré",
+      "accessory": "des lunettes rondes",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "plain",
+        "eyes": 3,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has snow white fluffy fur. Its face shows: focused determined frown, tongue out. It is sitting with one paw raised in a wave. It wears round eyeglasses."
+    },
+    {
+      "id": 64,
+      "name": "Litchi",
+      "file": "cat-064.png",
+      "fur": "noir de jais",
+      "expression": "espiègle",
+      "accessory": "un casque d’aviateur",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "plain",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has jet black fur. Its face shows: playful wink and cheeky smile. It is lying down with paws tucked under. It wears a leather aviator cap with goggles."
+    },
+    {
+      "id": 65,
+      "name": "Groseille",
+      "file": "cat-065.png",
+      "fur": "bicolore noir et blanc",
+      "expression": "tendre",
+      "accessory": "un pull tricoté",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "bicolour",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black and white bicolour fur. Its face shows: gentle tender smile, soft eyes. It is sitting with the tail curled around the paws. It wears a cosy knitted sweater."
+    },
+    {
+      "id": 66,
+      "name": "Mirabelle",
+      "file": "cat-066.png",
+      "fur": "calico tricolore",
+      "expression": "étonné",
+      "accessory": "un serre-tête à oreilles de lapin",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "patch",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tricolour calico fur. Its face shows: astonished round mouth, raised brows. It is standing on all fours, seen from the front. It wears a bunny ear headband."
+    },
+    {
+      "id": 67,
+      "name": "Clémentine",
+      "file": "cat-067.png",
+      "fur": "siamois crème",
+      "expression": "complice",
+      "accessory": "un tout petit sac à dos",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "points",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has cream siamese fur with darker face points. Its face shows: winking with a knowing smile. It is sitting facing the viewer. It wears a very small backpack."
+    },
+    {
+      "id": 68,
+      "name": "Abricot",
+      "file": "cat-068.png",
+      "fur": "bleu russe",
+      "expression": "boudeur",
+      "accessory": "une fleur derrière l’oreille",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "plain",
+        "eyes": 2,
+        "mouth": 6
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has blue-grey russian fur. Its face shows: cutely sulking, puffed cheeks. It is peeking with both front paws forward. It wears a flower tucked behind one ear."
+    },
+    {
+      "id": 69,
+      "name": "Prunelle",
+      "file": "cat-069.png",
+      "fur": "roux et blanc",
+      "expression": "tout excité",
+      "accessory": "un collier à grelot",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "bicolour",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has ginger and white fur. Its face shows: super excited sparkling eyes. It is sitting with one paw raised in a wave. It wears a collar with a little bell."
+    },
+    {
+      "id": 70,
+      "name": "Cassis",
+      "file": "cat-070.png",
+      "fur": "tacheté bengal",
+      "expression": "zen",
+      "accessory": "un bonnet à pompon",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "spots",
+        "eyes": 1,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has spotted bengal fur. Its face shows: peaceful serene closed eyes, calm smile. It is lying down with paws tucked under. It wears a bobble hat."
+    },
+    {
+      "id": 71,
+      "name": "Saphir",
+      "file": "cat-071.png",
+      "fur": "angora à longs poils",
+      "expression": "amoureux",
+      "accessory": "un béret",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "plain",
+        "eyes": 8,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has long haired fluffy white fur. Its face shows: heart shaped eyes, blissful smile. It is sitting with the tail curled around the paws. It wears a little beret."
+    },
+    {
+      "id": 72,
+      "name": "Topaze",
+      "file": "cat-072.png",
+      "fur": "chartreux gris",
+      "expression": "pensif",
+      "accessory": "une cape étoilée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "plain",
+        "eyes": 5,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has plush grey chartreux fur. Its face shows: thoughtful look, paw on chin. It is standing on all fours, seen from the front. It wears a tiny cape covered in stars."
+    },
+    {
+      "id": 73,
+      "name": "Opale",
+      "file": "cat-073.png",
+      "fur": "écaille de tortue",
+      "expression": "en train de chanter",
+      "accessory": "un bavoir en forme de nuage",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "patch",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tortoiseshell fur. Its face shows: singing with eyes shut and mouth open. It is sitting facing the viewer. It wears a cloud shaped bib."
+    },
+    {
+      "id": 74,
+      "name": "Ambre",
+      "file": "cat-074.png",
+      "fur": "smoking noir à plastron blanc",
+      "expression": "ébahi",
+      "accessory": "rien du tout",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "bicolour",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with a white chest bib. Its face shows: amazed starry wide eyes. It is peeking with both front paws forward. It wears no accessory at all."
+    },
+    {
+      "id": 75,
+      "name": "Jade",
+      "file": "cat-075.png",
+      "fur": "sable clair",
+      "expression": "satisfait",
+      "accessory": "un minuscule chapeau melon",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "plain",
+        "eyes": 3,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has light sandy beige fur. Its face shows: smug satisfied little smile. It is sitting with one paw raised in a wave. It wears a tiny bowler hat."
+    },
+    {
+      "id": 76,
+      "name": "Onyx",
+      "file": "cat-076.png",
+      "fur": "gris argenté rayé",
+      "expression": "tout joyeux",
+      "accessory": "une couronne en papier",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "tabby",
+        "eyes": 1,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has silver striped fur. Its face shows: beaming happy smile, eyes closed in joy. It is lying down with paws tucked under. It wears a paper crown."
+    },
+    {
+      "id": 77,
+      "name": "Perle",
+      "file": "cat-077.png",
+      "fur": "brun chocolat",
+      "expression": "surpris",
+      "accessory": "un bandana à pois",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has chocolate brown fur. Its face shows: wide surprised eyes, small open mouth. It is sitting with the tail curled around the paws. It wears a polka dot bandana."
+    },
+    {
+      "id": 78,
+      "name": "Corail",
+      "file": "cat-078.png",
+      "fur": "blanc à taches rousses",
+      "expression": "endormi",
+      "accessory": "un casque de musique",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "patch",
+        "eyes": 2,
+        "mouth": 4
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has white fur with ginger patches. Its face shows: sleepy half closed eyes, tiny yawn. It is standing on all fours, seen from the front. It wears oversized headphones."
+    },
+    {
+      "id": 79,
+      "name": "Turquoise",
+      "file": "cat-079.png",
+      "fur": "gris moucheté",
+      "expression": "câlin",
+      "accessory": "un chapeau de paille",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "spots",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey speckled fur. Its face shows: soft loving look, cheeks squished. It is sitting facing the viewer. It wears a straw sun hat."
+    },
+    {
+      "id": 80,
+      "name": "Améthyste",
+      "file": "cat-080.png",
+      "fur": "noir à chaussettes blanches",
+      "expression": "rieur",
+      "accessory": "un ruban au bout de la queue",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "bicolour",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with white socks. Its face shows: laughing out loud, mouth wide open. It is peeking with both front paws forward. It wears a ribbon tied on the tail."
+    },
+    {
+      "id": 81,
+      "name": "Pixel",
+      "file": "cat-081.png",
+      "fur": "tigré roux",
+      "expression": "timide",
+      "accessory": "un nœud papillon pastel",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "tabby",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has orange tabby fur with soft stripes. Its face shows: shy bashful look, looking away. It is sitting with one paw raised in a wave. It wears a small pastel bow tie."
+    },
+    {
+      "id": 82,
+      "name": "Confetti",
+      "file": "cat-082.png",
+      "fur": "tigré gris",
+      "expression": "curieux",
+      "accessory": "une écharpe rayée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "tabby",
+        "eyes": 0,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey tabby fur with soft stripes. Its face shows: curious tilted head, one ear up. It is lying down with paws tucked under. It wears a striped knitted scarf."
+    },
+    {
+      "id": 83,
+      "name": "Origami",
+      "file": "cat-083.png",
+      "fur": "blanc neige",
+      "expression": "fier",
+      "accessory": "des lunettes rondes",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "plain",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has snow white fluffy fur. Its face shows: proud confident smile, chin up. It is sitting with the tail curled around the paws. It wears round eyeglasses."
+    },
+    {
+      "id": 84,
+      "name": "Domino",
+      "file": "cat-084.png",
+      "fur": "noir de jais",
+      "expression": "malicieux",
+      "accessory": "un casque d’aviateur",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "plain",
+        "eyes": 3,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has jet black fur. Its face shows: mischievous grin, narrowed eyes. It is standing on all fours, seen from the front. It wears a leather aviator cap with goggles."
+    },
+    {
+      "id": 85,
+      "name": "Kaléido",
+      "file": "cat-085.png",
+      "fur": "bicolore noir et blanc",
+      "expression": "tout ému",
+      "accessory": "un pull tricoté",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "bicolour",
+        "eyes": 6,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black and white bicolour fur. Its face shows: teary eyed with emotion, happy tears. It is sitting facing the viewer. It wears a cosy knitted sweater."
+    },
+    {
+      "id": 86,
+      "name": "Ricochet",
+      "file": "cat-086.png",
+      "fur": "calico tricolore",
+      "expression": "affamé",
+      "accessory": "un serre-tête à oreilles de lapin",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "patch",
+        "eyes": 0,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tricolour calico fur. Its face shows: hungry excited eyes, licking lips. It is peeking with both front paws forward. It wears a bunny ear headband."
+    },
+    {
+      "id": 87,
+      "name": "Tourbillon",
+      "file": "cat-087.png",
+      "fur": "siamois crème",
+      "expression": "rêveur",
+      "accessory": "un tout petit sac à dos",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "points",
+        "eyes": 5,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has cream siamese fur with darker face points. Its face shows: dreamy faraway gaze, tiny smile. It is sitting with one paw raised in a wave. It wears a very small backpack."
+    },
+    {
+      "id": 88,
+      "name": "Colimaçon",
+      "file": "cat-088.png",
+      "fur": "bleu russe",
+      "expression": "concentré",
+      "accessory": "une fleur derrière l’oreille",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "plain",
+        "eyes": 3,
+        "mouth": 5
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has blue-grey russian fur. Its face shows: focused determined frown, tongue out. It is lying down with paws tucked under. It wears a flower tucked behind one ear."
+    },
+    {
+      "id": 89,
+      "name": "Bagatelle",
+      "file": "cat-089.png",
+      "fur": "roux et blanc",
+      "expression": "espiègle",
+      "accessory": "un collier à grelot",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "bicolour",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has ginger and white fur. Its face shows: playful wink and cheeky smile. It is sitting with the tail curled around the paws. It wears a collar with a little bell."
+    },
+    {
+      "id": 90,
+      "name": "Farandole",
+      "file": "cat-090.png",
+      "fur": "tacheté bengal",
+      "expression": "tendre",
+      "accessory": "un bonnet à pompon",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "spots",
+        "eyes": 0,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has spotted bengal fur. Its face shows: gentle tender smile, soft eyes. It is standing on all fours, seen from the front. It wears a bobble hat."
+    },
+    {
+      "id": 91,
+      "name": "Plumeau",
+      "file": "cat-091.png",
+      "fur": "angora à longs poils",
+      "expression": "étonné",
+      "accessory": "un béret",
+      "svg": {
+        "palette": {
+          "name": "pêche",
+          "fur": "#ffd3b6",
+          "accent": "#ff9a76",
+          "blush": "#ff8fa3"
+        },
+        "pattern": "plain",
+        "eyes": 0,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has long haired fluffy white fur. Its face shows: astonished round mouth, raised brows. It is sitting facing the viewer. It wears a little beret."
+    },
+    {
+      "id": 92,
+      "name": "Grelot",
+      "file": "cat-092.png",
+      "fur": "chartreux gris",
+      "expression": "complice",
+      "accessory": "une cape étoilée",
+      "svg": {
+        "palette": {
+          "name": "ardoise",
+          "fur": "#d8dee6",
+          "accent": "#7d8a99",
+          "blush": "#f79bb0"
+        },
+        "pattern": "plain",
+        "eyes": 4,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has plush grey chartreux fur. Its face shows: winking with a knowing smile. It is peeking with both front paws forward. It wears a tiny cape covered in stars."
+    },
+    {
+      "id": 93,
+      "name": "Bobine",
+      "file": "cat-093.png",
+      "fur": "écaille de tortue",
+      "expression": "boudeur",
+      "accessory": "un bavoir en forme de nuage",
+      "svg": {
+        "palette": {
+          "name": "citron",
+          "fur": "#fdf0b2",
+          "accent": "#e8c14b",
+          "blush": "#ff96ad"
+        },
+        "pattern": "patch",
+        "eyes": 2,
+        "mouth": 6
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has tortoiseshell fur. Its face shows: cutely sulking, puffed cheeks. It is sitting with one paw raised in a wave. It wears a cloud shaped bib."
+    },
+    {
+      "id": 94,
+      "name": "Pelote",
+      "file": "cat-094.png",
+      "fur": "smoking noir à plastron blanc",
+      "expression": "tout excité",
+      "accessory": "rien du tout",
+      "svg": {
+        "palette": {
+          "name": "lavande",
+          "fur": "#dcd3f7",
+          "accent": "#a78bfa",
+          "blush": "#f7a8c4"
+        },
+        "pattern": "bicolour",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with a white chest bib. Its face shows: super excited sparkling eyes. It is lying down with paws tucked under. It wears no accessory at all."
+    },
+    {
+      "id": 95,
+      "name": "Chamallow",
+      "file": "cat-095.png",
+      "fur": "sable clair",
+      "expression": "zen",
+      "accessory": "un minuscule chapeau melon",
+      "svg": {
+        "palette": {
+          "name": "cacao",
+          "fur": "#e4c9b0",
+          "accent": "#a67c52",
+          "blush": "#f2909f"
+        },
+        "pattern": "plain",
+        "eyes": 1,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has light sandy beige fur. Its face shows: peaceful serene closed eyes, calm smile. It is sitting with the tail curled around the paws. It wears a tiny bowler hat."
+    },
+    {
+      "id": 96,
+      "name": "Berlingot",
+      "file": "cat-096.png",
+      "fur": "gris argenté rayé",
+      "expression": "amoureux",
+      "accessory": "une couronne en papier",
+      "svg": {
+        "palette": {
+          "name": "rose",
+          "fur": "#ffd6e4",
+          "accent": "#f77fa1",
+          "blush": "#ff7d9c"
+        },
+        "pattern": "tabby",
+        "eyes": 8,
+        "mouth": 0
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has silver striped fur. Its face shows: heart shaped eyes, blissful smile. It is standing on all fours, seen from the front. It wears a paper crown."
+    },
+    {
+      "id": 97,
+      "name": "Sucrette",
+      "file": "cat-097.png",
+      "fur": "brun chocolat",
+      "expression": "pensif",
+      "accessory": "un bandana à pois",
+      "svg": {
+        "palette": {
+          "name": "menthe",
+          "fur": "#c8f0dc",
+          "accent": "#5ec5a0",
+          "blush": "#f9a1b5"
+        },
+        "pattern": "plain",
+        "eyes": 5,
+        "mouth": 2
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has chocolate brown fur. Its face shows: thoughtful look, paw on chin. It is sitting facing the viewer. It wears a polka dot bandana."
+    },
+    {
+      "id": 98,
+      "name": "Nectar",
+      "file": "cat-098.png",
+      "fur": "blanc à taches rousses",
+      "expression": "en train de chanter",
+      "accessory": "un casque de musique",
+      "svg": {
+        "palette": {
+          "name": "corail",
+          "fur": "#ffcfc4",
+          "accent": "#f76c5e",
+          "blush": "#ff7a92"
+        },
+        "pattern": "patch",
+        "eyes": 1,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has white fur with ginger patches. Its face shows: singing with eyes shut and mouth open. It is peeking with both front paws forward. It wears oversized headphones."
+    },
+    {
+      "id": 99,
+      "name": "Sorbet",
+      "file": "cat-099.png",
+      "fur": "gris moucheté",
+      "expression": "ébahi",
+      "accessory": "un chapeau de paille",
+      "svg": {
+        "palette": {
+          "name": "sable",
+          "fur": "#f2e3c9",
+          "accent": "#c9a878",
+          "blush": "#f79bb0"
+        },
+        "pattern": "spots",
+        "eyes": 7,
+        "mouth": 3
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has grey speckled fur. Its face shows: amazed starry wide eyes. It is sitting with one paw raised in a wave. It wears a straw sun hat."
+    },
+    {
+      "id": 100,
+      "name": "Panettone",
+      "file": "cat-100.png",
+      "fur": "noir à chaussettes blanches",
+      "expression": "satisfait",
+      "accessory": "un ruban au bout de la queue",
+      "svg": {
+        "palette": {
+          "name": "ciel",
+          "fur": "#cfe6ff",
+          "accent": "#6fa8dc",
+          "blush": "#ffa0b4"
+        },
+        "pattern": "bicolour",
+        "eyes": 3,
+        "mouth": 1
+      },
+      "prompt": "A single kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, thick soft outline, flat pastel colours with simple soft shading, big glossy eyes, tiny nose, centred single character, full body visible, plain transparent background, no text, no watermark, no border, children book mascot style. The cat has black fur with white socks. Its face shows: smug satisfied little smile. It is lying down with paws tucked under. It wears a ribbon tied on the tail."
+    }
+  ]
+}

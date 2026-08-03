@@ -1,0 +1,11 @@
+# Configuration contenant la clé OpenAI
+api/config.php
+tools/.env
+
+# Images générées (100 PNG, ~30 Mo) : à générer et déployer, pas à versionner.
+# Retire ces lignes si tu préfères les committer.
+assets/cats/*.png
+assets/cats/manifest.json
+
+node_modules/
+.DS_Store

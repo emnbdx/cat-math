@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Les 100 chats — table de Seguin</title>
+<meta name="description" content="Jeu éducatif Montessori : reconstruis la table de 100 et collectionne 100 chats kawaii.">
+<meta name="theme-color" content="#fff5f7">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="topbar">
+  <button class="topbar__back btn btn--ghost" data-nav="home" hidden>← Menu</button>
+  <h1 class="topbar__title">🐱 Les 100 chats</h1>
+  <div class="topbar__right">
+    <span class="catcount" id="catcount" hidden>
+      <span class="catcount__icon">🐾</span><output id="catcount-value">0</output><span class="catcount__total">/100</span>
+    </span>
+    <button class="btn btn--icon" id="sound-toggle" aria-pressed="true" title="Sons">🔊</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ══════════════════════════════════════════════════ ACCUEIL ══ -->
+  <section class="screen screen--home" data-screen="home">
+    <p class="home__intro">
+      Deux façons d’apprendre les nombres jusqu’à <strong>100</strong>.<br>
+      Chaque bonne réponse, c’est un chat de plus dans ta collection !
+    </p>
+
+    <div class="cards">
+      <button class="card" data-nav="build">
+        <span class="card__emoji">🧩</span>
+        <span class="card__title">Construire la table</span>
+        <span class="card__desc">La table est vide. On te donne un nombre, tu le poses à la bonne place.</span>
+        <span class="card__progress" data-progress="build"></span>
+      </button>
+
+      <button class="card" data-nav="speak">
+        <span class="card__emoji">🎤</span>
+        <span class="card__title">Dis le nombre</span>
+        <span class="card__desc">La table est complète. Un nombre s’allume, tu le dis à voix haute.</span>
+        <span class="card__progress" data-progress="speak"></span>
+      </button>
+
+      <button class="card card--soft" data-nav="collection">
+        <span class="card__emoji">📚</span>
+        <span class="card__title">Ma collection</span>
+        <span class="card__desc">Tous les chats déjà gagnés.</span>
+        <span class="card__progress" data-progress="collection"></span>
+      </button>
+    </div>
+
+    <p class="home__foot">
+      <button class="btn btn--ghost btn--small" id="reset-all">Tout recommencer</button>
+    </p>
+  </section>
+
+  <!-- ═════════════════════════════════════════ MODE CONSTRUIRE ══ -->
+  <section class="screen" data-screen="build" hidden>
+    <div class="mode">
+      <div class="mode__board">
+        <div class="boardwrap" id="build-boardwrap"></div>
+      </div>
+
+      <aside class="mode__side">
+        <div class="prompt" id="build-prompt">
+          <span class="prompt__label">Pose ce nombre</span>
+          <strong class="prompt__number" id="build-number">–</strong>
+          <span class="prompt__hint" id="build-hint"></span>
+        </div>
+
+        <div class="reward" id="build-reward" aria-live="polite"></div>
+
+        <div class="mode__tools">
+          <button class="btn btn--ghost btn--small" id="build-help" aria-pressed="false">💡 Aide</button>
+          <button class="btn btn--ghost btn--small" id="build-restart">↺ Recommencer</button>
+        </div>
+        <p class="mode__stat" id="build-stat"></p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ MODE VOIX ══ -->
+  <section class="screen" data-screen="speak" hidden>
+    <div class="mode">
+      <div class="mode__board">
+        <div class="boardwrap" id="speak-boardwrap"></div>
+      </div>
+
+      <aside class="mode__side">
+        <div class="prompt" id="speak-prompt">
+          <span class="prompt__label">Lis ce nombre à voix haute</span>
+          <strong class="prompt__number" id="speak-number">–</strong>
+        </div>
+
+        <button class="mic" id="mic" aria-live="polite">
+          <span class="mic__icon">🎤</span>
+          <span class="mic__label">Appuie et parle</span>
+          <svg class="mic__ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/></svg>
+        </button>
+
+        <p class="heard" id="speak-heard" aria-live="polite"></p>
+        <div class="reward" id="speak-reward" aria-live="polite"></div>
+
+        <form class="keypad" id="speak-keypad" hidden>
+          <label for="speak-input">Ou écris le nombre</label>
+          <div class="keypad__row">
+            <input id="speak-input" type="number" inputmode="numeric" min="1" max="100" placeholder="42">
+            <button class="btn btn--small" type="submit">OK</button>
+          </div>
+        </form>
+
+        <div class="mode__tools">
+          <button class="btn btn--ghost btn--small" id="speak-skip">⏭ Passer</button>
+          <button class="btn btn--ghost btn--small" id="speak-keyboard" aria-pressed="false">⌨️ Clavier</button>
+          <button class="btn btn--ghost btn--small" id="speak-restart">↺ Recommencer</button>
+        </div>
+        <p class="mode__stat" id="speak-stat"></p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ COLLECTION ══ -->
+  <section class="screen" data-screen="collection" hidden>
+    <div class="tabs" role="tablist">
+      <button class="tabs__tab is-active" role="tab" data-tab="build">🧩 Table</button>
+      <button class="tabs__tab" role="tab" data-tab="speak">🎤 Voix</button>
+    </div>
+    <div class="collection__bar"><div class="collection__fill" id="collection-fill"></div></div>
+    <p class="collection__count" id="collection-count"></p>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+</main>
+
+<!-- fiche d'un chat -->
+<dialog class="sheet" id="cat-sheet">
+  <button class="sheet__close btn btn--icon" data-close>✕</button>
+  <div class="sheet__body" id="cat-sheet-body"></div>
+</dialog>
+
+<div class="particles" id="particles" aria-hidden="true"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
