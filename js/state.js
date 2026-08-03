@@ -28,7 +28,9 @@ function freshSpeak() {
 }
 
 function fresh() {
-  return { sound: true, build: freshBuild(), speak: freshSpeak() };
+  // engine : moteur vocal choisi dans les réglages. Le modèle local est le
+  // défaut — gratuit, et la voix de l'enfant ne quitte pas l'appareil.
+  return { sound: true, engine: 'local', build: freshBuild(), speak: freshSpeak() };
 }
 
 function load() {
@@ -41,6 +43,7 @@ function load() {
     const base = fresh();
     return {
       sound: saved.sound ?? base.sound,
+      engine: saved.engine ?? base.engine,
       build: { ...base.build, ...(saved.build ?? {}) },
       speak: { ...base.speak, ...(saved.speak ?? {}) },
     };
@@ -65,7 +68,9 @@ export function resetMode(mode) {
 }
 
 export function resetAll() {
-  Object.assign(state, fresh());
+  // les réglages survivent à un effacement de progression
+  const { sound, engine } = state;
+  Object.assign(state, fresh(), { sound, engine });
   save();
 }
 

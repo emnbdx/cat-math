@@ -3,11 +3,12 @@
  */
 
 import { loadCats, getCat, catArt } from './cats.js';
-import { state, save, resetAll, catCount, answered, TOTAL } from './state.js';
+import { state, save, catCount, answered, TOTAL } from './state.js';
 import { setCatCount, hideCatCount, openCatSheet } from './ui.js';
 import * as sfx from './sfx.js';
 import * as build from './mode-build.js';
 import * as speak from './mode-speak.js';
+import * as settings from './settings.js';
 
 const screens = new Map(
   [...document.querySelectorAll('[data-screen]')].map((s) => [s.dataset.screen, s]),
@@ -22,6 +23,7 @@ const TITLES = {
   build: '🧩 Construire la table',
   speak: '🎤 Dis le nombre',
   collection: '📚 Ma collection',
+  settings: '⚙️ Réglages',
 };
 
 const modes = { build, speak };
@@ -30,7 +32,7 @@ let collectionTab = 'build';
 
 /* ---------------------------------------------------------- navigation --- */
 
-function show(name) {
+async function show(name) {
   if (!screens.has(name)) name = 'home';
   if (name === currentScreen) return;
 
@@ -45,9 +47,12 @@ function show(name) {
   window.scrollTo({ top: 0 });
 
   if (modes[name]) {
-    modes[name].enter();
+    await modes[name].enter();
   } else if (name === 'collection') {
     renderCollection();
+  } else if (name === 'settings') {
+    hideCatCount();
+    await settings.render();
   } else {
     hideCatCount();
     renderHomeProgress();
@@ -136,28 +141,28 @@ function renderCollection() {
 
 /* ------------------------------------------------------------ réglages -- */
 
+function paintSoundButton() {
+  soundBtn.setAttribute('aria-pressed', String(state.sound));
+  soundBtn.textContent = state.sound ? '🔊' : '🔇';
+}
+
 soundBtn.addEventListener('click', () => {
   state.sound = !state.sound;
   save();
-  soundBtn.setAttribute('aria-pressed', String(state.sound));
-  soundBtn.textContent = state.sound ? '🔊' : '🔇';
+  paintSoundButton();
   if (state.sound) sfx.pop();
 });
 
-document.getElementById('reset-all').addEventListener('click', () => {
-  if (!confirm('Tout effacer : les deux tables et les deux collections de chats ?')) return;
-  resetAll();
-  location.reload();
-});
+// Les réglages touchent au son et au moteur vocal : on resynchronise l'affichage.
+settings.init(paintSoundButton);
 
 /* --------------------------------------------------------- démarrage --- */
 
-soundBtn.setAttribute('aria-pressed', String(state.sound));
-soundBtn.textContent = state.sound ? '🔊' : '🔇';
+paintSoundButton();
 
 try {
   await loadCats();
-  show(location.hash.slice(1) || 'home');
+  await show(location.hash.slice(1) || 'home');
 } catch (err) {
   document.getElementById('main').innerHTML =
     `<p style="text-align:center">Impossible de charger le catalogue des chats.<br>

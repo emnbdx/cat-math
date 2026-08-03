@@ -4,8 +4,8 @@ Jeu éducatif d'inspiration Montessori autour du **tableau du cent** (table de
 Seguin / table de 100). Deux modes, et à chaque bonne réponse un chat kawaii
 rejoint la collection. À chaque erreur, un chat s'en va.
 
-Site **statique** (HTML/CSS/JS sans build) + **un seul fichier PHP** pour la
-reconnaissance vocale. Se dépose tel quel sur un mutualisé OVH.
+Site **statique** (HTML/CSS/JS sans build), avec un fichier PHP **optionnel**
+pour ceux qui veulent Whisper. Se dépose tel quel sur un mutualisé OVH.
 
 ---
 
@@ -33,8 +33,7 @@ moment.
 ### 🎤 Dis le nombre
 
 Le plateau est complet. Une case s'allume en jaune, l'enfant lit le nombre à
-voix haute. L'audio part vers **Whisper** (OpenAI) et la transcription est
-comparée au nombre attendu.
+voix haute, et la transcription est comparée au nombre attendu.
 
 - bonne réponse → **+1 chat**, la case passe en vert
 - mauvaise → **−1 chat**, on affiche ce qui a été entendu, on peut réessayer
@@ -47,6 +46,32 @@ La reconnaissance accepte les chiffres (« 72 »), les lettres
 (« soixante-douze »), les phrases entières (« euh… c'est soixante-douze ! »)
 et les variantes régionales (« septante-deux », « nonante-neuf »).
 Voir `js/fr-numbers.js` et ses tests.
+
+#### Quatre moteurs, au choix dans ⚙️ Réglages
+
+Le moteur se choisit dans l'écran **Réglages**, qui affiche la disponibilité
+réelle de chacun sur l'appareil. **Le modèle local est le défaut.**
+
+| moteur | coût | clé API | où va la voix | navigateurs |
+|---|---|---|---|---|
+| 🔒 **Modèle local** *(défaut)* | 0 | non | reste sur l'appareil | Chrome, Edge |
+| ☁️ Reconnaissance du navigateur | 0 | non | serveurs Google / Apple | + Safari |
+| 🤖 Whisper (OpenAI) | à la minute | oui | OpenAI | tous, Firefox compris |
+| ⌨️ Clavier | 0 | non | — | tous |
+
+Le modèle local passe par `SpeechRecognition.processLocally` : Chrome télécharge
+et gère lui-même un modèle français, et l'écran de réglages propose un bouton
+**⬇️ Installer le modèle français** quand il est disponible mais pas encore
+installé. Bonus par rapport à Whisper : la transcription arrive au fil de la
+phrase, donc l'enfant voit les mots s'afficher pendant qu'il parle.
+
+Si le moteur choisi n'est pas disponible — ou tombe en panne en cours de partie —
+le jeu descend automatiquement au suivant et l'annonce sous le micro. Un souci
+technique ne coûte **jamais** de chat.
+
+Le jeu exploite aussi les **hypothèses multiples** que renvoient ces moteurs
+(`maxAlternatives`) : si le bon nombre apparaît dans l'une d'elles, c'est validé.
+Gratuit, et ça rattrape pas mal d'approximations sur une voix jeune.
 
 ### ✍️ La reconnaissance d'écriture
 
@@ -92,7 +117,8 @@ le navigateur (`localStorage`) : on peut fermer l'onglet et reprendre plus tard.
 
 1. Envoyer tout le dossier dans `www/` (ou un sous-dossier — les chemins sont
    relatifs, ça marche aussi dans `www/chats/`).
-2. Pour le mode voix uniquement, créer `api/config.php` :
+2. **Seulement si tu veux Whisper** (les autres moteurs vocaux n'ont besoin de
+   rien), créer `api/config.php` :
 
    ```bash
    cp api/config.example.php api/config.php
@@ -107,9 +133,9 @@ le navigateur (`localStorage`) : on peut fermer l'onglet et reprendre plus tard.
 ⚠️ **HTTPS obligatoire** pour le micro : les navigateurs bloquent
 `getUserMedia` en HTTP. Le certificat gratuit d'OVH suffit.
 
-Le mode « Construire la table » et la collection fonctionnent **sans PHP et sans
-clé API** : un simple hébergement statique suffit si le mode voix ne t'intéresse
-pas.
+Tout fonctionne **sans PHP et sans clé API**, y compris le mode voix avec le
+modèle local ou celui du navigateur : un simple hébergement statique suffit.
+Le PHP ne sert qu'au moteur Whisper.
 
 ### Test en local
 
@@ -184,9 +210,10 @@ lances (les prix bougent) :
 
 - **les images** : 100 générations, une seule fois. C'est le gros du budget ;
   commence par `--count=5` pour juger du rendu avant de lancer les 100.
-- **la transcription** : `whisper-1` est facturé à la minute d'audio. Chaque
-  réponse d'enfant fait ~2 secondes, donc une partie complète de 100 nombres
-  représente quelques minutes d'audio au total.
+- **la transcription** : nulle si tu restes sur le modèle local ou celui du
+  navigateur. Avec Whisper, `whisper-1` est facturé à la minute d'audio ; une
+  réponse d'enfant fait ~2 secondes, donc une partie de 100 nombres représente
+  quelques minutes d'audio au total.
 
 Garde-fou côté serveur : `api/transcribe.php` limite à **90 requêtes par IP et
 par 5 minutes** (large pour un enfant qui joue, borné si l'URL fuite). Réglable
@@ -207,6 +234,8 @@ js/
   mode-build.js            mode « Construire la table »
   mode-speak.js            mode « Dis le nombre »
   fr-numbers.js            « soixante-douze » → 72
+  speech.js                les 4 moteurs vocaux derrière une seule interface
+  settings.js              écran de réglages (choix du moteur, sons)
   digits.js                reconnaissance de chiffres (inférence dans le navigateur)
   writepad.js              l'ardoise : un cadre de dessin par chiffre
   audio.js                 MediaRecorder + envoi au serveur
@@ -244,12 +273,22 @@ plausibles mais faux, et serait attrapée ici.
 
 ## Choix techniques
 
-**Pourquoi du PHP alors que le reste est front-only ?** Le mode voix a besoin
-d'une clé OpenAI. En pur JavaScript, la clé serait lisible dans le code de la
-page par n'importe quel visiteur — n'importe qui pourrait s'en servir à tes
-frais. `api/transcribe.php` est le plus petit serveur possible : il reçoit
-l'audio, ajoute la clé, relaie, renvoie le texte. Rien d'autre du jeu n'est
-côté serveur.
+**Pourquoi du PHP alors que le reste est front-only ?** Uniquement pour Whisper.
+En pur JavaScript, la clé OpenAI serait lisible dans le code de la page par
+n'importe quel visiteur, qui pourrait s'en servir à tes frais.
+`api/transcribe.php` est le plus petit serveur possible : il reçoit l'audio,
+ajoute la clé, relaie, renvoie le texte. Les trois autres moteurs vocaux ne
+passent pas par lui du tout.
+
+**Pourquoi ne pas entraîner notre propre modèle vocal, comme pour les chiffres ?**
+Parce que le blocage n'est pas le code, c'est **les données**. MNIST fournit
+60 000 chiffres étiquetés gratuits en un téléchargement ; il n'existe pas
+d'équivalent pour « des nombres français prononcés par des enfants ». Les corpus
+disponibles sont de la parole adulte en phrases, et un modèle entraîné là-dessus
+s'écroule sur une voix de cinq ans — pitch et formants n'ont rien à voir. En
+prime, un nombre est une *séquence* de mots (« soixante-douze »), donc il
+faudrait un modèle CTC, pas le petit classifieur qui suffit pour un chiffre
+isolé. D'où le choix de s'appuyer sur le modèle local que Chrome fournit déjà.
 
 **Afficher 100 nombres.** Les tailles sont en unités `cqw` (relatives à la
 largeur du plateau) : les 100 cases restent lisibles d'un téléphone de 360 px à
@@ -263,6 +302,10 @@ inutilisable au doigt.
 cible par geste, ça marche aussi bien à la souris qu'au doigt. Les cadres
 d'écriture sont en `touch-action: none`, sinon le doigt ferait défiler la page
 au lieu d'écrire.
+
+**Une règle CSS qui compte.** `[hidden] { display: none !important }` en tête de
+feuille : nos règles `display: grid` / `inline-flex` battent sinon la feuille du
+navigateur, et un élément marqué `hidden` resterait affiché.
 
 **Accessibilité.** Navigation au clavier, `aria-label` sur chaque case,
 `prefers-reduced-motion` respecté, cibles tactiles ≥ 38 px, contrastes soutenus.

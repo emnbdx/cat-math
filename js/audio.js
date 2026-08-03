@@ -84,6 +84,32 @@ export async function startRecording({ maxMs = 5000 } = {}) {
   };
 }
 
+/**
+ * Le relais Whisper est-il utilisable ?
+ *
+ * Astuce : on poste sans fichier. Si la clé manque le serveur répond
+ * 503 no_api_key ; si elle est là il se plaint juste de l'audio manquant
+ * (400 bad_upload). On connaît donc l'état sans consommer un centime.
+ *
+ * @returns {Promise<'ready'|'no_key'|'absent'|'error'>}
+ */
+let probe = null;
+export function probeServer() {
+  probe ??= (async () => {
+    try {
+      const res = await fetch(API_URL, { method: 'POST', body: new FormData() });
+      const payload = await res.json().catch(() => ({}));
+      if (payload.code === 'no_api_key') return 'no_key';
+      if (res.status === 400 || res.status === 429) return 'ready';
+      if (res.status === 404) return 'absent';
+      return 'error';
+    } catch {
+      return 'absent';   // pas de PHP (hébergement statique) ou hors ligne
+    }
+  })();
+  return probe;
+}
+
 /** Envoie l'audio au serveur et renvoie la transcription. */
 export async function transcribe(blob) {
   const subtype = (blob.type.split('/')[1] ?? 'webm').split(';')[0];

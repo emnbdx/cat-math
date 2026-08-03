@@ -21,6 +21,7 @@
       <span class="catcount__icon">🐾</span><output id="catcount-value">0</output><span class="catcount__total">/100</span>
     </span>
     <button class="btn btn--icon" id="sound-toggle" aria-pressed="true" title="Sons">🔊</button>
+    <button class="btn btn--icon" data-nav="settings" title="Réglages" aria-label="Réglages">⚙️</button>
   </div>
 </header>
 
@@ -57,7 +58,7 @@
     </div>
 
     <p class="home__foot">
-      <button class="btn btn--ghost btn--small" id="reset-all">Tout recommencer</button>
+      <button class="btn btn--ghost btn--small" data-nav="settings">⚙️ Réglages</button>
     </p>
   </section>
 
@@ -106,6 +107,7 @@
           <svg class="mic__ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/></svg>
         </button>
 
+        <p class="engine-line" id="speak-engine"></p>
         <p class="heard" id="speak-heard" aria-live="polite"></p>
         <div class="reward" id="speak-reward" aria-live="polite"></div>
 
@@ -136,6 +138,34 @@
     <div class="collection__bar"><div class="collection__fill" id="collection-fill"></div></div>
     <p class="collection__count" id="collection-count"></p>
     <div class="gallery" id="gallery"></div>
+  </section>
+
+  <!-- ═════════════════════════════════════════════════ RÉGLAGES ══ -->
+  <section class="screen screen--settings" data-screen="settings" hidden>
+
+    <fieldset class="settings__group">
+      <legend class="settings__legend">🎤 Reconnaissance vocale</legend>
+      <p class="settings__intro">
+        Utilisé par le mode « Dis le nombre ». Si le moteur choisi n’est pas
+        disponible, le jeu prend automatiquement le suivant dans la liste.
+      </p>
+      <div class="engines" id="engines"></div>
+    </fieldset>
+
+    <fieldset class="settings__group">
+      <legend class="settings__legend">🔊 Sons</legend>
+      <label class="settings__row">
+        <input type="checkbox" id="settings-sound" checked>
+        <span>Petits sons de récompense</span>
+      </label>
+    </fieldset>
+
+    <fieldset class="settings__group">
+      <legend class="settings__legend">🧹 Progression</legend>
+      <p class="settings__intro" id="settings-progress"></p>
+      <button class="btn btn--small" id="settings-reset">Tout effacer</button>
+    </fieldset>
+
   </section>
 
 </main>
