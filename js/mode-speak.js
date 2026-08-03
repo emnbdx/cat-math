@@ -5,10 +5,10 @@
  * haute, et la transcription est comparée au nombre attendu. Un nombre déjà
  * tiré ne revient jamais.
  *
- * Le moteur vocal vient des réglages (modèle local par défaut) ; js/speech.js
- * masque les différences entre les quatre. Si le moteur choisi tombe en panne,
- * on descend automatiquement au suivant — et un souci technique ne coûte
- * jamais de chat.
+ * Le moteur vocal vient des réglages — navigateur (défaut) ou Whisper ;
+ * js/speech.js masque leurs différences. Si celui qui est choisi tombe en
+ * panne, on prend l'autre ; s'il n'en reste aucun, l'enfant répond au clavier.
+ * Un souci technique ne coûte jamais de chat.
  */
 
 import { makeBoard } from './board.js';
@@ -46,7 +46,7 @@ let keypadOn = false;
 let celebrated = false;
 
 let caps = null;
-let engine = 'keyboard';
+let engine = null;         // null = aucun moteur vocal, on répond au clavier
 const broken = new Set();  // moteurs tombés en panne pendant la session
 
 export async function enter() {
@@ -115,28 +115,33 @@ async function pickEngine() {
 function applyEngine(next) {
   engine = next;
   const chosen = state.engine;
-  const fellBack = engine !== chosen;
 
+  if (engine === null) {
+    el.engine.textContent = 'Aucun moteur vocal disponible ici — réponds au clavier.';
+    el.engine.classList.add('is-fallback');
+    el.mic.disabled = true;
+    el.micLabel.textContent = 'Micro indisponible';
+    setKeypad(true);
+    return;
+  }
+
+  const fellBack = engine !== chosen;
   el.engine.textContent = fellBack
     ? `Moteur : ${ENGINE_LABELS[engine]} (${ENGINE_LABELS[chosen]} indisponible)`
     : `Moteur : ${ENGINE_LABELS[engine]}`;
   el.engine.classList.toggle('is-fallback', fellBack);
-
-  if (engine === 'keyboard') {
-    el.mic.disabled = true;
-    setKeypad(true);
-  } else {
-    el.mic.disabled = current() === null;
-  }
-  el.micLabel.textContent = engine === 'keyboard' ? 'Micro indisponible' : 'Appuie et parle';
+  el.mic.disabled = current() === null;
+  el.micLabel.textContent = 'Appuie et parle';
 }
 
-/** Le moteur courant est mort : on passe au suivant et on le dit. */
+/** Le moteur courant est mort : on prend l'autre, ou on passe au clavier. */
 function demoteEngine(reason) {
   broken.add(engine);
   const next = resolveEngine(state.engine, caps, broken);
   applyEngine(next);
-  el.heard.textContent = `${reason} On passe à : ${ENGINE_LABELS[next]}.`;
+  el.heard.textContent = next
+    ? `${reason} On passe à : ${ENGINE_LABELS[next]}.`
+    : `${reason} Réponds au clavier.`;
   el.heard.classList.add('is-error');
 }
 
@@ -171,7 +176,7 @@ function render() {
   el.label.textContent = over ? 'Tous les nombres sont passés !' : 'Lis ce nombre à voix haute';
   el.number.textContent = over ? '🎉' : String(target);
 
-  el.mic.disabled = over || engine === 'keyboard';
+  el.mic.disabled = over || engine === null;
   el.skip.disabled = over;
   el.input.disabled = over;
 
@@ -303,7 +308,7 @@ function micIdle() {
   busy = false;
   el.mic.classList.remove('is-recording', 'is-busy');
   el.micIcon.textContent = '🎤';
-  el.micLabel.textContent = engine === 'keyboard' ? 'Micro indisponible' : 'Appuie et parle';
+  el.micLabel.textContent = engine === null ? 'Micro indisponible' : 'Appuie et parle';
 }
 
 /* ---------------------------------------------------------- évaluation --- */

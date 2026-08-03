@@ -47,29 +47,27 @@ La reconnaissance accepte les chiffres (« 72 »), les lettres
 et les variantes régionales (« septante-deux », « nonante-neuf »).
 Voir `js/fr-numbers.js` et ses tests.
 
-#### Quatre moteurs, au choix dans ⚙️ Réglages
+#### Deux moteurs, au choix dans ⚙️ Réglages
 
 Le moteur se choisit dans l'écran **Réglages**, qui affiche la disponibilité
-réelle de chacun sur l'appareil. **Le modèle local est le défaut.**
+réelle des deux sur l'appareil. **Le navigateur est le défaut** : gratuit et
+sans rien à configurer.
 
-| moteur | coût | clé API | où va la voix | navigateurs |
-|---|---|---|---|---|
-| 🔒 **Modèle local** *(défaut)* | 0 | non | reste sur l'appareil | Chrome, Edge |
-| ☁️ Reconnaissance du navigateur | 0 | non | serveurs Google / Apple | + Safari |
-| 🤖 Whisper (OpenAI) | à la minute | oui | OpenAI | tous, Firefox compris |
-| ⌨️ Clavier | 0 | non | — | tous |
+| moteur | coût | clé API | navigateurs |
+|---|---|---|---|
+| ☁️ **Reconnaissance du navigateur** *(défaut)* | 0 | non | Chrome, Edge, Safari |
+| 🤖 Whisper (OpenAI) | à la minute | oui | tous, Firefox compris |
 
-Le modèle local passe par `SpeechRecognition.processLocally` : Chrome télécharge
-et gère lui-même un modèle français, et l'écran de réglages propose un bouton
-**⬇️ Installer le modèle français** quand il est disponible mais pas encore
-installé. Bonus par rapport à Whisper : la transcription arrive au fil de la
-phrase, donc l'enfant voit les mots s'afficher pendant qu'il parle.
+Le navigateur a un avantage secondaire : la transcription arrive au fil de la
+phrase, donc l'enfant voit les mots s'afficher pendant qu'il parle. Whisper,
+lui, comprend mieux les voix jeunes.
 
 Si le moteur choisi n'est pas disponible — ou tombe en panne en cours de partie —
-le jeu descend automatiquement au suivant et l'annonce sous le micro. Un souci
-technique ne coûte **jamais** de chat.
+le jeu prend l'autre et l'annonce sous le micro ; si aucun des deux ne répond,
+l'enfant tape le nombre au clavier. Un souci technique ne coûte **jamais** de
+chat.
 
-Le jeu exploite aussi les **hypothèses multiples** que renvoient ces moteurs
+Le jeu exploite aussi les **hypothèses multiples** que renvoie le navigateur
 (`maxAlternatives`) : si le bon nombre apparaît dans l'une d'elles, c'est validé.
 Gratuit, et ça rattrape pas mal d'approximations sur une voix jeune.
 
@@ -134,8 +132,8 @@ le navigateur (`localStorage`) : on peut fermer l'onglet et reprendre plus tard.
 `getUserMedia` en HTTP. Le certificat gratuit d'OVH suffit.
 
 Tout fonctionne **sans PHP et sans clé API**, y compris le mode voix avec le
-modèle local ou celui du navigateur : un simple hébergement statique suffit.
-Le PHP ne sert qu'au moteur Whisper.
+moteur du navigateur : un simple hébergement statique suffit. Le PHP ne sert
+qu'au moteur Whisper.
 
 ### Test en local
 
@@ -210,8 +208,8 @@ lances (les prix bougent) :
 
 - **les images** : 100 générations, une seule fois. C'est le gros du budget ;
   commence par `--count=5` pour juger du rendu avant de lancer les 100.
-- **la transcription** : nulle si tu restes sur le modèle local ou celui du
-  navigateur. Avec Whisper, `whisper-1` est facturé à la minute d'audio ; une
+- **la transcription** : nulle si tu restes sur le moteur du navigateur. Avec
+  Whisper, `whisper-1` est facturé à la minute d'audio ; une
   réponse d'enfant fait ~2 secondes, donc une partie de 100 nombres représente
   quelques minutes d'audio au total.
 
@@ -234,7 +232,7 @@ js/
   mode-build.js            mode « Construire la table »
   mode-speak.js            mode « Dis le nombre »
   fr-numbers.js            « soixante-douze » → 72
-  speech.js                les 4 moteurs vocaux derrière une seule interface
+  speech.js                les 2 moteurs vocaux derrière une seule interface
   settings.js              écran de réglages (choix du moteur, sons)
   digits.js                reconnaissance de chiffres (inférence dans le navigateur)
   writepad.js              l'ardoise : un cadre de dessin par chiffre
@@ -288,7 +286,8 @@ disponibles sont de la parole adulte en phrases, et un modèle entraîné là-de
 s'écroule sur une voix de cinq ans — pitch et formants n'ont rien à voir. En
 prime, un nombre est une *séquence* de mots (« soixante-douze »), donc il
 faudrait un modèle CTC, pas le petit classifieur qui suffit pour un chiffre
-isolé. D'où le choix de s'appuyer sur le modèle local que Chrome fournit déjà.
+isolé. D'où le choix de s'appuyer sur la reconnaissance que le navigateur
+fournit déjà.
 
 **Afficher 100 nombres.** Les tailles sont en unités `cqw` (relatives à la
 largeur du plateau) : les 100 cases restent lisibles d'un téléphone de 360 px à

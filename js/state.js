@@ -27,10 +27,11 @@ function freshSpeak() {
   return { queue: shuffled(TOTAL), done: [], missed: [], deck: shuffled(TOTAL), cats: [], errors: 0 };
 }
 
+/** Moteurs vocaux proposés. Le navigateur est le défaut : gratuit et sans clé. */
+const ENGINES = ['browser', 'whisper'];
+
 function fresh() {
-  // engine : moteur vocal choisi dans les réglages. Le modèle local est le
-  // défaut — gratuit, et la voix de l'enfant ne quitte pas l'appareil.
-  return { sound: true, engine: 'local', build: freshBuild(), speak: freshSpeak() };
+  return { sound: true, engine: 'browser', build: freshBuild(), speak: freshSpeak() };
 }
 
 function load() {
@@ -43,7 +44,8 @@ function load() {
     const base = fresh();
     return {
       sound: saved.sound ?? base.sound,
-      engine: saved.engine ?? base.engine,
+      // une sauvegarde plus ancienne peut contenir un moteur qui n'existe plus
+      engine: ENGINES.includes(saved.engine) ? saved.engine : base.engine,
       build: { ...base.build, ...(saved.build ?? {}) },
       speak: { ...base.speak, ...(saved.speak ?? {}) },
     };

@@ -1,18 +1,18 @@
 /**
- * Couche vocale unifiée : quatre moteurs derrière une seule interface.
+ * Couche vocale : deux moteurs derrière une seule interface.
  *
- *   local     Web Speech avec `processLocally` — Chrome télécharge et gère un
- *             modèle français sur l'appareil. Gratuit, et la voix ne sort pas
- *             du téléphone. C'est le défaut.
- *   browser   Web Speech classique — gratuit aussi, mais l'audio passe par les
- *             serveurs de Google (Chrome) ou d'Apple (Safari).
+ *   browser   Reconnaissance intégrée au navigateur (Web Speech). Gratuite,
+ *             sans clé, sans serveur. Chrome, Edge et Safari.
  *   whisper   Notre api/transcribe.php → Whisper. Payant et nécessite une clé,
  *             mais marche partout, Firefox compris, et comprend mieux les voix
  *             d'enfants.
- *   keyboard  Pas de micro du tout : l'enfant tape le nombre.
  *
- * `listen()` renvoie toujours la même chose — { text, alternatives, engine } —
- * donc js/fr-numbers.js analyse la transcription sans savoir d'où elle vient.
+ * Le choix se fait dans les réglages. `listen()` renvoie toujours la même
+ * chose — { text, alternatives, engine } — donc js/fr-numbers.js analyse la
+ * transcription sans savoir d'où elle vient.
+ *
+ * Si aucun des deux n'est disponible, `resolveEngine()` renvoie null et le mode
+ * voix bascule sur la saisie au clavier.
  */
 
 import { startRecording, transcribe, probeServer } from './audio.js';
@@ -22,13 +22,11 @@ const LANG = 'fr-FR';
 const WEB_SPEECH_TIMEOUT = 9000;   // filet : certains navigateurs n'émettent jamais `end`
 const RECORD_MS = 5000;
 
-export const ENGINES = ['local', 'browser', 'whisper', 'keyboard'];
+export const ENGINES = ['browser', 'whisper'];
 
 export const ENGINE_LABELS = {
-  local: 'modèle local (sur l’appareil)',
   browser: 'reconnaissance du navigateur',
   whisper: 'Whisper (OpenAI)',
-  keyboard: 'clavier',
 };
 
 /* ============================================================
@@ -39,71 +37,38 @@ export function hasWebSpeech() {
   return Boolean(SR);
 }
 
-/** Le navigateur sait-il forcer le traitement sur l'appareil ? */
-export function supportsLocal() {
-  return Boolean(SR && 'processLocally' in SR.prototype);
-}
-
 /**
- * État du modèle local.
- * @returns {Promise<'available'|'downloadable'|'downloading'|'unavailable'|'unsupported'>}
- */
-export async function localStatus() {
-  if (!supportsLocal() || typeof SR.available !== 'function') return 'unsupported';
-  try {
-    const status = await SR.available({ langs: [LANG], processLocally: true });
-    if (typeof status === 'string') return status;
-    return status ? 'available' : 'unavailable';
-  } catch {
-    return 'unsupported';
-  }
-}
-
-/** Demande à Chrome de télécharger le modèle français. À appeler sur un clic. */
-export async function installLocal() {
-  if (typeof SR?.install !== 'function') {
-    throw new Error('Ce navigateur ne gère pas les modèles locaux.');
-  }
-  return SR.install({ langs: [LANG], processLocally: true });
-}
-
-/**
- * Capacités réelles des quatre moteurs, pour l'écran de réglages.
+ * Disponibilité réelle des deux moteurs, pour l'écran de réglages.
  * @returns {Promise<Record<string, {usable: boolean, state: string}>>}
  */
 export async function capabilities() {
-  const [local, whisper] = await Promise.all([localStatus(), probeServer()]);
+  const whisper = await probeServer();
   return {
-    local: {
-      usable: local === 'available',
-      state: local,           // available | downloadable | downloading | unavailable | unsupported
-    },
     browser: {
       usable: hasWebSpeech(),
       state: hasWebSpeech() ? 'available' : 'unsupported',
     },
     whisper: {
       usable: whisper === 'ready',
-      state: whisper,         // ready | no_key | absent | error
+      state: whisper,          // ready | no_key | absent | error
     },
-    keyboard: { usable: true, state: 'available' },
   };
 }
 
 /**
  * Moteur réellement utilisable, en partant du choix de l'utilisateur.
- * On descend la liste dans l'ordre : local → navigateur → Whisper → clavier.
  *
  * @param {string} preferred    moteur choisi dans les réglages
  * @param {object} caps         résultat de capabilities()
- * @param {Set<string>} broken  moteurs qui ont échoué pendant la session
+ * @param {Set<string>} broken  moteurs tombés en panne pendant la session
+ * @returns {string|null}       null si aucun moteur vocal n'est disponible
  */
 export function resolveEngine(preferred, caps, broken = new Set()) {
   const order = [preferred, ...ENGINES.filter((e) => e !== preferred)];
   for (const engine of order) {
     if (!broken.has(engine) && caps[engine]?.usable) return engine;
   }
-  return 'keyboard';
+  return null;
 }
 
 /* ============================================================
@@ -114,14 +79,14 @@ export function resolveEngine(preferred, caps, broken = new Set()) {
  * Lance une écoute.
  *
  * @param {object} opts
- * @param {string} opts.engine       'local' | 'browser' | 'whisper'
+ * @param {string} opts.engine                       'browser' | 'whisper'
  * @param {(text: string) => void} [opts.onPartial]  transcription en cours
  * @param {(phase: string) => void} [opts.onPhase]   'listening' | 'transcribing'
  * @returns {Promise<{stop: () => void, done: Promise<{text: string, alternatives: string[], engine: string}>}>}
  */
 export async function listen({ engine, onPartial, onPhase }) {
   if (engine === 'whisper') return listenWhisper({ onPhase });
-  return listenWebSpeech({ local: engine === 'local', onPartial, onPhase });
+  return listenWebSpeech({ onPartial, onPhase });
 }
 
 /** Erreurs qui condamnent le moteur pour la session (≠ « je n'ai rien entendu »). */
@@ -133,7 +98,7 @@ const ENGINE_FAILURES = new Set([
   'bad-grammar',
 ]);
 
-function listenWebSpeech({ local, onPartial, onPhase }) {
+function listenWebSpeech({ onPartial, onPhase }) {
   if (!SR) {
     const err = new Error('Reconnaissance vocale non disponible dans ce navigateur.');
     err.engineFailure = true;
@@ -147,20 +112,17 @@ function listenWebSpeech({ local, onPartial, onPhase }) {
   // Plusieurs hypothèses : on validera si le bon nombre est dans n'importe
   // laquelle. Gratuit, et ça rattrape beaucoup d'approximations.
   recognition.maxAlternatives = 5;
-  if (local && 'processLocally' in recognition) recognition.processLocally = true;
 
   const alternatives = [];
   let settled = false;
   let watchdog = null;
 
   const done = new Promise((resolve, reject) => {
-    const engine = local ? 'local' : 'browser';
-
     const finish = () => {
       if (settled) return;
       settled = true;
       clearTimeout(watchdog);
-      resolve({ text: alternatives[0] ?? '', alternatives, engine });
+      resolve({ text: alternatives[0] ?? '', alternatives, engine: 'browser' });
     };
 
     const fail = (error) => {
