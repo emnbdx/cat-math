@@ -138,7 +138,8 @@ const STYLE =
   'kawaii chibi cat sticker illustration, cute rounded shapes, oversized head, ' +
   'thick soft outline, flat pastel colours with simple soft shading, ' +
   'big glossy eyes, tiny nose, centred single character, full body visible, ' +
-  'plain transparent background, no text, no watermark, no border, ' +
+  'solid flat pure magenta (#FF00FF) chroma-key background, no checkerboard, ' +
+  'no shadows, no floor, no text, no watermark, no border, ' +
   'children book mascot style';
 
 function buildPrompt({ fur, expression, accessory, pose }) {

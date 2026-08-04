@@ -10,7 +10,7 @@
     "test": "node test-fr-numbers.mjs"
   },
   "optionalDependencies": {
-    "sharp": "^0.34.0"
+    "sharp": "^0.34.5"
   },
   "engines": {
     "node": ">=18"
