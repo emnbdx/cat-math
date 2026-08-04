@@ -9,7 +9,7 @@
 import { canvasToInput, checkDigit } from './digits.js';
 
 const PLACES = ['unités', 'dizaines', 'centaines'];
-const CANVAS_SIZE = 168;      // résolution interne d'un cadre
+const CANVAS_SIZE = 256;
 
 const pad = document.getElementById('writepad');
 const title = document.getElementById('writepad-title');

@@ -520,32 +520,34 @@ main { padding: 0 clamp(10px, 3vw, 22px) 32px; }
 
 .writepad {
   border: none;
-  border-radius: 24px;
-  padding: 22px 20px 18px;
-  max-width: 460px;
-  width: calc(100% - 24px);
+  border-radius: 28px;
+  padding: 28px 18px 22px;
+  max-width: min(720px, calc(100vw - 16px));
+  width: calc(100% - 16px);
   background: #fff;
   color: var(--ink);
   text-align: center;
   box-shadow: 0 18px 50px rgba(74, 59, 69, .25);
 }
 .writepad::backdrop { background: rgba(74, 59, 69, .4); backdrop-filter: blur(2px); }
-.writepad__title { font-size: 1.1rem; margin: 0 26px 14px; }
+.writepad__title { font-size: 1.25rem; margin: 0 36px 18px; }
 
-.writepad__boxes { display: flex; gap: 12px; justify-content: center; }
+.writepad__boxes { display: flex; gap: clamp(10px, 2.5vw, 20px); justify-content: center; }
 
-.writebox { position: relative; display: grid; gap: 4px; justify-items: center; }
-.writebox__label { font-size: .72rem; color: var(--ink-soft); text-transform: lowercase; }
+.writebox { position: relative; display: grid; gap: 6px; justify-items: center; }
+.writebox__label { font-size: .8rem; color: var(--ink-soft); text-transform: lowercase; }
 .writebox__canvas {
-  /* --boxes vaut 1, 2 ou 3 selon le nombre : trois cadres doivent tenir
-     côte à côte même sur un téléphone étroit */
-  width: min(calc((100vw - 72px) / var(--boxes, 2)), 132px);
+  /* --boxes vaut 1, 2 ou 3 : on remplit l’écran tout en gardant 3 cadres côte à côte */
+  width: min(
+    calc((100vw - 48px - (var(--boxes, 2) - 1) * 16px) / var(--boxes, 2)),
+    220px
+  );
   aspect-ratio: 1;
   background:
     linear-gradient(var(--line) 1px, transparent 1px) center / 100% 33.33%,
     #fdf4f7;
   border: 3px dashed var(--pink);
-  border-radius: 16px;
+  border-radius: 20px;
   cursor: crosshair;
   /* indispensable : sinon le doigt fait défiler la page au lieu d'écrire */
   touch-action: none;
