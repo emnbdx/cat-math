@@ -21,7 +21,6 @@
       <span class="catcount__icon">🐾</span><output id="catcount-value">0</output><span class="catcount__total">/100</span>
     </span>
     <button class="btn btn--icon" id="sound-toggle" aria-pressed="true" title="Sons">🔊</button>
-    <button class="btn btn--icon" data-nav="settings" title="Réglages" aria-label="Réglages">⚙️</button>
   </div>
 </header>
 
@@ -38,7 +37,7 @@
       <button class="card" data-nav="build">
         <span class="card__emoji">🧩</span>
         <span class="card__title">Construire la table</span>
-        <span class="card__desc">La table est vide. On te donne un nombre, tu le poses à la bonne place.</span>
+        <span class="card__desc">La table est vide. Tu choisis une case et tu écris son nombre au doigt.</span>
         <span class="card__progress" data-progress="build"></span>
       </button>
 
@@ -67,15 +66,13 @@
 
       <aside class="mode__side">
         <div class="prompt" id="build-prompt">
-          <span class="prompt__label">Pose ce nombre</span>
-          <strong class="prompt__number" id="build-number">–</strong>
-          <span class="prompt__hint" id="build-hint"></span>
+          <span class="prompt__label">Choisis une case vide</span>
+          <strong class="prompt__number" id="build-number">✍️</strong>
         </div>
 
         <div class="reward" id="build-reward" aria-live="polite"></div>
 
         <div class="mode__tools">
-          <button class="btn btn--ghost btn--small" id="build-write" aria-pressed="false">✍️ Écrire</button>
           <button class="btn btn--ghost btn--small" id="build-help" aria-pressed="false">💡 Aide</button>
           <button class="btn btn--ghost btn--small" id="build-restart">↺ Recommencer</button>
         </div>
@@ -107,17 +104,8 @@
         <p class="heard" id="speak-heard" aria-live="polite"></p>
         <div class="reward" id="speak-reward" aria-live="polite"></div>
 
-        <form class="keypad" id="speak-keypad" hidden>
-          <label for="speak-input">Ou écris le nombre</label>
-          <div class="keypad__row">
-            <input id="speak-input" type="number" inputmode="numeric" min="1" max="100" placeholder="42">
-            <button class="btn btn--small" type="submit">OK</button>
-          </div>
-        </form>
-
         <div class="mode__tools">
           <button class="btn btn--ghost btn--small" id="speak-skip">⏭ Passer</button>
-          <button class="btn btn--ghost btn--small" id="speak-keyboard" aria-pressed="false">⌨️ Clavier</button>
           <button class="btn btn--ghost btn--small" id="speak-restart">↺ Recommencer</button>
         </div>
         <p class="mode__stat" id="speak-stat"></p>
@@ -134,31 +122,6 @@
     <div class="collection__bar"><div class="collection__fill" id="collection-fill"></div></div>
     <p class="collection__count" id="collection-count"></p>
     <div class="gallery" id="gallery"></div>
-  </section>
-
-  <!-- ═════════════════════════════════════════════════ RÉGLAGES ══ -->
-  <section class="screen screen--settings" data-screen="settings" hidden>
-
-    <fieldset class="settings__group">
-      <legend class="settings__legend">🎤 Reconnaissance vocale</legend>
-      <p class="settings__intro">Utilisé par le mode « Dis le nombre ».</p>
-      <div class="engines" id="engines"></div>
-    </fieldset>
-
-    <fieldset class="settings__group">
-      <legend class="settings__legend">🔊 Sons</legend>
-      <label class="settings__row">
-        <input type="checkbox" id="settings-sound" checked>
-        <span>Petits sons de récompense</span>
-      </label>
-    </fieldset>
-
-    <fieldset class="settings__group">
-      <legend class="settings__legend">🧹 Progression</legend>
-      <p class="settings__intro" id="settings-progress"></p>
-      <button class="btn btn--small" id="settings-reset">Tout effacer</button>
-    </fieldset>
-
   </section>
 
 </main>

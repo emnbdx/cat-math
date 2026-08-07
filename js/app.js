@@ -8,7 +8,6 @@ import { setCatCount, hideCatCount, openCatSheet } from './ui.js';
 import * as sfx from './sfx.js';
 import * as build from './mode-build.js';
 import * as speak from './mode-speak.js';
-import * as settings from './settings.js';
 
 const screens = new Map(
   [...document.querySelectorAll('[data-screen]')].map((s) => [s.dataset.screen, s]),
@@ -23,14 +22,11 @@ const TITLES = {
   build: '🧩 Construire la table',
   speak: '🎤 Dis le nombre',
   collection: '📚 Ma collection',
-  settings: '⚙️ Réglages',
 };
 
 const modes = { build, speak };
 let currentScreen = null;
 let collectionTab = 'build';
-
-/* ---------------------------------------------------------- navigation --- */
 
 async function show(name) {
   if (!screens.has(name)) name = 'home';
@@ -50,9 +46,6 @@ async function show(name) {
     await modes[name].enter();
   } else if (name === 'collection') {
     renderCollection();
-  } else if (name === 'settings') {
-    hideCatCount();
-    await settings.render();
   } else {
     hideCatCount();
     renderHomeProgress();
@@ -74,8 +67,6 @@ document.addEventListener('click', (event) => {
   navigate(trigger.dataset.nav);
 });
 
-/* -------------------------------------------------------------- accueil -- */
-
 function renderHomeProgress() {
   const labels = {
     build: `${answered('build')}/${TOTAL} posés · ${catCount('build')} 🐱`,
@@ -87,8 +78,6 @@ function renderHomeProgress() {
     if (node) node.textContent = text;
   }
 }
-
-/* ----------------------------------------------------------- collection -- */
 
 const gallery = document.getElementById('gallery');
 const fill = document.getElementById('collection-fill');
@@ -139,8 +128,6 @@ function renderCollection() {
   gallery.replaceChildren(frag);
 }
 
-/* ------------------------------------------------------------ réglages -- */
-
 function paintSoundButton() {
   soundBtn.setAttribute('aria-pressed', String(state.sound));
   soundBtn.textContent = state.sound ? '🔊' : '🔇';
@@ -152,11 +139,6 @@ soundBtn.addEventListener('click', () => {
   paintSoundButton();
   if (state.sound) sfx.pop();
 });
-
-// Les réglages touchent au son et au moteur vocal : on resynchronise l'affichage.
-settings.init(paintSoundButton);
-
-/* --------------------------------------------------------- démarrage --- */
 
 paintSoundButton();
 

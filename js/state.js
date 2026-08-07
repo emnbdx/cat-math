@@ -27,11 +27,8 @@ function freshSpeak() {
   return { queue: shuffled(TOTAL), done: [], missed: [], deck: shuffled(TOTAL), cats: [], errors: 0 };
 }
 
-/** Moteurs vocaux proposés. Le navigateur est le défaut : gratuit et sans clé. */
-const ENGINES = ['browser', 'whisper'];
-
 function fresh() {
-  return { sound: true, engine: 'browser', build: freshBuild(), speak: freshSpeak() };
+  return { sound: true, build: freshBuild(), speak: freshSpeak() };
 }
 
 function load() {
@@ -39,13 +36,9 @@ function load() {
     const raw = localStorage.getItem(KEY);
     if (!raw) return fresh();
     const saved = JSON.parse(raw);
-    // Fusion défensive : une sauvegarde d'une version antérieure ne doit pas
-    // casser le jeu, on complète simplement ce qui manque.
     const base = fresh();
     return {
       sound: saved.sound ?? base.sound,
-      // une sauvegarde plus ancienne peut contenir un moteur qui n'existe plus
-      engine: ENGINES.includes(saved.engine) ? saved.engine : base.engine,
       build: { ...base.build, ...(saved.build ?? {}) },
       speak: { ...base.speak, ...(saved.speak ?? {}) },
     };
@@ -66,13 +59,6 @@ export function save() {
 
 export function resetMode(mode) {
   state[mode] = mode === 'build' ? freshBuild() : freshSpeak();
-  save();
-}
-
-export function resetAll() {
-  // les réglages survivent à un effacement de progression
-  const { sound, engine } = state;
-  Object.assign(state, fresh(), { sound, engine });
   save();
 }
 

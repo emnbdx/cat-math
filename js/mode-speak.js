@@ -2,12 +2,8 @@
  * Mode « Dis le nombre ».
  *
  * La table est complète. Une case s'allume, l'enfant lit le nombre à voix
- * haute, et la transcription est comparée au nombre attendu. Un nombre déjà
- * tiré ne revient jamais.
- *
- * Le moteur vocal vient des réglages — navigateur (défaut) ou Whisper ;
- * js/speech.js masque leurs différences. Si celui qui est choisi tombe en
- * panne, on prend l'autre ; s'il n'en reste aucun, l'enfant répond au clavier.
+ * haute, et Whisper transcrit. Un nombre déjà tiré ne revient jamais.
+ * Sans micro / Whisper, le mode ne fonctionne pas.
  * Un souci technique ne coûte jamais de chat.
  */
 
@@ -16,7 +12,7 @@ import { state, save, resetMode, awardCat, loseCat, catCount, TOTAL } from './st
 import { getCat } from './cats.js';
 import { releaseStream } from './audio.js';
 import { matchNumber } from './fr-numbers.js';
-import { capabilities, resolveEngine, listen, ENGINE_LABELS } from './speech.js';
+import { whisperStatus, listen } from './speech.js';
 import * as sfx from './sfx.js';
 import { setCatCount, showReward, showMessage, clearReward, burst } from './ui.js';
 
@@ -30,28 +26,21 @@ const el = {
   micIcon: document.querySelector('#mic .mic__icon'),
   heard: document.getElementById('speak-heard'),
   reward: document.getElementById('speak-reward'),
-  keypad: document.getElementById('speak-keypad'),
-  input: document.getElementById('speak-input'),
   skip: document.getElementById('speak-skip'),
-  keyboard: document.getElementById('speak-keyboard'),
   restart: document.getElementById('speak-restart'),
   engine: document.getElementById('speak-engine'),
   stat: document.getElementById('speak-stat'),
 };
 
 let board = null;
-let session = null;        // écoute en cours
+let session = null;
 let busy = false;
-let keypadOn = false;
 let celebrated = false;
-
-let caps = null;
-let engine = null;         // null = aucun moteur vocal, on répond au clavier
-const broken = new Set();  // moteurs tombés en panne pendant la session
+let voiceReady = false;
 
 export async function enter() {
   if (!board) build();
-  await pickEngine();
+  await checkVoice();
   render();
 }
 
@@ -65,7 +54,7 @@ function build() {
   board = makeBoard(el.boardwrap);
 
   el.mic.addEventListener('click', () => {
-    if (busy) return;
+    if (busy || !voiceReady) return;
     if (session) stopListening();
     else beginListening();
   });
@@ -84,16 +73,6 @@ function build() {
     render();
   });
 
-  el.keyboard.addEventListener('click', () => setKeypad(!keypadOn));
-
-  el.keypad.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const value = Number(el.input.value);
-    el.input.value = '';
-    if (!Number.isInteger(value) || value < 1 || value > TOTAL) return;
-    evaluate({ typed: value });
-  });
-
   el.restart.addEventListener('click', () => {
     if (!confirm('Recommencer ce mode ? Les chats gagnés ici seront perdus.')) return;
     resetMode('speak');
@@ -104,58 +83,39 @@ function build() {
   });
 }
 
-/* --------------------------------------------------------- moteur vocal -- */
+async function checkVoice() {
+  const status = await whisperStatus();
+  voiceReady = status === 'ready';
 
-/** Redétecte les capacités et choisit le moteur effectif. */
-async function pickEngine() {
-  caps = await capabilities();
-  applyEngine(resolveEngine(state.engine, caps, broken));
-}
-
-function applyEngine(next) {
-  engine = next;
-  const chosen = state.engine;
-
-  if (engine === null) {
-    el.engine.textContent = 'Aucun moteur vocal disponible ici — réponds au clavier.';
-    el.engine.classList.add('is-fallback');
-    el.mic.disabled = true;
-    el.micLabel.textContent = 'Micro indisponible';
-    setKeypad(true);
+  if (voiceReady) {
+    el.engine.textContent = '';
+    el.engine.classList.remove('is-fallback');
+    el.mic.disabled = current() === null;
+    el.micLabel.textContent = 'Appuie et parle';
     return;
   }
 
-  const fellBack = engine !== chosen;
-  el.engine.textContent = fellBack
-    ? `Moteur : ${ENGINE_LABELS[engine]} (${ENGINE_LABELS[chosen]} indisponible)`
-    : `Moteur : ${ENGINE_LABELS[engine]}`;
-  el.engine.classList.toggle('is-fallback', fellBack);
-  el.mic.disabled = current() === null;
-  el.micLabel.textContent = 'Appuie et parle';
+  el.engine.textContent = statusMessage(status);
+  el.engine.classList.add('is-fallback');
+  el.mic.disabled = true;
+  el.micLabel.textContent = 'Micro indisponible';
 }
 
-/** Le moteur courant est mort : on prend l'autre, ou on passe au clavier. */
-function demoteEngine(reason) {
-  broken.add(engine);
-  const next = resolveEngine(state.engine, caps, broken);
-  applyEngine(next);
-  el.heard.textContent = next
-    ? `${reason} On passe à : ${ENGINE_LABELS[next]}.`
-    : `${reason} Réponds au clavier.`;
-  el.heard.classList.add('is-error');
+function statusMessage(status) {
+  switch (status) {
+    case 'no_key':
+      return 'Whisper n’est pas configuré (voir README).';
+    case 'unsupported':
+      return 'Ce navigateur ne permet pas d’enregistrer le micro.';
+    case 'absent':
+      return 'Serveur Whisper absent — le mode voix ne peut pas démarrer.';
+    default:
+      return 'Whisper indisponible — le mode voix ne peut pas démarrer.';
+  }
 }
-
-/* ---------------------------------------------------------------- rendu -- */
 
 function current() {
   return state.speak.queue[0] ?? null;
-}
-
-function setKeypad(on) {
-  keypadOn = on;
-  el.keypad.hidden = !on;
-  el.keyboard.setAttribute('aria-pressed', String(on));
-  if (on && current() !== null) el.input.focus();
 }
 
 function render() {
@@ -176,9 +136,8 @@ function render() {
   el.label.textContent = over ? 'Tous les nombres sont passés !' : 'Lis ce nombre à voix haute';
   el.number.textContent = over ? '🎉' : String(target);
 
-  el.mic.disabled = over || engine === null;
-  el.skip.disabled = over;
-  el.input.disabled = over;
+  el.mic.disabled = over || !voiceReady;
+  el.skip.disabled = over || !voiceReady;
 
   setCatCount(catCount('speak'));
   updateStat();
@@ -201,8 +160,6 @@ function scrollTargetIntoView(n) {
   }
 }
 
-/* -------------------------------------------------------------- écoute -- */
-
 async function beginListening() {
   el.heard.textContent = '';
   el.heard.classList.remove('is-error');
@@ -210,12 +167,6 @@ async function beginListening() {
 
   try {
     session = await listen({
-      engine,
-      onPartial: (text) => {
-        // Web Speech livre la transcription au fil de la phrase.
-        el.heard.textContent = `… ${text}`;
-        el.heard.classList.remove('is-error');
-      },
       onPhase: (phase) => {
         if (phase === 'listening') micListening();
         if (phase === 'transcribing') micBusy();
@@ -224,7 +175,7 @@ async function beginListening() {
   } catch (err) {
     session = null;
     micIdle();
-    handleEngineError(err);
+    handleVoiceError(err);
     return;
   }
 
@@ -236,7 +187,7 @@ async function beginListening() {
   } catch (err) {
     session = null;
     micIdle();
-    handleEngineError(err);
+    handleVoiceError(err);
     return;
   }
 
@@ -248,19 +199,19 @@ async function beginListening() {
     el.heard.classList.add('is-error');
     return;
   }
-  evaluate({ heardText: result.text, alternatives: result.alternatives });
+  evaluate(result.text, result.alternatives);
 }
 
-/** Un pépin technique : jamais de chat perdu, et on propose une porte de sortie. */
-function handleEngineError(err) {
+function handleVoiceError(err) {
   busy = false;
-  if (err.engineFailure || err.code === 'no_api_key') {
-    demoteEngine(describeError(err));
-    return;
-  }
   el.heard.textContent = describeError(err);
   el.heard.classList.add('is-error');
-  if (err.code === 'not-allowed' || err.name === 'NotAllowedError') setKeypad(true);
+  if (err.code === 'no_api_key' || err.code === 'not-allowed' || err.name === 'NotAllowedError') {
+    voiceReady = false;
+    el.mic.disabled = true;
+    el.micLabel.textContent = 'Micro indisponible';
+    el.skip.disabled = true;
+  }
 }
 
 function describeError(err) {
@@ -270,7 +221,7 @@ function describeError(err) {
     case 'rate_limited':
       return 'Trop de demandes d’un coup, attends quelques secondes.';
     case 'not-allowed':
-      return 'Le micro est bloqué : autorise-le, ou réponds au clavier.';
+      return 'Le micro est bloqué : autorise-le dans le navigateur.';
     default:
       return err.message ?? 'Reconnaissance impossible.';
   }
@@ -289,7 +240,7 @@ function cancelListening() {
 
 function micListening() {
   busy = false;
-  el.mic.style.setProperty('--rec-ms', '9000ms');
+  el.mic.style.setProperty('--rec-ms', '5000ms');
   el.mic.classList.add('is-recording');
   el.mic.classList.remove('is-busy');
   el.micIcon.textContent = '⏺';
@@ -308,34 +259,17 @@ function micIdle() {
   busy = false;
   el.mic.classList.remove('is-recording', 'is-busy');
   el.micIcon.textContent = '🎤';
-  el.micLabel.textContent = engine === null ? 'Micro indisponible' : 'Appuie et parle';
+  el.micLabel.textContent = voiceReady ? 'Appuie et parle' : 'Micro indisponible';
 }
 
-/* ---------------------------------------------------------- évaluation --- */
-
-/**
- * @param {object} answer
- * @param {number} [answer.typed]          nombre saisi au clavier
- * @param {string} [answer.heardText]      meilleure transcription
- * @param {string[]} [answer.alternatives] autres hypothèses du moteur
- */
-function evaluate({ typed, heardText, alternatives = [] }) {
+function evaluate(heardText, alternatives = []) {
   const target = current();
   if (target === null) return;
 
-  let ok;
-  let heard;
-  if (typed !== undefined) {
-    ok = typed === target;
-    heard = typed;
-  } else {
-    // On accepte si le bon nombre apparaît dans n'importe quelle hypothèse :
-    // les moteurs en proposent plusieurs, autant s'en servir.
-    const tries = alternatives.length ? alternatives : [heardText];
-    const results = tries.map((text) => matchNumber(text, target));
-    ok = results.some((r) => r.ok);
-    heard = results.find((r) => r.ok)?.heard ?? results[0]?.heard ?? null;
-  }
+  const tries = alternatives.length ? alternatives : [heardText];
+  const results = tries.map((text) => matchNumber(text, target));
+  const ok = results.some((r) => r.ok);
+  const heard = results.find((r) => r.ok)?.heard ?? results[0]?.heard ?? null;
 
   if (ok) {
     state.speak.queue.shift();
@@ -359,7 +293,6 @@ function evaluate({ typed, heardText, alternatives = [] }) {
     return;
   }
 
-  // mauvaise réponse : le nombre reste affiché, on peut réessayer
   board.flash(target, 'cell--wrong');
   sfx.failure();
 

@@ -334,20 +334,6 @@ main { padding: 0 clamp(10px, 3vw, 22px) 32px; }
 .heard strong { color: var(--ink); }
 .heard.is-error { color: #b3455f; }
 
-.keypad { display: grid; gap: 6px; font-size: .88rem; color: var(--ink-soft); }
-.keypad__row { display: flex; gap: 8px; }
-.keypad input {
-  flex: 1;
-  font: inherit;
-  font-weight: 700;
-  padding: 10px 14px;
-  min-height: 44px;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--ink);
-}
-
 /* ----------------------------------------------------------- récompense -- */
 
 .reward {
@@ -464,49 +450,6 @@ main { padding: 0 clamp(10px, 3vw, 22px) 32px; }
 .sheet__art img, .sheet__art svg { width: 100%; height: 100%; object-fit: contain; }
 .sheet__name { font-size: 1.5rem; font-weight: 800; margin: 0; }
 .sheet__meta { color: var(--ink-soft); font-size: .9rem; margin: 0; }
-
-/* ------------------------------------------------------------- réglages -- */
-
-.screen--settings { max-width: 620px; margin: 0 auto; display: grid; gap: 16px; }
-
-.settings__group {
-  background: var(--card);
-  border: 2px solid var(--line);
-  border-radius: var(--radius);
-  padding: 14px 16px 16px;
-  margin: 0;
-}
-.settings__legend { font-weight: 800; padding: 0 8px; }
-.settings__intro { margin: 4px 0 12px; color: var(--ink-soft); font-size: .9rem; }
-.settings__row { display: flex; align-items: center; gap: 10px; min-height: 40px; cursor: pointer; }
-.settings__row input { width: 20px; height: 20px; accent-color: var(--pink); }
-
-.engines { display: grid; gap: 8px; }
-
-.engine {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 10px 12px;
-  border: 2px solid var(--line);
-  border-radius: 14px;
-  cursor: pointer;
-  transition: border-color .12s, background .12s;
-}
-.engine:hover { background: var(--pink-soft); }
-.engine:has(input:checked) { border-color: var(--pink); background: #fff; }
-.engine input { margin-top: 3px; width: 20px; height: 20px; accent-color: var(--pink); flex: none; }
-.engine__body { display: grid; gap: 2px; }
-.engine__title { font-weight: 700; }
-.engine__detail { color: var(--ink-soft); font-size: .85rem; }
-.engine__state { font-size: .78rem; font-weight: 700; }
-.engine__state.is-ok { color: #2f6b56; }
-.engine__state.is-warn { color: #a2701a; }
-.engine__state.is-off { color: #a3455c; }
-.engine__body .btn { margin-top: 6px; justify-self: start; }
-/* moteur indisponible : on le laisse sélectionnable (l'état peut changer) mais
-   on le montre en retrait */
-.engine--off { opacity: .72; }
 
 .engine-line {
   margin: 0;
