@@ -111,6 +111,32 @@ le navigateur (`localStorage`) : on peut fermer l'onglet et reprendre plus tard.
 
 ---
 
+## 🎮 Bonus : Le Vallon des chats (`aventure.html`)
+
+Une page **à part**, dans l'esprit d'un jeu de console portable des années 2000 :
+on se promène dans un petit monde en pixels, des chats sauvages vadrouillent
+partout, et on les capture un par un.
+
+- rendu **240×160** (la résolution d'une Game Boy Advance), agrandi au pixel près
+- déplacement case par case : **flèches** ou ZQSD, plus une croix directionnelle
+  tactile ; **A** = Espace/Entrée, **B** = Échap
+- les chats se cachent aussi dans les **hautes herbes** : un pas peut déclencher
+  une rencontre
+- pour capturer : une croquette **et une bonne réponse** à une question de
+  nombres jusqu'à 100 (successeur, dizaines, nombre écrit en lettres…).
+  Caresser le chat d'abord enlève une mauvaise proposition.
+- l'**ordinateur** de l'enclos ouvre la boîte à chats : 100 cases réparties en
+  trois boîtes, avec la fiche de chaque chat (numéro, type, talent, ce qu'il aime)
+
+Tout est dessiné à la main en pixels dans `js/aventure/` (tuiles, dresseur,
+sprites de chats) : aucune image à héberger. La page réutilise le catalogue
+`data/cats.json` + `js/cats.js`, mais **rien d'autre** : son style
+(`css/aventure.css`), ses modules et sa sauvegarde
+(`cent-chats:aventure:v1`) lui sont propres, la progression du jeu principal
+n'est jamais touchée.
+
+---
+
 ## Installation sur un mutualisé OVH
 
 1. Envoyer tout le dossier dans `www/` (ou un sous-dossier — les chemins sont
@@ -245,6 +271,23 @@ js/
   audio.js                 MediaRecorder + envoi au serveur
   sfx.js                   sons (Web Audio, aucun fichier)
   ui.js                    récompenses, particules, fiche d'un chat
+aventure.html              le bonus « Le Vallon des chats » (page autonome)
+css/aventure.css           son style (console portable)
+js/aventure/
+  main.js                  écran, barre du bas, boutons tactiles
+  game.js                  boucle de jeu, déplacements, chats sauvages
+  world.js                 la carte et son rendu
+  tiles.js                 les tuiles, dessinées en pixels
+  sprites.js               le dresseur et les sprites de chats
+  encounter.js             la rencontre et la capture
+  quiz.js                  les questions de nombres
+  dex.js                   la boîte à chats
+  dialog.js                boîte de dialogue et menus
+  input.js                 clavier + croix directionnelle
+  catinfo.js               fiche d'un chat (type, talent, ce qu'il aime)
+  save.js                  sauvegarde propre à l'aventure
+  audio.js                 bruitages chiptune
+  pixel.js                 outils de dessin pixel par pixel
 api/
   transcribe.php           relais vers Whisper (garde la clé côté serveur)
   config.example.php       à copier en config.php

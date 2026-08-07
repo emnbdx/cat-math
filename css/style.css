@@ -148,6 +148,7 @@ main { padding: 0 clamp(10px, 3vw, 22px) 32px; }
   text-align: left;
   font: inherit;
   color: inherit;
+  text-decoration: none; /* la carte « Vallon des chats » est un lien */
   background: var(--card);
   border: 3px solid var(--line);
   border-radius: 22px;
