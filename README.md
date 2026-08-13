@@ -169,9 +169,15 @@ Sans images, le jeu affiche des **chats SVG dessinés à la volée** (9 regards,
 7 bouches, 6 robes, 10 palettes) — il est donc jouable immédiatement. Les PNG
 générés les remplacent dès qu'ils sont présents.
 
+La génération d'images vit dans l'app dédiée **`generate-avatar`**
+(dossier frère `../generate-avatar/`). Une fois installée :
+
 ```bash
-export OPENAI_API_KEY=sk-...            # ou créer tools/.env
-node tools/generate-cats.mjs            # les 100 chats, ~3 en parallèle
+cd ../generate-avatar && npm i && npm link
+export OPENAI_API_KEY=sk-...            # ou un .env à la racine de generate-avatar
+generate-avatar -f data/cats.json -o assets/cats
+# ou, depuis cat-math :
+node tools/generate-cats.mjs            # wrapper → generate-avatar
 ```
 
 Les images arrivent dans `assets/cats/cat-001.png` … `cat-100.png`, plus un
@@ -180,12 +186,12 @@ Les images arrivent dans `assets/cats/cat-001.png` … `cat-100.png`, plus un
 Options utiles :
 
 ```bash
-node tools/generate-cats.mjs --dry-run              # affiche les prompts, n'appelle rien
-node tools/generate-cats.mjs --count=5              # tester sur 5 chats d'abord
-node tools/generate-cats.mjs --only=7,42,88         # régénérer ceux qui ne plaisent pas
-node tools/generate-cats.mjs --model=gpt-image-1    # si gpt-image-2 n'est pas dispo sur le compte
-node tools/generate-cats.mjs --quality=high         # plus beau, plus cher
-node tools/generate-cats.mjs --resize=512           # allège les PNG (npm i sharp)
+generate-avatar -f data/cats.json -o assets/cats --dry-run
+generate-avatar -f data/cats.json -o assets/cats --count=5
+generate-avatar -f data/cats.json -o assets/cats --only=7,42,88
+generate-avatar -f data/cats.json -o assets/cats --model=gpt-image-1
+generate-avatar -f data/cats.json -o assets/cats --quality=high
+generate-avatar -f data/cats.json -o assets/cats --resize=512
 ```
 
 Le script est **reprenable** : il saute les fichiers déjà présents, réessaie
@@ -247,7 +253,7 @@ data/digit-model.json      poids du réseau de reconnaissance (généré, versio
 assets/cats/               les PNG générés (non versionnés)
 tools/
   build-catalog.mjs        régénère data/cats.json
-  generate-cats.mjs        génère les 100 images
+  generate-cats.mjs        wrapper → ../generate-avatar
   train-digits.py          entraîne le réseau de chiffres
   export-digit-fixture.py  référence de test pour l'inférence JS
   test-fr-numbers.mjs      tests du parseur de nombres

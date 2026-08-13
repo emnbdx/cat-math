@@ -1,9 +1,9 @@
 /**
  * Catalogue des chats + rendu.
  *
- * Chaque chat a une image PNG générée par tools/generate-cats.mjs. Tant qu'une
- * image n'existe pas, on dessine un chat kawaii en SVG à la volée : le jeu est
- * donc jouable immédiatement, sans clé OpenAI et sans images.
+ * Chaque chat a une image PNG générée via generate-avatar (voir
+ * tools/generate-cats.mjs). Tant qu'une image n'existe pas, on dessine un chat
+ * kawaii en SVG à la volée : le jeu est jouable immédiatement, sans clé OpenAI.
  */
 
 const CATALOG_URL = new URL('../data/cats.json', import.meta.url);

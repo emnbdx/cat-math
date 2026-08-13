@@ -3,7 +3,7 @@
  * Génère data/cats.json : le catalogue des 100 chats.
  *
  * C'est la source de vérité unique, utilisée à la fois par :
- *  - tools/generate-cats.mjs (pour construire les prompts d'images)
+ *  - generate-avatar / tools/generate-cats.mjs (prompts d'images)
  *  - le front (pour les noms et les chats SVG de repli)
  *
  * Les attributs sont combinés de façon déterministe pour garantir que

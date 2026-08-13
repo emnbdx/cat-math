@@ -9,9 +9,6 @@
     "cats": "node generate-cats.mjs",
     "test": "node test-fr-numbers.mjs"
   },
-  "optionalDependencies": {
-    "sharp": "^0.34.5"
-  },
   "engines": {
     "node": ">=18"
   }
