@@ -10,6 +10,7 @@ import { sheet, flavour } from './catinfo.js';
 import { addCat, markSeen, save } from './save.js';
 import * as audio from './audio.js';
 
+const screenEl = document.getElementById('screen');
 const scene = document.getElementById('encounter');
 const artEl = document.getElementById('encounter-art');
 const nameEl = document.getElementById('encounter-name');
@@ -31,6 +32,7 @@ export async function encounter(cat) {
   nameEl.textContent = cat.name;
   subEl.textContent = `Chat sauvage · ${sheet(cat).number}`;
   scene.hidden = false;
+  screenEl.classList.add('is-scene');
   scene.classList.add('is-entering');
   setTimeout(() => scene.classList.remove('is-entering'), 500);
 
@@ -98,6 +100,8 @@ export async function encounter(cat) {
 
 function finish(result) {
   scene.hidden = true;
+  scene.classList.remove('is-caught');
+  screenEl.classList.remove('is-scene');
   card.hidden = true;
   nameEl.parentElement.hidden = false;
   artEl.replaceChildren();
@@ -117,12 +121,15 @@ async function showCard(cat) {
       <p class="catcard__row">Aime : ${info.likes}</p>
     </div>`;
   card.hidden = false;
-  nameEl.parentElement.hidden = true; // la fiche affiche déjà son nom
+  // la fiche montre déjà le chat et son nom : on efface la scène derrière
+  scene.classList.add('is-caught');
+  nameEl.parentElement.hidden = true;
   await say([
     `${cat.name} a rejoint ta collection !`,
     `Tu as maintenant ${save.caught.length} chat${save.caught.length > 1 ? 's' : ''} sur 100.`,
     'Retrouve-le quand tu veux dans la boîte à chats.',
   ]);
   card.hidden = true;
+  scene.classList.remove('is-caught');
   nameEl.parentElement.hidden = false;
 }

@@ -1,11 +1,12 @@
 /* ============================================================
    Le Vallon des chats — style de la page d'aventure
-   Deux écrans 256×192 façon console à double écran : le monde en
-   haut, les menus tactiles en bas. Indépendant de css/style.css.
+   Un seul écran de jeu (256×192, résolution d'une console portable
+   de l'époque), agrandi au pixel près. Les menus se posent par-dessus.
+   Indépendant de css/style.css.
    ============================================================ */
 
 :root {
-  /* facteur d'agrandissement des écrans, posé par js/aventure/main.js.
+  /* facteur d'agrandissement de l'écran, posé par js/aventure/main.js.
      `--u` = 1 pixel de la console une fois agrandi. */
   --scale: 3;
   --u: calc(1px * var(--scale));
@@ -15,13 +16,9 @@
   --blue: #3d7fd6;
   --blue-light: #78b7f2;
   --blue-pale: #e8f2fe;
-  --cream: #fdfbf5;
   --cream-2: #f0f4fb;
   --gold: #ffd166;
   --pink: #ff87ab;
-  --green: #63c47f;
-  --shell: #f2f4f9;
-  --shell-2: #d9def0;
   --shell-line: #b9c2dd;
 
   --font: "Trebuchet MS", "Segoe UI", Verdana, system-ui, -apple-system, sans-serif;
@@ -49,37 +46,32 @@ body {
   user-select: none;
 }
 
-/* ------------------------------------------------------------ châssis ---- */
+/* --------------------------------------------------------- la console --- */
 
-.ds {
+.game {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
-  padding: 14px;
-  border-radius: 22px;
-  background: linear-gradient(160deg, var(--shell) 0%, var(--shell-2) 100%);
-  box-shadow:
-    inset 0 2px 0 #ffffff,
-    inset 0 -3px 0 rgba(80, 95, 140, .18),
-    0 18px 40px rgba(42, 53, 80, .22);
+  width: fit-content;
 }
 
-.ds__top {
+.game__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 4px;
+  width: 100%;
+  padding: 0 2px;
 }
 
-.ds__brand {
+.game__brand {
   font-size: 15px;
   font-weight: 700;
-  letter-spacing: .02em;
   color: var(--navy);
 }
 
-.ds__exit {
+.game__exit {
   font-size: 12px;
   font-weight: 700;
   color: var(--navy-soft);
@@ -89,15 +81,18 @@ body {
   background: #ffffffcc;
   border: 1px solid var(--shell-line);
 }
-.ds__exit:hover { color: var(--blue); border-color: var(--blue-light); }
+.game__exit:hover { color: var(--blue); border-color: var(--blue-light); }
 
-.ds__screens {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
+.game__hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--navy-soft);
+  text-align: center;
 }
 
-.ds__screen {
+/* ------------------------------------------------------------- écran ---- */
+
+.screen {
   position: relative;
   width: calc(256 * var(--u));
   height: calc(192 * var(--u));
@@ -107,13 +102,7 @@ body {
   box-shadow:
     0 0 0 calc(1.5 * var(--u)) #1d2740,
     0 0 0 calc(3 * var(--u)) #cdd5ea,
-    0 6px 14px rgba(30, 40, 70, .28);
-}
-
-.ds__screen--touch {
-  background: linear-gradient(180deg, #f7fbff 0%, #e6eefb 100%);
-  display: flex;
-  flex-direction: column;
+    0 10px 26px rgba(30, 40, 70, .3);
 }
 
 #view {
@@ -136,6 +125,10 @@ body {
 }
 
 /* --------------------------------------------------------------- HUD ---- */
+
+/* le compteur s'efface quand un menu ou une rencontre prend l'écran */
+.screen.is-menu .hud,
+.screen.is-scene .hud { display: none; }
 
 .hud {
   position: absolute;
@@ -177,7 +170,7 @@ body {
     0 calc(3 * var(--u)) 0 rgba(42, 53, 80, .22);
   display: grid;
   gap: calc(2 * var(--u));
-  z-index: 6;
+  z-index: 8;
 }
 
 .dialog.has-face { grid-template-columns: calc(34 * var(--u)) 1fr; align-items: center; }
@@ -228,7 +221,6 @@ body {
   background: #ffffff;
   color: var(--navy);
   cursor: pointer;
-  transition: transform .1s;
 }
 
 .dialog__item.is-active {
@@ -276,7 +268,7 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(34 * var(--u));
+  top: calc(32 * var(--u));
   display: grid;
   justify-items: center;
 }
@@ -302,6 +294,9 @@ body {
   from { transform: translateY(calc(-26 * var(--u))) scale(.55); opacity: 0; }
   to { transform: none; opacity: 1; }
 }
+
+/* pendant la fiche de capture, la scène s'efface derrière */
+.encounter.is-caught .encounter__stage { display: none; }
 
 .encounter.is-shaking .encounter__art { animation: shake .4s; }
 @keyframes shake {
@@ -382,201 +377,28 @@ body {
   font-weight: 700;
 }
 
-/* ═══════════════════════════════════ écran du bas : les panneaux ═══ */
+/* ═══════════════ les menus, posés par-dessus l'écran de jeu ═══════ */
 
 .panel {
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
+  z-index: 6;
   padding: calc(6 * var(--u));
   display: flex;
   flex-direction: column;
-  gap: calc(4 * var(--u));
-}
-
-/* l'écran « Jouer » : entête, cartes, manette élastique, puis l'astuce */
-.panel[data-view="game"] {
-  display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
-}
-
-.panel__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: calc(4 * var(--u));
-  padding: calc(2 * var(--u)) calc(5 * var(--u));
-  background: linear-gradient(180deg, #ffffff 0%, var(--blue-pale) 100%);
-  border: calc(1 * var(--u)) solid #c3d3ea;
-  border-radius: calc(6 * var(--u));
-  font-size: calc(7.5 * var(--u));
-  font-weight: 700;
-}
-.panel__count { color: var(--blue); }
-
-.panel__hint {
-  margin: 0;
-  text-align: center;
-  font-size: calc(6 * var(--u));
-  color: var(--navy-soft);
-}
-
-/* --------------------------------------- mini-carte et dernières prises -- */
-
-.play {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: calc(5 * var(--u));
-  align-items: stretch;
-}
-
-.play__map {
-  margin: 0;
-  display: grid;
-  justify-items: center;
-  gap: calc(1 * var(--u));
-  padding: calc(2 * var(--u));
-  background: linear-gradient(180deg, #ffffff 0%, var(--blue-pale) 100%);
-  border: calc(1 * var(--u)) solid #c3d3ea;
-  border-radius: calc(6 * var(--u));
-}
-
-.play__map canvas {
-  width: calc(78 * var(--u));
-  height: calc(64 * var(--u));
-  image-rendering: pixelated;
-  border-radius: calc(2 * var(--u));
-  box-shadow: 0 0 0 calc(1 * var(--u)) #a9bdd8;
-}
-
-.play__map figcaption {
-  font-size: calc(5.5 * var(--u));
-  color: var(--navy-soft);
-}
-
-.play__latest {
-  display: flex;
-  flex-direction: column;
-  gap: calc(2 * var(--u));
-  padding: calc(3 * var(--u)) calc(4 * var(--u));
-  background: #ffffffb8;
-  border: calc(1 * var(--u)) solid #d7e1f2;
-  border-radius: calc(6 * var(--u));
-  overflow: hidden;
-}
-
-.play__label {
-  margin: 0;
-  font-size: calc(6 * var(--u));
-  font-weight: 700;
-  color: var(--navy-soft);
-  text-transform: uppercase;
-  letter-spacing: .06em;
-}
-
-.latest {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: calc(1 * var(--u));
-}
-
-.latest__item {
-  display: flex;
-  align-items: center;
   gap: calc(3 * var(--u));
-  font-size: calc(6.5 * var(--u));
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7fbff 0%, #e2ecfb 100%);
+}
+
+.panel__title {
+  margin: 0;
+  font-size: calc(10 * var(--u));
+  font-weight: 700;
   color: var(--navy);
 }
-.latest__item img {
-  width: calc(12 * var(--u));
-  height: calc(12 * var(--u));
-  image-rendering: pixelated;
-}
-.latest__empty { font-size: calc(6 * var(--u)); color: var(--navy-soft); font-style: italic; }
-
-/* ------------------------------------------------------------ manette --- */
-
-.pad {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 calc(6 * var(--u));
-}
-
-.dpad {
-  position: relative;
-  width: calc(48 * var(--u));
-  height: calc(48 * var(--u));
-}
-
-.dpad__btn,
-.dpad__hub {
-  position: absolute;
-  width: calc(16 * var(--u));
-  height: calc(16 * var(--u));
-  background: linear-gradient(180deg, #ffffff 0%, #d8e2f4 100%);
-  border: calc(1 * var(--u)) solid #9fb0d0;
-  cursor: pointer;
-  touch-action: none;
-}
-.dpad__up { left: calc(16 * var(--u)); top: 0; border-radius: calc(5 * var(--u)) calc(5 * var(--u)) 0 0; border-bottom: 0; }
-.dpad__down { left: calc(16 * var(--u)); top: calc(32 * var(--u)); border-radius: 0 0 calc(5 * var(--u)) calc(5 * var(--u)); border-top: 0; }
-.dpad__left { left: 0; top: calc(16 * var(--u)); border-radius: calc(5 * var(--u)) 0 0 calc(5 * var(--u)); border-right: 0; }
-.dpad__right { left: calc(32 * var(--u)); top: calc(16 * var(--u)); border-radius: 0 calc(5 * var(--u)) calc(5 * var(--u)) 0; border-left: 0; }
-.dpad__hub { left: calc(16 * var(--u)); top: calc(16 * var(--u)); border-left: 0; border-right: 0; }
-
-/* petites flèches gravées dans la croix */
-.dpad__btn::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  border: calc(4 * var(--u)) solid transparent;
-}
-.dpad__up::after { border-bottom-color: var(--navy-soft); margin-top: calc(-2 * var(--u)); }
-.dpad__down::after { border-top-color: var(--navy-soft); margin-top: calc(2 * var(--u)); }
-.dpad__left::after { border-right-color: var(--navy-soft); margin-left: calc(-2 * var(--u)); }
-.dpad__right::after { border-left-color: var(--navy-soft); margin-left: calc(2 * var(--u)); }
-
-.dpad__btn.is-down { background: linear-gradient(180deg, var(--blue-light) 0%, var(--blue) 100%); }
-.dpad__btn.is-down::after { border-color: transparent; }
-.dpad__up.is-down::after { border-bottom-color: #fff; }
-.dpad__down.is-down::after { border-top-color: #fff; }
-.dpad__left.is-down::after { border-right-color: #fff; }
-.dpad__right.is-down::after { border-left-color: #fff; }
-
-.pad__ab {
-  display: flex;
-  align-items: center;
-  gap: calc(6 * var(--u));
-  transform: rotate(-12deg);
-}
-
-.pad__btn {
-  width: calc(22 * var(--u));
-  height: calc(22 * var(--u));
-  border-radius: 50%;
-  font-family: inherit;
-  font-size: calc(9 * var(--u));
-  font-weight: 700;
-  color: #fff;
-  border: calc(1 * var(--u)) solid rgba(0, 0, 0, .25);
-  cursor: pointer;
-  touch-action: none;
-  box-shadow: 0 calc(2 * var(--u)) 0 rgba(42, 53, 80, .28);
-}
-.pad__btn--a { background: linear-gradient(180deg, #ff9d97 0%, #e2504a 100%); }
-.pad__btn--b { background: linear-gradient(180deg, #8fc0f5 0%, #3d7fd6 100%); }
-.pad__btn.is-down { transform: translateY(calc(2 * var(--u))); box-shadow: none; }
 
 /* -------------------------------------------------------- collection --- */
-
-.panel--box { gap: calc(3 * var(--u)); }
 
 .box__head {
   display: grid;
@@ -588,7 +410,7 @@ body {
 .box__title {
   margin: 0;
   text-align: center;
-  font-size: calc(8 * var(--u));
+  font-size: calc(9 * var(--u));
   font-weight: 700;
   color: var(--navy);
 }
@@ -597,7 +419,7 @@ body {
   font-family: inherit;
   font-size: calc(6 * var(--u));
   line-height: 1;
-  padding: calc(1 * var(--u)) calc(4 * var(--u));
+  padding: calc(1.5 * var(--u)) calc(5 * var(--u));
   color: #fff;
   background: linear-gradient(180deg, var(--blue-light) 0%, var(--blue) 100%);
   border: calc(1 * var(--u)) solid var(--navy);
@@ -651,17 +473,18 @@ body {
   gap: calc(4 * var(--u));
   align-items: center;
   padding: calc(2 * var(--u)) calc(4 * var(--u));
-  flex: 1;
-  min-height: 0;
   background: linear-gradient(180deg, #ffffff 0%, var(--cream-2) 100%);
   border: calc(1 * var(--u)) solid #c3d3ea;
   border-radius: calc(6 * var(--u));
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
 .detail__art svg { width: 100%; height: auto; display: block; }
 .box__detail .detail__info p { font-size: calc(6.5 * var(--u)); margin-bottom: calc(1 * var(--u)); }
 .box__detail .detail__name { font-size: calc(8.5 * var(--u)) !important; }
+
 .detail__art--unknown {
   display: grid;
   place-items: center;
@@ -702,8 +525,14 @@ body {
 .settings__block h3 { margin: 0 0 calc(1 * var(--u)); font-size: calc(7.5 * var(--u)); }
 .settings__block ul { margin: 0; padding-left: calc(9 * var(--u)); color: var(--navy-soft); }
 
+.settings__foot {
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--u));
+  flex-wrap: wrap;
+}
+
 .settings__danger {
-  align-self: flex-start;
   font-family: inherit;
   font-size: calc(7 * var(--u));
   font-weight: 700;
@@ -715,16 +544,19 @@ body {
   box-shadow: 0 calc(1.5 * var(--u)) 0 rgba(42, 53, 80, .25);
   cursor: pointer;
 }
-.settings__note { margin: 0; font-size: calc(6 * var(--u)); color: var(--navy-soft); }
+.settings__note { margin: 0; flex: 1; font-size: calc(6 * var(--u)); color: var(--navy-soft); }
 
 /* ------------------------------------------------------ barre d'onglets -- */
 
 .tabbar {
   display: flex;
-  gap: calc(2 * var(--u));
-  padding: calc(3 * var(--u));
-  background: linear-gradient(180deg, #dfe8f7 0%, #c9d6ee 100%);
-  border-top: calc(1 * var(--u)) solid #aebbd8;
+  gap: 6px;
+  width: 100%;
+  padding: 6px;
+  background: linear-gradient(180deg, #ffffff 0%, #e3ebf9 100%);
+  border: 1px solid var(--shell-line);
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(42, 53, 80, .12);
 }
 
 .tabbar__tab {
@@ -732,48 +564,116 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: calc(2 * var(--u));
+  gap: 6px;
   font-family: inherit;
-  font-size: calc(7 * var(--u));
+  font-size: 13px;
   font-weight: 700;
-  padding: calc(3 * var(--u)) calc(2 * var(--u));
+  padding: 9px 6px;
   color: var(--navy-soft);
   background: #ffffffcc;
-  border: calc(1 * var(--u)) solid #b7c5e0;
-  border-radius: calc(6 * var(--u));
+  border: 1px solid #c3d3ea;
+  border-radius: 10px;
   cursor: pointer;
 }
-.tabbar__tab span { font-size: calc(8 * var(--u)); }
+.tabbar__tab span { font-size: 15px; }
 .tabbar__tab:hover { color: var(--navy); background: #fff; }
 .tabbar__tab.is-active {
   color: #fff;
   background: linear-gradient(180deg, var(--blue-light) 0%, var(--blue) 100%);
   border-color: var(--navy);
-  box-shadow: inset 0 calc(1 * var(--u)) 0 rgba(255, 255, 255, .5);
 }
+
+/* ------------------------------------------------------------ manette --- */
+
+/* pas de croix directionnelle quand il y a un vrai clavier */
+.pad { display: none; }
+
+@media (hover: none), (pointer: coarse), (max-width: 700px) {
+  .pad {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 420px;
+    margin-top: 4px;
+  }
+  .game__hint { display: none; }
+}
+
+.dpad {
+  position: relative;
+  width: 132px;
+  height: 132px;
+}
+
+.dpad__btn,
+.dpad__hub {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(180deg, #ffffff 0%, #d8e2f4 100%);
+  border: 1px solid #9fb0d0;
+  cursor: pointer;
+  touch-action: none;
+}
+.dpad__up { left: 44px; top: 0; border-radius: 10px 10px 0 0; border-bottom: 0; }
+.dpad__down { left: 44px; top: 88px; border-radius: 0 0 10px 10px; border-top: 0; }
+.dpad__left { left: 0; top: 44px; border-radius: 10px 0 0 10px; border-right: 0; }
+.dpad__right { left: 88px; top: 44px; border-radius: 0 10px 10px 0; border-left: 0; }
+.dpad__hub { left: 44px; top: 44px; border-left: 0; border-right: 0; }
+
+/* petites flèches gravées dans la croix */
+.dpad__btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  border: 9px solid transparent;
+}
+.dpad__up::after { border-bottom-color: var(--navy-soft); margin-top: -5px; }
+.dpad__down::after { border-top-color: var(--navy-soft); margin-top: 5px; }
+.dpad__left::after { border-right-color: var(--navy-soft); margin-left: -5px; }
+.dpad__right::after { border-left-color: var(--navy-soft); margin-left: 5px; }
+
+.dpad__btn.is-down { background: linear-gradient(180deg, var(--blue-light) 0%, var(--blue) 100%); }
+.dpad__btn.is-down::after { border-color: transparent; }
+.dpad__up.is-down::after { border-bottom-color: #fff; }
+.dpad__down.is-down::after { border-top-color: #fff; }
+.dpad__left.is-down::after { border-right-color: #fff; }
+.dpad__right.is-down::after { border-left-color: #fff; }
+
+.pad__ab {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transform: rotate(-12deg);
+}
+
+.pad__btn {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid rgba(0, 0, 0, .25);
+  cursor: pointer;
+  touch-action: none;
+  box-shadow: 0 4px 0 rgba(42, 53, 80, .28);
+}
+.pad__btn--a { background: linear-gradient(180deg, #ff9d97 0%, #e2504a 100%); }
+.pad__btn--b { background: linear-gradient(180deg, #8fc0f5 0%, #3d7fd6 100%); }
+.pad__btn.is-down { transform: translateY(4px); box-shadow: none; }
 
 /* --------------------------------------------------------- responsive --- */
 
-/* écran étroit : les deux écrans se superposent, comme une vraie console */
-@media (max-aspect-ratio: 1/1) {
-  .ds__screens { flex-direction: column; align-items: center; }
-}
-
 @media (max-width: 520px) {
   body { padding: 6px; }
-  .ds { padding: 10px; border-radius: 16px; }
-  .ds__brand { font-size: 13px; }
-  .ds__exit { font-size: 11px; padding: 4px 9px; }
-
-  /* au doigt, la croix et les boutons doivent rester attrapables */
-  .dpad { width: calc(66 * var(--u)); height: calc(66 * var(--u)); }
-  .dpad__btn, .dpad__hub { width: calc(22 * var(--u)); height: calc(22 * var(--u)); }
-  .dpad__up { left: calc(22 * var(--u)); }
-  .dpad__down { left: calc(22 * var(--u)); top: calc(44 * var(--u)); }
-  .dpad__left { top: calc(22 * var(--u)); }
-  .dpad__right { left: calc(44 * var(--u)); top: calc(22 * var(--u)); }
-  .dpad__hub { left: calc(22 * var(--u)); top: calc(22 * var(--u)); }
-  .pad__btn { width: calc(30 * var(--u)); height: calc(30 * var(--u)); font-size: calc(11 * var(--u)); }
+  .game__brand { font-size: 13px; }
+  .game__exit { font-size: 11px; padding: 4px 9px; }
+  .tabbar__tab { font-size: 12px; padding: 8px 4px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

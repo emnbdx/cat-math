@@ -16,7 +16,8 @@ import { TILE, makeCanvas, hash } from './pixel.js';
 /* ------------------------------------------------------------ palettes -- */
 
 const C = {
-  grass: '#79c46b',
+  grass: '#7cc86c',
+  grassTint: '#88d073',
   grassDark: '#63ae58',
   grassLight: '#95d77e',
   grassEdge: '#4f9048',
@@ -173,6 +174,14 @@ function nearShape(grid, x, y, d) {
 function grassBase(ctx, variant = 0) {
   ctx.fillStyle = C.grass;
   ctx.fillRect(0, 0, TILE, TILE);
+
+  // tramage : deux verts très proches en damier, pour que le pré vibre un peu
+  ctx.fillStyle = C.grassTint;
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if ((x + y) % 4 === 0) ctx.fillRect(x, y, 1, 1);
+    }
+  }
 
   // touffes discrètes : le tapis vert ne doit pas être plat
   ctx.fillStyle = C.grassDark;
@@ -359,21 +368,38 @@ function paintCanopy(ctx, grid, mask, variant) {
     }
   }
 
-  // 2. bouquets : une boule claire, une ombre en dessous à droite
-  for (const [cx, cy, r] of CLUMPS[variant % CLUMPS.length]) {
+  // 2. un houppier rond par tuile, cerné : même collés, les arbres restent
+  //    des arbres et pas un mur de vert
+  const cx = 7.5;
+  const cy = 7.5;
+  const R = 7.9 - (variant % 3) * 0.5;
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (!inside(x, y)) continue;
+      const d = Math.hypot(x - cx, y - cy);
+      if (d > R) continue;
+      if (d > R - 1) ctx.fillStyle = C.leafEdge;
+      else if (x - cx + (y - cy) < -3) ctx.fillStyle = C.leafLight;
+      else if (y - cy > 3.5) ctx.fillStyle = C.leafDark;
+      else ctx.fillStyle = C.leaf;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  // 3. bouquets de feuilles, pour que deux arbres ne soient pas identiques
+  for (const [bx, by, r] of CLUMPS[variant % CLUMPS.length].slice(0, 2)) {
     for (let y = 0; y < TILE; y++) {
       for (let x = 0; x < TILE; x++) {
-        if (!inside(x, y)) continue;
-        const d = Math.hypot(x - cx, y - cy);
+        if (!inside(x, y) || Math.hypot(x - cx, y - cy) > 6.6) continue;
+        const d = Math.hypot(x - bx, y - by);
         if (d > r) continue;
-        const lit = x - cx + (y - cy) < -0.5;
-        ctx.fillStyle = lit ? C.leafLight : d > r - 1.2 ? C.leafDark : C.leaf;
+        ctx.fillStyle = x - bx + (y - by) < -0.5 ? C.leafLight : C.leaf;
         ctx.fillRect(x, y, 1, 1);
       }
     }
   }
 
-  // 3. ombre portée sur le bas du houppier
+  // 4. ombre portée sur le bas du bosquet
   for (let x = 0; x < TILE; x++) {
     for (let y = TILE - 1; y >= 0; y--) {
       if (!inside(x, y)) continue;
@@ -386,7 +412,7 @@ function paintCanopy(ctx, grid, mask, variant) {
     }
   }
 
-  // 4. contour sombre, et liseré clair sur le dessus
+  // 5. contour sombre, et liseré clair sur le dessus
   for (let y = 0; y < TILE; y++) {
     for (let x = 0; x < TILE; x++) {
       if (!inside(x, y) || !isRim(grid, x, y)) continue;
@@ -555,16 +581,21 @@ function rock(ctx) {
 
 /** Buisson : petit obstacle rond, purement décoratif. */
 function bush(ctx) {
-  ctx.fillStyle = C.leafEdge;
-  ctx.fillRect(2, 5, 12, 9);
-  ctx.fillRect(3, 4, 10, 11);
-  ctx.fillStyle = C.leaf;
-  ctx.fillRect(3, 5, 10, 8);
-  ctx.fillStyle = C.leafLight;
-  ctx.fillRect(4, 6, 4, 2);
-  ctx.fillRect(9, 7, 2, 1);
-  ctx.fillStyle = C.leafDark;
-  ctx.fillRect(3, 12, 10, 2);
+  const cx = 7.5;
+  const cy = 9;
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      const d = Math.hypot((x - cx) / 6.6, (y - cy) / 5.6);
+      if (d > 1) continue;
+      if (d > 0.84) ctx.fillStyle = C.leafEdge;
+      else if (x - cx + (y - cy) < -3) ctx.fillStyle = C.leafLight;
+      else if (y - cy > 2.5) ctx.fillStyle = C.leafDark;
+      else ctx.fillStyle = C.leaf;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  ctx.fillStyle = 'rgba(30, 60, 35, .2)';
+  ctx.fillRect(4, 15, 8, 1);
 }
 
 /** Gamelle de croquettes. */

@@ -113,20 +113,18 @@ le navigateur (`localStorage`) : on peut fermer l'onglet et reprendre plus tard.
 
 ## 🎮 Bonus : Le Vallon des chats (`aventure.html`)
 
-Une page **à part**, dans l'esprit des jeux d'aventure de l'ère Nintendo DS :
-deux écrans, le monde en haut, l'écran tactile en bas. On s'y promène dans un
-vallon en pixels, des chats sauvages vadrouillent partout, et on les capture un
-par un.
+Une page **à part**, dans l'esprit des jeux d'aventure sur console portable :
+un écran de jeu unique, un vallon en pixels où l'on se promène, des chats
+sauvages qui vadrouillent partout, et on les capture un par un.
 
-- rendu **256×192 par écran** (la résolution d'une DS), agrandi au facteur
-  entier dès que la place le permet
+- rendu **256×192**, agrandi au facteur entier dès que la place le permet
 - le décor est **auto-tuilé** : la forme d'une tuile dépend de ses voisines,
   donc les chemins tournent en arrondi, l'étang a une plage de sable, et les
-  arbres voisins forment un seul houppier — voir `js/aventure/tiles.js`
-- déplacement case par case : **flèches** ou ZQSD, plus la croix directionnelle
-  tactile de l'écran du bas ; **A** = Espace/Entrée, **B** = Échap
-- l'écran du bas montre la **mini-carte** du vallon et les dernières prises, et
-  se change en **boîte à chats** (2 boîtes de 50, fiche complète) ou en réglages
+  arbres voisins forment un bosquet de houppiers — voir `js/aventure/tiles.js`
+- déplacement case par case : **flèches** ou ZQSD (croix directionnelle tactile
+  sur mobile) ; **A** = Espace/Entrée, **B** = Échap
+- la **boîte à chats** et les **réglages** s'ouvrent par-dessus le jeu
+  (2 boîtes de 50, avec la fiche complète de chaque chat)
 - les chats se cachent aussi dans les **hautes herbes** : un pas peut déclencher
   une rencontre
 - pour capturer : une croquette **et une bonne réponse** à une question de
@@ -283,7 +281,6 @@ js/aventure/
   game.js                  boucle de jeu, déplacements, chats sauvages
   world.js                 la carte et son rendu
   tiles.js                 les tuiles, dessinées en pixels (auto-tuilage)
-  minimap.js               la mini-carte de l'écran du bas
   sprites.js               le dresseur et les sprites de chats
   encounter.js             la rencontre et la capture
   quiz.js                  les questions de nombres

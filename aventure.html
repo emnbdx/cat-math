@@ -7,137 +7,118 @@
 <meta name="description" content="Petite aventure : promène-toi dans le vallon et capture les 100 chats kawaii.">
 <meta name="theme-color" content="#cfe3f7">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/aventure.css?v=2">
+<link rel="stylesheet" href="css/aventure.css?v=3">
 </head>
 <body>
 
-<div class="ds">
+<div class="game">
 
-  <header class="ds__top">
-    <span class="ds__brand">🐾 Le Vallon des chats</span>
-    <a class="ds__exit" href="index.html">← Les 100 chats</a>
+  <header class="game__top">
+    <span class="game__brand">🐾 Le Vallon des chats</span>
+    <a class="game__exit" href="index.html">← Les 100 chats</a>
   </header>
 
-  <div class="ds__screens">
+  <!-- ═══════════════════════════════════════════ L'ÉCRAN DE JEU ══ -->
+  <div class="screen" id="screen">
+    <canvas id="view" width="256" height="192"></canvas>
 
-    <!-- ═══════════════════════════════ ÉCRAN DU HAUT : LE MONDE ══ -->
-    <section class="ds__screen" id="screen">
-      <canvas id="view" width="256" height="192"></canvas>
+    <div class="hud">
+      <span class="hud__badge"><span class="hud__paw">🐾</span><output id="hud-count">0/100</output></span>
+    </div>
 
-      <div class="hud">
-        <span class="hud__badge"><span class="hud__paw">🐾</span><output id="hud-count">0/100</output></span>
+    <!-- rencontre d'un chat sauvage -->
+    <div class="encounter" id="encounter" hidden>
+      <div class="encounter__plate">
+        <p class="encounter__name" id="encounter-name"></p>
+        <p class="encounter__sub" id="encounter-sub"></p>
+      </div>
+      <div class="encounter__stage">
+        <div class="encounter__art" id="encounter-art"></div>
+      </div>
+    </div>
+
+    <!-- fiche « nouveau chat capturé ! » -->
+    <div class="catcard" id="catcard" hidden>
+      <p class="catcard__title">Nouveau chat capturé !</p>
+      <div class="catcard__body" id="catcard-body"></div>
+    </div>
+
+    <!-- ═════════════════════════════ COLLECTION (par-dessus le jeu) ══ -->
+    <div class="panel panel--box" data-view="box" hidden>
+      <div class="box__head">
+        <button class="box__arrow" id="box-prev" aria-label="Boîte précédente">◀</button>
+        <h2 class="box__title" id="box-title">Boîte 1</h2>
+        <button class="box__arrow" id="box-next" aria-label="Boîte suivante">▶</button>
+        <span class="box__count" id="box-count">0/100</span>
+      </div>
+      <div class="box__grid" id="box-grid"></div>
+      <div class="box__detail" id="box-detail"></div>
+    </div>
+
+    <!-- ═══════════════════════════════ RÉGLAGES (par-dessus le jeu) ══ -->
+    <div class="panel panel--settings" data-view="settings" hidden>
+      <h2 class="panel__title">Réglages</h2>
+
+      <label class="settings__row">
+        <input type="checkbox" id="set-sound">
+        <span>Petits bruitages</span>
+      </label>
+
+      <div class="settings__block">
+        <h3>Comment on joue&nbsp;?</h3>
+        <ul>
+          <li><b>Flèches</b> ou ZQSD : marcher</li>
+          <li><b>A</b> (Espace / Entrée) : parler, choisir</li>
+          <li><b>B</b> (Échap) : revenir au jeu</li>
+          <li>Les chats se cachent dans les <b>hautes herbes</b></li>
+          <li>L’<b>ordinateur</b> du jardin ouvre la boîte à chats</li>
+          <li>Pour capturer : une <b>croquette</b> + une bonne réponse</li>
+        </ul>
       </div>
 
-      <!-- rencontre d'un chat sauvage -->
-      <div class="encounter" id="encounter" hidden>
-        <div class="encounter__plate">
-          <p class="encounter__name" id="encounter-name"></p>
-          <p class="encounter__sub" id="encounter-sub"></p>
-        </div>
-        <div class="encounter__stage">
-          <div class="encounter__art" id="encounter-art"></div>
-        </div>
-      </div>
-
-      <!-- fiche « nouveau chat capturé ! » -->
-      <div class="catcard" id="catcard" hidden>
-        <p class="catcard__title">Nouveau chat capturé !</p>
-        <div class="catcard__body" id="catcard-body"></div>
-      </div>
-
-      <!-- boîte de dialogue -->
-      <div class="dialog" id="dialog" hidden>
-        <div class="dialog__face" id="dialog-face" hidden></div>
-        <p class="dialog__text" id="dialog-text"></p>
-        <span class="dialog__more" id="dialog-more" hidden></span>
-        <ul class="dialog__menu" id="dialog-menu" hidden></ul>
-      </div>
-
-      <div class="boot" id="boot"><span>Chargement du vallon…</span></div>
-    </section>
-
-    <!-- ════════════════════════ ÉCRAN DU BAS : L'ÉCRAN TACTILE ══ -->
-    <section class="ds__screen ds__screen--touch">
-
-      <div class="panel" data-view="game">
-        <div class="panel__head">
-          <span class="panel__place">🌿 Vallon des chats</span>
-          <span class="panel__count"><output id="pad-count">0</output> / 100 chats</span>
-        </div>
-
-        <div class="play">
-          <figure class="play__map">
-            <canvas id="minimap"></canvas>
-            <figcaption>Le vallon</figcaption>
-          </figure>
-          <div class="play__latest">
-            <p class="play__label">Derniers chats</p>
-            <ul class="latest" id="latest"></ul>
-          </div>
-        </div>
-
-        <div class="pad">
-          <div class="dpad">
-            <button class="dpad__btn dpad__up" data-button="up" aria-label="Haut"></button>
-            <button class="dpad__btn dpad__left" data-button="left" aria-label="Gauche"></button>
-            <button class="dpad__btn dpad__right" data-button="right" aria-label="Droite"></button>
-            <button class="dpad__btn dpad__down" data-button="down" aria-label="Bas"></button>
-            <span class="dpad__hub"></span>
-          </div>
-          <div class="pad__ab">
-            <button class="pad__btn pad__btn--b" data-button="b">B</button>
-            <button class="pad__btn pad__btn--a" data-button="a">A</button>
-          </div>
-        </div>
-
-        <p class="panel__hint">Flèches ou ZQSD pour marcher · <b>A</b> pour parler et choisir</p>
-      </div>
-
-      <!-- ════════════════════════════════════════ COLLECTION ══ -->
-      <div class="panel panel--box" data-view="box" hidden>
-        <div class="box__head">
-          <button class="box__arrow" id="box-prev" aria-label="Boîte précédente">◀</button>
-          <h2 class="box__title" id="box-title">Boîte 1</h2>
-          <button class="box__arrow" id="box-next" aria-label="Boîte suivante">▶</button>
-          <span class="box__count" id="box-count">0/100</span>
-        </div>
-        <div class="box__grid" id="box-grid"></div>
-        <div class="box__detail" id="box-detail"></div>
-      </div>
-
-      <!-- ══════════════════════════════════════════ RÉGLAGES ══ -->
-      <div class="panel panel--settings" data-view="settings" hidden>
-        <label class="settings__row">
-          <input type="checkbox" id="set-sound">
-          <span>Petits bruitages</span>
-        </label>
-
-        <div class="settings__block">
-          <h3>Comment on joue&nbsp;?</h3>
-          <ul>
-            <li><b>Flèches</b> ou ZQSD : marcher</li>
-            <li><b>A</b> (Espace / Entrée) : parler, choisir</li>
-            <li><b>B</b> (Échap) : revenir au jeu</li>
-            <li>Les chats se cachent dans les <b>hautes herbes</b></li>
-            <li>L’<b>ordinateur</b> du jardin ouvre la boîte à chats</li>
-            <li>Pour capturer : une <b>croquette</b> + une bonne réponse</li>
-          </ul>
-        </div>
-
+      <div class="settings__foot">
         <button class="settings__danger" id="set-reset">Effacer l’aventure</button>
         <p class="settings__note">Ta progression du jeu « Les 100 chats » n’est pas touchée.</p>
       </div>
+    </div>
 
-      <nav class="tabbar">
-        <button class="tabbar__tab is-active" data-tab="game"><span>🌿</span>Jouer</button>
-        <button class="tabbar__tab" data-tab="box"><span>📦</span>Collection</button>
-        <button class="tabbar__tab" data-tab="settings"><span>⚙️</span>Réglages</button>
-      </nav>
+    <!-- boîte de dialogue -->
+    <div class="dialog" id="dialog" hidden>
+      <div class="dialog__face" id="dialog-face" hidden></div>
+      <p class="dialog__text" id="dialog-text"></p>
+      <span class="dialog__more" id="dialog-more" hidden></span>
+      <ul class="dialog__menu" id="dialog-menu" hidden></ul>
+    </div>
 
-    </section>
+    <div class="boot" id="boot"><span>Chargement du vallon…</span></div>
   </div>
+
+  <!-- ══════════════════════════════════════════ BARRE DU BAS ══ -->
+  <nav class="tabbar">
+    <button class="tabbar__tab is-active" data-tab="game"><span>🌿</span>Jouer</button>
+    <button class="tabbar__tab" data-tab="box"><span>📦</span>Collection</button>
+    <button class="tabbar__tab" data-tab="settings"><span>⚙️</span>Réglages</button>
+  </nav>
+
+  <!-- commandes tactiles : seulement là où il n'y a pas de clavier -->
+  <div class="pad">
+    <div class="dpad">
+      <button class="dpad__btn dpad__up" data-button="up" aria-label="Haut"></button>
+      <button class="dpad__btn dpad__left" data-button="left" aria-label="Gauche"></button>
+      <button class="dpad__btn dpad__right" data-button="right" aria-label="Droite"></button>
+      <button class="dpad__btn dpad__down" data-button="down" aria-label="Bas"></button>
+      <span class="dpad__hub"></span>
+    </div>
+    <div class="pad__ab">
+      <button class="pad__btn pad__btn--b" data-button="b">B</button>
+      <button class="pad__btn pad__btn--a" data-button="a">A</button>
+    </div>
+  </div>
+
+  <p class="game__hint">Flèches ou ZQSD pour marcher · <b>A</b> (Espace) pour parler et choisir · <b>B</b> (Échap) pour revenir</p>
+
 </div>
 
-<script type="module" src="js/aventure/main.js?v=2"></script>
+<script type="module" src="js/aventure/main.js?v=3"></script>
 </body>
 </html>
