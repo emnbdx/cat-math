@@ -8,81 +8,99 @@ import { makeCanvas, drawGrid, mirror } from './pixel.js';
 
 /* ═════════════════════════════════════════════════════ le dresseur ═══ */
 
+/**
+ * Le dresseur fait 16×20 : plus haut qu'une tuile, comme dans les jeux de
+ * l'époque DS — la tête dépasse du décor, ce qui donne du relief.
+ */
+export const HERO_H = 20;
+
 const HERO = {
-  o: '#33262f', // contour
+  o: '#2f2436', // contour
   c: '#e2504a', // casquette
-  C: '#b93a37', // visière
+  C: '#7d2825', // visière
   s: '#f7c9a4', // peau
-  e: '#33262f', // yeux
-  j: '#f4f1ec', // veste
-  b: '#3f6fb5', // pantalon
-  k: '#4a4550', // chaussures
-  p: '#f2c14e', // sac à dos
+  e: '#2f2436', // yeux
   H: '#5b3f33', // cheveux
+  j: '#3f6fb5', // veste
+  J: '#2c5390', // ombre de la veste
+  t: '#f4f1ec', // col et manches
+  b: '#4b4f63', // pantalon
+  k: '#3a3340', // chaussures
+  p: '#f2c14e', // sac à dos
+  l: '#f4867f', // reflet sur la casquette
 };
 
 // moitié gauche (8 px), symétrique → 16 px de large
 const HERO_DOWN = mirror([
   '........',
-  '...ooo..',
-  '..occcc.',
+  '...oooo.',
+  '..oclccc',
+  '.oclcccc',
   '.occcccc',
   '.oCCCCCC',
+  '.oHHHHHH',
+  '.oHsesss',
+  '.oHsesss',
   '.oHsssss',
-  '.ossesss',
-  '.ossssss',
   '..oooooo',
+  '.pojtttj',
   '.pojjjjj',
   '.pojjjjj',
-  '..ojjjjj',
+  '..oJjjjj',
   '..obbbbb',
   '..obbbbb',
 ]);
 
 const HERO_UP = mirror([
   '........',
-  '...ooo..',
-  '..occcc.',
+  '...oooo.',
+  '..occccc',
   '.occcccc',
   '.occcccc',
+  '.occcccc',
+  '.oHHHHHH',
   '.oHHHHHH',
   '.oHHHHHH',
   '.oHHHHHH',
   '..oooooo',
-  '..ojjjjj',
+  '..ojtttj',
   '..ojpppp',
   '..ojpppp',
+  '..oJpppp',
   '..obbbbb',
   '..obbbbb',
 ]);
 
 const HERO_SIDE = [
   '................',
-  '....ooooo.......',
-  '...occccco......',
-  '..occccccco.....',
+  '...oooooo.......',
+  '..occccccc......',
+  '..occcccccc.....',
   '..oCCCCCCCo.....',
-  '..osssssso......',
-  '..ossesso.......',
-  '..ossssso.......',
-  '..oooooooo......',
-  '..opjjjjjo......',
-  '..opjjjjjo......',
+  '..oHHHHHso......',
+  '..oHsesso.......',
+  '..oHsssso.......',
+  '..osssso........',
+  '..oooooo........',
+  '..optttjo.......',
   '..opjjjjo.......',
-  '...objjbo.......',
+  '..opjjjjo.......',
+  '..opjjjjo.......',
+  '...oJjjbo.......',
+  '...obbbbo.......',
   '...obbbbo.......',
 ];
 
 const LEGS = {
-  stand: ['..okkk....kkko..', '..okkk....kkko..'],
-  stepA: ['..okkk....kkko..', '...kkk..........'],
-  stepB: ['..okkk....kkko..', '..........kkk...'],
+  stand: ['..obbb....bbbo..', '..okkk....kkko..', '...kk......kk...'],
+  stepA: ['..obbb....bbbo..', '..okkk....kkko..', '..kkk...........'],
+  stepB: ['..obbb....bbbo..', '..okkk....kkko..', '..........kkk...'],
 };
 
 const LEGS_SIDE = {
-  stand: ['...okkkkko......', '...okkkkko......'],
-  stepA: ['..okkk.kkko.....', '..okk...okk.....'],
-  stepB: ['...okkkkko......', '....okkko.......'],
+  stand: ['...obbbbo.......', '...okkkko.......', '...kkkk.........'],
+  stepA: ['..obb.bbo.......', '..okk..kko......', '..kk.....kk.....'],
+  stepB: ['...obbbbo.......', '...okkkko.......', '....kkk.........'],
 };
 
 const hero = new Map();
@@ -98,11 +116,10 @@ function buildHero() {
     ['left', HERO_SIDE, true],
   ]) {
     const frames = cycles.map((step) => {
-      const { cv, ctx } = makeCanvas(16, 16);
+      const { cv, ctx } = makeCanvas(16, HERO_H);
       const flip = dir === 'left';
       drawGrid(ctx, grid, HERO, 0, 0, flip);
-      const legs = side ? LEGS_SIDE[step] : LEGS[step];
-      drawGrid(ctx, legs, HERO, 0, 14, flip);
+      drawGrid(ctx, side ? LEGS_SIDE[step] : LEGS[step], HERO, 0, 17, flip);
       return cv;
     });
     hero.set(dir, frames);

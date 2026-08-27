@@ -13,6 +13,7 @@ import * as audio from './audio.js';
 const scene = document.getElementById('encounter');
 const artEl = document.getElementById('encounter-art');
 const nameEl = document.getElementById('encounter-name');
+const subEl = document.getElementById('encounter-sub');
 const card = document.getElementById('catcard');
 const cardBody = document.getElementById('catcard-body');
 
@@ -27,7 +28,8 @@ export async function encounter(cat) {
   audio.encounter();
 
   artEl.innerHTML = catSvg(cat);
-  nameEl.textContent = `${cat.name} sauvage`;
+  nameEl.textContent = cat.name;
+  subEl.textContent = `Chat sauvage · ${sheet(cat).number}`;
   scene.hidden = false;
   scene.classList.add('is-entering');
   setTimeout(() => scene.classList.remove('is-entering'), 500);
@@ -97,7 +99,7 @@ export async function encounter(cat) {
 function finish(result) {
   scene.hidden = true;
   card.hidden = true;
-  nameEl.hidden = false;
+  nameEl.parentElement.hidden = false;
   artEl.replaceChildren();
   return result;
 }
@@ -115,12 +117,12 @@ async function showCard(cat) {
       <p class="catcard__row">Aime : ${info.likes}</p>
     </div>`;
   card.hidden = false;
-  nameEl.hidden = true; // la fiche affiche déjà son nom
+  nameEl.parentElement.hidden = true; // la fiche affiche déjà son nom
   await say([
     `${cat.name} a rejoint ta collection !`,
     `Tu as maintenant ${save.caught.length} chat${save.caught.length > 1 ? 's' : ''} sur 100.`,
     'Retrouve-le quand tu veux dans la boîte à chats.',
   ]);
   card.hidden = true;
-  nameEl.hidden = false;
+  nameEl.parentElement.hidden = false;
 }

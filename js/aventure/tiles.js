@@ -1,322 +1,687 @@
 /**
- * Le jeu de tuiles, dessiné en pixels au démarrage (16×16 chacune).
+ * Le décor, dessiné pixel par pixel au démarrage — aucune image à héberger.
  *
- * Chaque caractère de la carte correspond à une tuile ; certaines ont
- * plusieurs images (eau animée) ou plusieurs variantes décoratives choisies
- * par la position (herbe).
+ * Deux familles :
+ *
+ * - les **terrains** (chemin, eau, hautes herbes, feuillage) sont *auto-tuilés* :
+ *   la forme d'une tuile dépend de ses voisines, donc un chemin fait des
+ *   virages arrondis, un étang a une rive, et deux arbres côte à côte forment
+ *   un seul houppier. C'est ce qui distingue une carte dessinée d'un damier.
+ * - les **objets** (maison, panneau, barrière, ordinateur…) sont des tuiles
+ *   fixes posées sur l'herbe.
  */
 
 import { TILE, makeCanvas, hash } from './pixel.js';
 
+/* ------------------------------------------------------------ palettes -- */
+
 const C = {
-  grass: '#79c56a',
-  grassDark: '#63b158',
-  grassLight: '#93d67c',
-  path: '#e6cfa4',
-  pathDark: '#d2b487',
-  sand: '#f0dcb0',
-  water: '#4fa8de',
-  waterDark: '#3d8ec4',
-  waterLight: '#8fd3f0',
-  trunk: '#8a5a3b',
-  trunkDark: '#6b4529',
-  leaf: '#3f9450',
-  leafDark: '#2f7540',
-  leafLight: '#5fb567',
-  rock: '#a9a6ad',
-  rockDark: '#807d86',
-  wood: '#c08a55',
-  woodDark: '#8f6238',
-  roof: '#e05a52',
-  roofDark: '#b73f3c',
-  wall: '#f6e6cf',
-  wallDark: '#d8bd9b',
-  window: '#8fd3f0',
-  ink: '#3d2f37',
+  grass: '#79c46b',
+  grassDark: '#63ae58',
+  grassLight: '#95d77e',
+  grassEdge: '#4f9048',
+
+  dirt: '#e3c495',
+  dirtDark: '#c9a679',
+  dirtLight: '#f2ddb8',
+  dirtEdge: '#a8875e',
+
+  water: '#4aa9e0',
+  waterDark: '#2f86bf',
+  waterLight: '#8fd6f2',
+  foam: '#e9f8ff',
+  sand: '#f0dfb4',
+  sandDark: '#d8c294',
+
+  leaf: '#3f8f4f',
+  leafDark: '#2a6b3c',
+  leafLight: '#63b268',
+  leafEdge: '#1f5230',
+  trunk: '#8a5c38',
+  trunkDark: '#5f3d24',
+
+  blade: '#43904a',
+  bladeDark: '#2f6f39',
+  bladeLight: '#6fbb63',
+
+  wood: '#c58c56',
+  woodDark: '#8c5f36',
+  woodLight: '#e0b183',
+
+  roof: '#e2635a',
+  roofDark: '#b8433f',
+  roofLight: '#f2938a',
+  wall: '#f7e9d2',
+  wallDark: '#d9bd97',
+  wallLine: '#c0a179',
+  glass: '#8fd6f2',
+  glassDark: '#5aa8cf',
+
+  rock: '#b0adb6',
+  rockDark: '#84818c',
+  rockLight: '#d3d1d8',
+
+  ink: '#3a2f3d',
   white: '#ffffff',
-  pc: '#e9edf5',
-  pcDark: '#aab6cc',
-  screen: '#5fc7d8',
   petal: ['#ff9ec4', '#ffe066', '#ffffff', '#c8a2ff'],
 };
 
-/** Tuiles qui bloquent le passage. */
-export const SOLID = new Set(['T', '~', 'H', 'h', 'D', 'F', 'r', 'S', 'P', 'W', 'B']);
+/** Tuiles infranchissables. */
+export const SOLID = new Set(['T', '~', 'H', 'h', 'D', 'F', 'r', 'S', 'P', 'W', 'B', 'b']);
 
-/** Tuiles qui déclenchent des rencontres aléatoires. */
+/** Tuiles où l'on peut croiser un chat sauvage. */
 export const ENCOUNTER = new Set(['"']);
 
-const tileset = new Map();
+/** Terrains auto-tuilés : caractère → réglages de forme. */
+const TERRAIN = {
+  '=': { kind: 'path', margin: 3, radius: 5, notch: 4 },
+  '~': { kind: 'water', margin: 3, radius: 5, notch: 4 },
+  '"': { kind: 'blades', margin: 1, radius: 3, notch: 2 },
+  T: { kind: 'canopy', margin: 1, radius: 5, notch: 4 },
+};
 
-function fill(ctx, x, y, w, h, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, w, h);
+export function isTerrain(ch) {
+  return ch in TERRAIN;
 }
 
-/* ------------------------------------------------------------- décors ---- */
+/* -------------------------------------------------- géométrie des bords -- */
 
-function grassBase(ctx) {
-  fill(ctx, 0, 0, TILE, TILE, C.grass);
-  fill(ctx, 2, 3, 2, 1, C.grassDark);
-  fill(ctx, 9, 6, 2, 1, C.grassLight);
-  fill(ctx, 5, 11, 2, 1, C.grassDark);
-  fill(ctx, 12, 13, 2, 1, C.grassLight);
-}
-
-function grassTuft(ctx) {
-  fill(ctx, 4, 9, 1, 3, C.grassDark);
-  fill(ctx, 5, 8, 1, 4, C.grassDark);
-  fill(ctx, 6, 10, 1, 2, C.grassDark);
-  fill(ctx, 10, 4, 1, 3, C.grassDark);
-  fill(ctx, 11, 3, 1, 4, C.grassDark);
-}
-
-function grassFlower(ctx, color) {
-  fill(ctx, 7, 9, 1, 3, C.grassDark);
-  fill(ctx, 6, 7, 3, 1, color);
-  fill(ctx, 7, 6, 1, 3, color);
-  fill(ctx, 7, 7, 1, 1, '#ffe9a8');
-}
-
-function tallGrass(ctx, variant = 0) {
-  grassBase(ctx);
-  for (let i = 0; i < 5; i++) {
-    const x = 1 + i * 3;
-    const lift = (i + variant) % 2 ? 0 : 2; // touffes irrégulières
-    fill(ctx, x, 7 - lift, 1, 8 + lift, C.leafDark);
-    fill(ctx, x + 1, 5 - lift, 1, 10 + lift, C.leaf);
-    fill(ctx, x + 2, 8 - lift, 1, 7 + lift, C.leafDark);
-    fill(ctx, x + 1, 4 - lift, 1, 1, C.leafLight);
-  }
-}
-
-function tree(ctx) {
-  grassBase(ctx);
-  fill(ctx, 6, 11, 4, 5, C.trunkDark);
-  fill(ctx, 7, 11, 2, 5, C.trunk);
-  // houppier
-  fill(ctx, 3, 2, 10, 9, C.leaf);
-  fill(ctx, 2, 4, 12, 5, C.leaf);
-  fill(ctx, 4, 1, 8, 1, C.leaf);
-  fill(ctx, 4, 3, 4, 3, C.leafLight);
-  fill(ctx, 3, 8, 10, 2, C.leafDark);
-  fill(ctx, 5, 10, 6, 1, C.leafDark);
-}
-
-function rock(ctx) {
-  grassBase(ctx);
-  fill(ctx, 5, 5, 6, 1, C.rockDark);
-  fill(ctx, 4, 6, 8, 1, C.rock);
-  fill(ctx, 3, 7, 10, 5, C.rock);
-  fill(ctx, 2, 9, 12, 3, C.rock);
-  fill(ctx, 5, 6, 3, 2, '#c5c2c9');
-  fill(ctx, 3, 11, 10, 1, C.rockDark);
-  fill(ctx, 2, 12, 12, 1, C.rockDark);
-  fill(ctx, 4, 13, 9, 1, '#5d8a52');
-}
-
-function path(ctx) {
-  fill(ctx, 0, 0, TILE, TILE, C.path);
-  fill(ctx, 3, 2, 2, 1, C.pathDark);
-  fill(ctx, 10, 5, 2, 1, C.pathDark);
-  fill(ctx, 6, 12, 2, 1, C.pathDark);
-}
-
-function water(ctx, frame) {
-  fill(ctx, 0, 0, TILE, TILE, C.water);
-  fill(ctx, 0, 4, TILE, 1, C.waterDark);
-  fill(ctx, 0, 12, TILE, 1, C.waterDark);
-  const o = frame * 5;
-  fill(ctx, (2 + o) % 16, 2, 3, 1, C.waterLight);
-  fill(ctx, (9 + o) % 16, 7, 4, 1, C.waterLight);
-  fill(ctx, (5 + o) % 16, 10, 3, 1, C.waterLight);
-  fill(ctx, (12 + o) % 16, 14, 2, 1, C.waterLight);
-}
-
-function shore(ctx) {
-  fill(ctx, 0, 0, TILE, TILE, C.sand);
-  fill(ctx, 2, 4, 2, 1, C.pathDark);
-  fill(ctx, 11, 9, 2, 1, C.pathDark);
-}
+const N = 1;
+const NE = 2;
+const E = 4;
+const SE = 8;
+const S = 16;
+const SW = 32;
+const W = 64;
+const NW = 128;
 
 /**
- * Barrière. `dirs` dit dans quels sens elle se prolonge ('h', 'v' ou les deux) :
- * sans ça, les côtés d'un enclos ressembleraient à des planches volantes.
+ * Silhouette d'une tuile de terrain, à partir des 8 voisines.
+ * Renvoie une grille de booléens 16×16.
  */
-function fence(ctx, dirs = 'h') {
-  grassBase(ctx);
-  const horizontal = dirs.includes('h');
-  const vertical = dirs.includes('v');
+function silhouette(mask, { margin, radius, notch }) {
+  const has = (bit) => (mask & bit) !== 0;
+  const top = has(N) ? 0 : margin;
+  const bottom = has(S) ? 0 : margin;
+  const left = has(W) ? 0 : margin;
+  const right = has(E) ? 0 : margin;
 
-  if (horizontal) {
-    fill(ctx, 0, 6, TILE, 2, C.wood);
-    fill(ctx, 0, 11, TILE, 2, C.wood);
+  const round = (x, y, cx, cy, r) => (x - cx) ** 2 + (y - cy) ** 2 > r ** 2;
+  const grid = [];
+
+  for (let y = 0; y < TILE; y++) {
+    const row = [];
+    for (let x = 0; x < TILE; x++) {
+      let on = x >= left && x <= TILE - 1 - right && y >= top && y <= TILE - 1 - bottom;
+
+      // coins sortants : on les arrondit
+      if (on && !has(N) && !has(W) && x < left + radius && y < top + radius) {
+        on = !round(x, y, left + radius - 0.5, top + radius - 0.5, radius - 0.5);
+      }
+      if (on && !has(N) && !has(E) && x > TILE - 1 - right - radius && y < top + radius) {
+        on = !round(x, y, TILE - right - radius - 0.5, top + radius - 0.5, radius - 0.5);
+      }
+      if (on && !has(S) && !has(W) && x < left + radius && y > TILE - 1 - bottom - radius) {
+        on = !round(x, y, left + radius - 0.5, TILE - bottom - radius - 0.5, radius - 0.5);
+      }
+      if (on && !has(S) && !has(E) && x > TILE - 1 - right - radius && y > TILE - 1 - bottom - radius) {
+        on = !round(x, y, TILE - right - radius - 0.5, TILE - bottom - radius - 0.5, radius - 0.5);
+      }
+
+      // coins rentrants : petite encoche là où la diagonale manque
+      if (on && has(N) && has(W) && !has(NW) && x < notch && y < notch) {
+        on = round(x, y, -0.5, -0.5, notch);
+      }
+      if (on && has(N) && has(E) && !has(NE) && x >= TILE - notch && y < notch) {
+        on = round(x, y, TILE - 0.5, -0.5, notch);
+      }
+      if (on && has(S) && has(W) && !has(SW) && x < notch && y >= TILE - notch) {
+        on = round(x, y, -0.5, TILE - 0.5, notch);
+      }
+      if (on && has(S) && has(E) && !has(SE) && x >= TILE - notch && y >= TILE - notch) {
+        on = round(x, y, TILE - 0.5, TILE - 0.5, notch);
+      }
+
+      row.push(on);
+    }
+    grid.push(row);
   }
-  if (vertical) {
-    fill(ctx, 5, 0, 2, TILE, C.wood);
-    fill(ctx, 10, 0, 2, TILE, C.wood);
+  return grid;
+}
+
+const at = (grid, x, y) => (x < 0 || y < 0 || x >= TILE || y >= TILE ? null : grid[y][x]);
+
+/** Pixels de la silhouette qui touchent le vide (bord intérieur). */
+function isRim(grid, x, y) {
+  return [at(grid, x - 1, y), at(grid, x + 1, y), at(grid, x, y - 1), at(grid, x, y + 1)].some(
+    (n) => n === false,
+  );
+}
+
+/** Pixels hors silhouette à moins de `d` pixels d'elle (bord extérieur). */
+function nearShape(grid, x, y, d) {
+  for (let dy = -d; dy <= d; dy++) {
+    for (let dx = -d; dx <= d; dx++) {
+      if (at(grid, x + dx, y + dy)) return true;
+    }
   }
-  if (horizontal) {
-    // poteaux debout, aux deux bouts
-    fill(ctx, 2, 3, 2, 12, C.woodDark);
-    fill(ctx, 12, 3, 2, 12, C.woodDark);
-    fill(ctx, 2, 3, 2, 1, '#d9a878');
-    fill(ctx, 12, 3, 2, 1, '#d9a878');
-  } else if (vertical) {
-    // traverse, pour que la clôture « rentre » dans le décor
-    fill(ctx, 4, 3, 9, 2, C.woodDark);
-    fill(ctx, 4, 12, 9, 2, C.woodDark);
+  return false;
+}
+
+/* ------------------------------------------------------------- l'herbe -- */
+
+function grassBase(ctx, variant = 0) {
+  ctx.fillStyle = C.grass;
+  ctx.fillRect(0, 0, TILE, TILE);
+
+  // touffes discrètes : le tapis vert ne doit pas être plat
+  ctx.fillStyle = C.grassDark;
+  ctx.fillRect(2, 4, 2, 1);
+  ctx.fillRect(9, 11, 2, 1);
+  ctx.fillStyle = C.grassLight;
+  ctx.fillRect(11, 3, 2, 1);
+  ctx.fillRect(5, 9, 2, 1);
+
+  if (variant === 1) {
+    ctx.fillStyle = C.grassDark;
+    ctx.fillRect(4, 12, 1, 2);
+    ctx.fillRect(5, 11, 1, 3);
+    ctx.fillRect(6, 13, 1, 1);
+    ctx.fillStyle = C.grassLight;
+    ctx.fillRect(5, 10, 1, 1);
+  }
+  if (variant === 2) {
+    ctx.fillStyle = C.grassDark;
+    ctx.fillRect(10, 5, 1, 3);
+    ctx.fillRect(11, 4, 1, 4);
+    ctx.fillStyle = C.grassLight;
+    ctx.fillRect(11, 3, 1, 1);
   }
 }
 
-function sign(ctx) {
-  grassBase(ctx);
-  fill(ctx, 7, 9, 2, 6, C.woodDark);
-  fill(ctx, 2, 2, 12, 8, C.woodDark);
-  fill(ctx, 3, 3, 10, 6, C.wood);
-  fill(ctx, 4, 5, 8, 1, C.woodDark);
-  fill(ctx, 4, 7, 6, 1, C.woodDark);
+function flower(ctx, color, cx = 7, cy = 7) {
+  ctx.fillStyle = C.grassDark;
+  ctx.fillRect(cx, cy + 2, 1, 3);
+  ctx.fillStyle = color;
+  ctx.fillRect(cx - 1, cy, 3, 1);
+  ctx.fillRect(cx, cy - 1, 1, 3);
+  ctx.fillStyle = '#ffe9a8';
+  ctx.fillRect(cx, cy, 1, 1);
 }
+
+/* --------------------------------------------------- terrains auto-tuilés */
+
+function paintPath(ctx, grid) {
+  // l'herbe s'assombrit juste au bord du chemin : la transition est plus douce
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (grid[y][x] || !nearShape(grid, x, y, 1)) continue;
+      ctx.fillStyle = C.grassEdge;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (!grid[y][x]) continue;
+      const rim = isRim(grid, x, y);
+      const topRim = at(grid, x, y - 1) === false;
+      ctx.fillStyle = rim ? C.dirtEdge : C.dirt;
+      if (!rim && topRim) ctx.fillStyle = C.dirtLight;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  // gravillons
+  ctx.fillStyle = C.dirtDark;
+  for (const [x, y] of [[5, 4], [10, 8], [7, 12]]) {
+    if (grid[y]?.[x] && !isRim(grid, x, y)) ctx.fillRect(x, y, 1, 1);
+  }
+  ctx.fillStyle = C.dirtLight;
+  if (grid[6]?.[9] && !isRim(grid, 9, 6)) ctx.fillRect(9, 6, 1, 1);
+}
+
+function paintWater(ctx, grid, frame) {
+  // plage : un liseré de sable tout autour de l'eau
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (grid[y][x] || !nearShape(grid, x, y, 2)) continue;
+      ctx.fillStyle = nearShape(grid, x, y, 1) ? C.sand : C.sandDark;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (!grid[y][x]) continue;
+      const rim = isRim(grid, x, y);
+      ctx.fillStyle = rim ? C.waterDark : C.water;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  // écume qui glisse le long de la rive, et petites vaguelettes
+  ctx.fillStyle = C.foam;
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (!grid[y][x] || at(grid, x, y - 1) !== false) continue;
+      if ((x + frame * 3) % 6 < 3) ctx.fillRect(x, y + 1, 1, 1);
+    }
+  }
+  ctx.fillStyle = C.waterLight;
+  for (const [x, y] of [[3, 5], [4, 5], [9, 9], [10, 9], [11, 9], [6, 12], [7, 12]]) {
+    const px = (x + frame * 4) % TILE;
+    if (grid[y]?.[px] && !isRim(grid, px, y)) ctx.fillRect(px, y, 1, 1);
+  }
+}
+
+/** Touffes d'herbe haute : trois bouquets par tuile, pointes claires. */
+const TUFTS = [
+  [[3, 9, 4], [9, 7, 5], [13, 11, 3]],
+  [[4, 7, 5], [11, 10, 4], [1, 12, 3]],
+  [[7, 8, 5], [13, 7, 4], [3, 12, 3]],
+  [[2, 10, 4], [8, 11, 4], [12, 6, 5]],
+];
+
+function paintBlades(ctx, grid, variant) {
+  const inside = (x, y) => grid[y]?.[x] === true;
+
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (!inside(x, y)) continue;
+      ctx.fillStyle = C.blade;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  // chaque bouquet : un dôme clair, une base sombre, deux ou trois brins
+  for (const [cx, cy, r] of TUFTS[variant % TUFTS.length]) {
+    for (let y = 0; y < TILE; y++) {
+      for (let x = 0; x < TILE; x++) {
+        if (!inside(x, y)) continue;
+        const dx = (x - cx) / r;
+        const dy = (y - cy) / (r * 0.9);
+        if (dx * dx + dy * dy > 1) continue;
+        ctx.fillStyle = y < cy - r * 0.25 ? C.bladeLight : y > cy + r * 0.45 ? C.bladeDark : C.blade;
+        ctx.fillRect(x, y, 1, 1);
+      }
+    }
+    for (const [bx, top] of [[cx - 1, cy - r - 1], [cx + 1, cy - r]]) {
+      if (inside(bx, top)) {
+        ctx.fillStyle = C.bladeLight;
+        ctx.fillRect(bx, top, 1, 2);
+      }
+    }
+  }
+
+  // ombre au pied de la touffe
+  for (let x = 0; x < TILE; x++) {
+    for (let y = TILE - 1; y >= 0; y--) {
+      if (!inside(x, y)) continue;
+      if (!inside(x, y + 1)) {
+        ctx.fillStyle = C.bladeDark;
+        ctx.fillRect(x, y, 1, 1);
+      }
+      break;
+    }
+  }
+}
+
+/** Bouquets de feuillage : trois positions selon la variante de la tuile. */
+const CLUMPS = [
+  [[4, 4, 3.4], [11, 5, 2.8], [7, 11, 3.2], [13, 11, 2.4]],
+  [[3, 7, 2.6], [9, 3, 3.6], [13, 8, 2.8], [6, 12, 3.0]],
+  [[6, 3, 3.0], [2, 10, 2.6], [10, 9, 3.6], [14, 4, 2.4]],
+  [[8, 6, 3.8], [3, 4, 2.6], [12, 12, 3.0], [5, 13, 2.4]],
+  [[5, 9, 3.4], [11, 4, 3.2], [2, 4, 2.4], [14, 10, 2.6]],
+  [[7, 5, 2.8], [12, 8, 3.4], [4, 12, 3.0], [10, 13, 2.4]],
+];
+
+function paintCanopy(ctx, grid, mask, variant) {
+  const hasSouth = (mask & S) !== 0;
+
+  // tronc : uniquement sur la tuile la plus basse du bosquet
+  if (!hasSouth) {
+    ctx.fillStyle = C.trunkDark;
+    ctx.fillRect(6, 11, 4, 5);
+    ctx.fillStyle = C.trunk;
+    ctx.fillRect(7, 11, 2, 5);
+    ctx.fillStyle = 'rgba(30, 60, 35, .25)';
+    ctx.fillRect(5, 15, 6, 1);
+  }
+
+  const inside = (x, y) => grid[y]?.[x] === true;
+
+  // 1. masse du houppier
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (!inside(x, y)) continue;
+      ctx.fillStyle = C.leaf;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  // 2. bouquets : une boule claire, une ombre en dessous à droite
+  for (const [cx, cy, r] of CLUMPS[variant % CLUMPS.length]) {
+    for (let y = 0; y < TILE; y++) {
+      for (let x = 0; x < TILE; x++) {
+        if (!inside(x, y)) continue;
+        const d = Math.hypot(x - cx, y - cy);
+        if (d > r) continue;
+        const lit = x - cx + (y - cy) < -0.5;
+        ctx.fillStyle = lit ? C.leafLight : d > r - 1.2 ? C.leafDark : C.leaf;
+        ctx.fillRect(x, y, 1, 1);
+      }
+    }
+  }
+
+  // 3. ombre portée sur le bas du houppier
+  for (let x = 0; x < TILE; x++) {
+    for (let y = TILE - 1; y >= 0; y--) {
+      if (!inside(x, y)) continue;
+      if (!inside(x, y + 1)) {
+        ctx.fillStyle = C.leafDark;
+        ctx.fillRect(x, y, 1, 1);
+        if (inside(x, y - 1)) ctx.fillRect(x, y - 1, 1, 1);
+      }
+      break;
+    }
+  }
+
+  // 4. contour sombre, et liseré clair sur le dessus
+  for (let y = 0; y < TILE; y++) {
+    for (let x = 0; x < TILE; x++) {
+      if (!inside(x, y) || !isRim(grid, x, y)) continue;
+      ctx.fillStyle = C.leafEdge;
+      ctx.fillRect(x, y, 1, 1);
+      if (!inside(x, y - 1) && inside(x, y + 1)) {
+        ctx.fillStyle = C.leafLight;
+        ctx.fillRect(x, y + 1, 1, 1);
+      }
+    }
+  }
+}
+
+/* -------------------------------------------------------------- objets -- */
 
 function wall(ctx) {
-  fill(ctx, 0, 0, TILE, TILE, C.wall);
-  fill(ctx, 0, 7, TILE, 1, C.wallDark);
-  fill(ctx, 0, 15, TILE, 1, C.wallDark);
-  fill(ctx, 5, 0, 1, 7, C.wallDark);
-  fill(ctx, 11, 8, 1, 7, C.wallDark);
+  ctx.fillStyle = C.wall;
+  ctx.fillRect(0, 0, TILE, TILE);
+  ctx.fillStyle = C.wallLine;
+  ctx.fillRect(0, 7, TILE, 1);
+  ctx.fillRect(0, 15, TILE, 1);
+  ctx.fillStyle = C.wallDark;
+  ctx.fillRect(5, 0, 1, 7);
+  ctx.fillRect(11, 8, 1, 7);
 }
 
 function windowWall(ctx) {
   wall(ctx);
-  fill(ctx, 3, 3, 10, 9, C.ink);
-  fill(ctx, 4, 4, 8, 7, C.window);
-  fill(ctx, 5, 5, 3, 2, C.white);
-  fill(ctx, 8, 4, 1, 7, C.ink);
-  fill(ctx, 4, 7, 8, 1, C.ink);
+  ctx.fillStyle = C.wood;
+  ctx.fillRect(2, 2, 12, 11);
+  ctx.fillStyle = C.glassDark;
+  ctx.fillRect(3, 3, 10, 9);
+  ctx.fillStyle = C.glass;
+  ctx.fillRect(3, 3, 10, 5);
+  ctx.fillStyle = C.white;
+  ctx.fillRect(4, 4, 3, 2);
+  ctx.fillStyle = C.woodDark;
+  ctx.fillRect(8, 3, 1, 9);
+  ctx.fillRect(3, 7, 10, 1);
+  ctx.fillRect(2, 12, 12, 1);
 }
 
-function roof(ctx) {
-  fill(ctx, 0, 0, TILE, TILE, C.roof);
-  fill(ctx, 0, 0, TILE, 3, C.roofDark);
-  fill(ctx, 0, 8, TILE, 1, C.roofDark);
-  fill(ctx, 4, 4, 1, 4, C.roofDark);
-  fill(ctx, 12, 10, 1, 5, C.roofDark);
-  fill(ctx, 0, 15, TILE, 1, C.roofDark);
+function roof(ctx, row) {
+  ctx.fillStyle = row === 0 ? C.roofDark : C.roof;
+  ctx.fillRect(0, 0, TILE, TILE);
+  if (row === 0) {
+    // faîtage
+    ctx.fillStyle = '#8f2f2c';
+    ctx.fillRect(0, 0, TILE, 3);
+    ctx.fillStyle = C.roof;
+    ctx.fillRect(0, 8, TILE, 8);
+  }
+  // tuiles en écailles
+  ctx.fillStyle = row === 0 ? C.roofDark : '#c94b46';
+  for (let y = row === 0 ? 8 : 0; y < TILE; y += 4) {
+    ctx.fillRect(0, y + 3, TILE, 1);
+    for (let x = (y / 4) % 2 ? 0 : 4; x < TILE; x += 8) ctx.fillRect(x, y, 1, 3);
+  }
+  ctx.fillStyle = C.roofLight;
+  ctx.fillRect(0, row === 0 ? 3 : 0, TILE, 1);
 }
 
 function door(ctx) {
-  fill(ctx, 0, 0, TILE, TILE, C.wall);
-  fill(ctx, 2, 1, 12, 15, C.woodDark);
-  fill(ctx, 3, 2, 10, 14, C.wood);
-  fill(ctx, 10, 8, 2, 2, C.ink);
-  fill(ctx, 3, 6, 10, 1, C.woodDark);
+  ctx.fillStyle = C.wall;
+  ctx.fillRect(0, 0, TILE, TILE);
+  ctx.fillStyle = C.woodDark;
+  ctx.fillRect(2, 1, 12, 15);
+  ctx.fillStyle = C.wood;
+  ctx.fillRect(3, 2, 10, 14);
+  ctx.fillStyle = C.woodLight;
+  ctx.fillRect(3, 2, 10, 1);
+  ctx.fillStyle = C.woodDark;
+  ctx.fillRect(3, 7, 10, 1);
+  ctx.fillStyle = '#f5d76e';
+  ctx.fillRect(10, 9, 2, 2);
 }
 
-/** Le « PC » : c'est lui qui ouvre la boîte à chats. */
+/** L'ordinateur qui ouvre la boîte à chats. */
 function terminal(ctx) {
-  grassBase(ctx);
-  fill(ctx, 2, 2, 12, 12, C.ink);
-  fill(ctx, 3, 3, 10, 10, C.pc);
-  fill(ctx, 4, 4, 8, 6, C.ink);
-  fill(ctx, 5, 5, 6, 4, C.screen);
-  fill(ctx, 6, 6, 2, 1, C.white);
-  fill(ctx, 4, 11, 3, 1, C.pcDark);
-  fill(ctx, 9, 11, 3, 1, C.pcDark);
-  fill(ctx, 2, 14, 12, 2, C.ink);
+  ctx.fillStyle = C.ink;
+  ctx.fillRect(2, 1, 12, 14);
+  ctx.fillStyle = '#e7ecf5';
+  ctx.fillRect(3, 2, 10, 11);
+  ctx.fillStyle = '#b9c4d8';
+  ctx.fillRect(3, 12, 10, 1);
+  ctx.fillStyle = C.ink;
+  ctx.fillRect(4, 3, 8, 7);
+  ctx.fillStyle = '#54c8dc';
+  ctx.fillRect(5, 4, 6, 5);
+  ctx.fillStyle = '#a9ecf5';
+  ctx.fillRect(5, 4, 6, 2);
+  ctx.fillStyle = C.white;
+  ctx.fillRect(6, 5, 2, 1);
+  ctx.fillStyle = '#ff8fab';
+  ctx.fillRect(5, 11, 2, 1);
+  ctx.fillStyle = '#8fd6f2';
+  ctx.fillRect(9, 11, 3, 1);
+  ctx.fillStyle = 'rgba(40,30,40,.25)';
+  ctx.fillRect(2, 15, 12, 1);
 }
 
-/** Bac à croquettes : purement décoratif. */
+function sign(ctx) {
+  ctx.fillStyle = C.trunkDark;
+  ctx.fillRect(7, 9, 2, 6);
+  ctx.fillStyle = C.woodDark;
+  ctx.fillRect(1, 2, 14, 8);
+  ctx.fillStyle = C.wood;
+  ctx.fillRect(2, 3, 12, 6);
+  ctx.fillStyle = C.woodLight;
+  ctx.fillRect(2, 3, 12, 1);
+  ctx.fillStyle = C.woodDark;
+  ctx.fillRect(3, 5, 9, 1);
+  ctx.fillRect(3, 7, 6, 1);
+  ctx.fillStyle = 'rgba(40,30,40,.22)';
+  ctx.fillRect(4, 15, 8, 1);
+}
+
+function fence(ctx, dirs) {
+  const horizontal = dirs.includes('h');
+  const vertical = dirs.includes('v');
+  if (horizontal) {
+    ctx.fillStyle = C.wood;
+    ctx.fillRect(0, 5, TILE, 2);
+    ctx.fillRect(0, 10, TILE, 2);
+    ctx.fillStyle = C.woodDark;
+    ctx.fillRect(0, 7, TILE, 1);
+    ctx.fillRect(0, 12, TILE, 1);
+  }
+  if (vertical) {
+    ctx.fillStyle = C.wood;
+    ctx.fillRect(5, 0, 2, TILE);
+    ctx.fillRect(10, 0, 2, TILE);
+    ctx.fillStyle = C.woodDark;
+    ctx.fillRect(7, 0, 1, TILE);
+    ctx.fillRect(12, 0, 1, TILE);
+  }
+  if (horizontal) {
+    for (const x of [2, 12]) {
+      ctx.fillStyle = C.woodDark;
+      ctx.fillRect(x, 2, 2, 13);
+      ctx.fillStyle = C.woodLight;
+      ctx.fillRect(x, 2, 2, 1);
+    }
+  } else if (vertical) {
+    ctx.fillStyle = C.woodDark;
+    ctx.fillRect(3, 2, 10, 2);
+    ctx.fillRect(3, 12, 10, 2);
+  }
+  ctx.fillStyle = 'rgba(40,30,40,.18)';
+  ctx.fillRect(0, 15, TILE, 1);
+}
+
+function rock(ctx) {
+  ctx.fillStyle = C.rockDark;
+  ctx.fillRect(3, 6, 10, 8);
+  ctx.fillRect(2, 8, 12, 5);
+  ctx.fillStyle = C.rock;
+  ctx.fillRect(3, 6, 9, 6);
+  ctx.fillRect(2, 8, 11, 4);
+  ctx.fillStyle = C.rockLight;
+  ctx.fillRect(4, 7, 4, 2);
+  ctx.fillStyle = C.grassDark;
+  ctx.fillRect(3, 13, 3, 1);
+  ctx.fillRect(10, 13, 3, 1);
+}
+
+/** Buisson : petit obstacle rond, purement décoratif. */
+function bush(ctx) {
+  ctx.fillStyle = C.leafEdge;
+  ctx.fillRect(2, 5, 12, 9);
+  ctx.fillRect(3, 4, 10, 11);
+  ctx.fillStyle = C.leaf;
+  ctx.fillRect(3, 5, 10, 8);
+  ctx.fillStyle = C.leafLight;
+  ctx.fillRect(4, 6, 4, 2);
+  ctx.fillRect(9, 7, 2, 1);
+  ctx.fillStyle = C.leafDark;
+  ctx.fillRect(3, 12, 10, 2);
+}
+
+/** Gamelle de croquettes. */
 function bowl(ctx) {
-  grassBase(ctx);
-  fill(ctx, 3, 8, 10, 5, C.ink);
-  fill(ctx, 4, 9, 8, 3, '#f4a7bb');
-  fill(ctx, 5, 8, 6, 2, '#8a5a3b');
-  fill(ctx, 6, 7, 1, 1, '#a9713f');
-  fill(ctx, 9, 7, 1, 1, '#a9713f');
+  ctx.fillStyle = 'rgba(40,30,40,.18)';
+  ctx.fillRect(3, 13, 10, 2);
+  ctx.fillStyle = '#c94b7a';
+  ctx.fillRect(3, 9, 10, 5);
+  ctx.fillStyle = '#f4a7bb';
+  ctx.fillRect(4, 9, 8, 3);
+  ctx.fillStyle = C.trunkDark;
+  ctx.fillRect(5, 7, 6, 3);
+  ctx.fillStyle = C.trunk;
+  ctx.fillRect(6, 6, 4, 2);
+  ctx.fillStyle = '#a9713f';
+  ctx.fillRect(7, 5, 1, 1);
 }
 
-const BUILDERS = {
-  '.': grassBase,
-  '"': tallGrass,
-  T: tree,
-  r: rock,
-  '=': path,
-  '-': shore,
-  F: fence,
-  S: sign,
+/* ------------------------------------------------------------- fabrique -- */
+
+const cache = new Map();
+
+function build(key, draw) {
+  let cv = cache.get(key);
+  if (!cv) {
+    const made = makeCanvas(TILE, TILE);
+    draw(made.ctx);
+    cv = made.cv;
+    cache.set(key, cv);
+  }
+  return cv;
+}
+
+/** Fond d'herbe (avec sa petite variante décorative). */
+export function grassTile(x, y) {
+  const roll = hash(x, y, 7);
+  const variant = roll < 0.12 ? 1 : roll < 0.2 ? 2 : 0;
+  const petal = roll > 0.94 ? C.petal[Math.floor(hash(x, y, 11) * C.petal.length)] : null;
+  const key = `grass:${variant}:${petal ?? ''}`;
+  return build(key, (ctx) => {
+    grassBase(ctx, variant);
+    if (petal) flower(ctx, petal);
+  });
+}
+
+/** Parterre de fleurs explicite (caractère `f`). */
+export function flowerTile(x, y) {
+  const color = C.petal[Math.floor(hash(x, y, 3) * C.petal.length)];
+  const second = C.petal[Math.floor(hash(x, y, 19) * C.petal.length)];
+  return build(`flowers:${color}:${second}`, (ctx) => {
+    grassBase(ctx, 0);
+    flower(ctx, color, 4, 6);
+    flower(ctx, second, 10, 9);
+  });
+}
+
+/** Tuile de terrain auto-tuilée. */
+export function terrainTile(ch, mask, frame = 0, variant = 0) {
+  const spec = TERRAIN[ch];
+  const animated = spec.kind === 'water';
+  const key = `${spec.kind}:${mask}:${animated ? frame : variant}`;
+  return build(key, (ctx) => {
+    const grid = silhouette(mask, spec);
+    switch (spec.kind) {
+      case 'path':
+        paintPath(ctx, grid);
+        break;
+      case 'water':
+        paintWater(ctx, grid, frame);
+        break;
+      case 'blades':
+        paintBlades(ctx, grid, variant);
+        break;
+      case 'canopy':
+        paintCanopy(ctx, grid, mask, variant);
+        break;
+      default:
+        break;
+    }
+  });
+}
+
+const OBJECTS = {
   H: wall,
   W: windowWall,
-  h: roof,
+  h: (ctx) => roof(ctx, 1),
+  R: (ctx) => roof(ctx, 0),
   D: door,
   P: terminal,
+  S: sign,
+  r: rock,
+  b: bush,
   B: bowl,
 };
 
-/** Construit toutes les tuiles (+ 3 images pour l'eau). */
-export function buildTileset() {
-  if (tileset.size) return tileset;
+/**
+ * Objet posé sur l'herbe (ou tuile de bâtiment, opaque).
+ * Pour un bâtiment, `dirs` contient 'l'/'r' quand le mur continue de ce côté :
+ * les extrémités reçoivent alors une arête sombre, comme un vrai pignon.
+ */
+export function objectTile(ch, dirs = '') {
+  if (ch === 'F') return build(`fence:${dirs}`, (ctx) => fence(ctx, dirs));
+  const draw = OBJECTS[ch];
+  if (!draw) return null;
+  if (!OPAQUE.has(ch)) return build(`obj:${ch}`, draw);
 
-  for (const [ch, draw] of Object.entries(BUILDERS)) {
-    const { cv, ctx } = makeCanvas(TILE, TILE);
+  return build(`obj:${ch}:${dirs}`, (ctx) => {
     draw(ctx);
-    tileset.set(ch, [cv]);
-  }
-
-  // herbe : 8 variantes, dont peu de fleurs — sinon le pré vire au confetti
-  const decor = [null, null, null, 'tuft', null, 'flower0', null, 'flower1'];
-  tileset.set(
-    '.',
-    decor.map((kind) => {
-      const { cv, ctx } = makeCanvas(TILE, TILE);
-      grassBase(ctx);
-      if (kind === 'tuft') grassTuft(ctx);
-      if (kind === 'flower0') grassFlower(ctx, C.petal[0]);
-      if (kind === 'flower1') grassFlower(ctx, C.petal[1]);
-      return cv;
-    }),
-  );
-
-  // barrières : 3 orientations, choisies par le voisinage (voir world.js)
-  for (const dirs of ['h', 'v', 'hv']) {
-    const { cv, ctx } = makeCanvas(TILE, TILE);
-    fence(ctx, dirs);
-    tileset.set(`F${dirs}`, [cv]);
-  }
-
-  // hautes herbes : 2 touffes différentes, pour éviter l'effet papier peint
-  const blades = [];
-  for (let i = 0; i < 2; i++) {
-    const { cv, ctx } = makeCanvas(TILE, TILE);
-    tallGrass(ctx, i);
-    blades.push(cv);
-  }
-  tileset.set('"', blades);
-
-  const waves = [];
-  for (let f = 0; f < 3; f++) {
-    const { cv, ctx } = makeCanvas(TILE, TILE);
-    water(ctx, f);
-    waves.push(cv);
-  }
-  tileset.set('~', waves);
-
-  // fleurs plantées explicitement sur la carte
-  const flowers = [];
-  for (const color of C.petal) {
-    const { cv, ctx } = makeCanvas(TILE, TILE);
-    grassBase(ctx);
-    grassFlower(ctx, color);
-    flowers.push(cv);
-  }
-  tileset.set('f', flowers);
-
-  return tileset;
+    ctx.fillStyle = 'rgba(60, 40, 45, .28)';
+    if (!dirs.includes('l')) ctx.fillRect(0, 0, 1, TILE);
+    if (!dirs.includes('r')) ctx.fillRect(TILE - 1, 0, 1, TILE);
+    if (!dirs.includes('b')) {
+      ctx.fillStyle = 'rgba(60, 40, 45, .22)';
+      ctx.fillRect(0, TILE - 1, TILE, 1);
+    }
+  });
 }
 
-/** Image à afficher pour une tuile donnée, à un instant donné. */
-export function tileImage(ch, x, y, time) {
-  const frames = tileset.get(ch) ?? tileset.get('.');
-  if (frames.length === 1) return frames[0];
-  if (ch === '~') return frames[Math.floor(time / 380) % frames.length];
-  return frames[Math.floor(hash(x, y, 7) * frames.length)];
-}
+/** Ces objets couvrent toute la tuile : inutile de dessiner l'herbe dessous. */
+export const OPAQUE = new Set(['H', 'W', 'h', 'R', 'D']);

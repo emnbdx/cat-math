@@ -1,6 +1,6 @@
 /**
  * La boîte à chats : les 100 cases, façon PC du Centre Pokémon.
- * 40 cases par boîte, la fiche du chat sélectionné s'affiche en dessous.
+ * 50 cases par boîte, la fiche du chat sélectionné s'affiche en dessous.
  */
 
 import { catSvg, getCat } from '../cats.js';
@@ -10,8 +10,8 @@ import { isCaught, save } from './save.js';
 import { onPress } from './input.js';
 import { blip } from './audio.js';
 
-const PER_BOX = 40;
-const COLS = 8;
+const PER_BOX = 50;
+const COLS = 10;
 const BOXES = Math.ceil(100 / PER_BOX);
 
 const titleEl = document.getElementById('box-title');
@@ -123,8 +123,8 @@ function showDetail(id) {
 }
 
 export function render() {
-  titleEl.textContent = `BOÎTE ${String(box + 1).padStart(2, '0')}`;
-  countEl.textContent = `${save.caught.length}/100 chats`;
+  titleEl.textContent = `Boîte ${box + 1}`;
+  countEl.textContent = `${save.caught.length} chats sur 100`;
 
   const cells = [];
   for (let i = 0; i < slotCount(); i++) {

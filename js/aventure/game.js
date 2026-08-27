@@ -1,6 +1,6 @@
 /**
  * Le monde qui tourne : déplacement du dresseur, chats sauvages qui vadrouillent,
- * rencontres, et rendu à 240×160 (la résolution d'une Game Boy Advance).
+ * rencontres, et rendu à 256×192 (la résolution d'un écran de Nintendo DS).
  */
 
 import { TILE, hash } from './pixel.js';
@@ -8,7 +8,7 @@ import {
   MAP_W, MAP_H, VIEW_W, VIEW_H, START, SIGNS,
   tileAt, isSolid, isTallGrass, camera, drawMap, drawRustle,
 } from './world.js';
-import { heroSprite, catSprite, shadow } from './sprites.js';
+import { heroSprite, catSprite, shadow, HERO_H } from './sprites.js';
 import { direction, onPress, clearInput } from './input.js';
 import { isOpen as dialogOpen, say } from './dialog.js';
 import { encounter } from './encounter.js';
@@ -20,7 +20,7 @@ const STEP_MS = 155; // durée d'un pas du joueur
 const CAT_STEP_MS = 220;
 const WILD_MAX = 12; // chats présents sur la carte en même temps
 const GRASS_RATE = 0.17; // probabilité de rencontre par pas dans les herbes
-const WALKABLE_FOR_CATS = new Set(['.', '"', 'f', '=', '-']);
+const WALKABLE_FOR_CATS = new Set(['.', '"', 'f', '=']);
 
 const DELTA = {
   up: [0, -1],
@@ -30,7 +30,7 @@ const DELTA = {
 };
 
 let ctx = null;
-let active = false;
+let playing = false; // le joueur a la main (l'écran du bas est sur « Jouer »)
 let busy = false; // une rencontre ou un dialogue est en cours
 let onOpenBox = () => {};
 let raf = 0;
@@ -64,13 +64,19 @@ export async function init(canvas, options = {}) {
   raf = requestAnimationFrame(frame);
 }
 
-export function setActive(value) {
-  active = value;
-  if (active) last = performance.now();
+/** Le monde reste animé en permanence ; seules les commandes se coupent. */
+export function setPlaying(value) {
+  playing = value;
+  if (playing) last = performance.now();
 }
 
 export function isBusy() {
   return busy;
+}
+
+/** Case occupée par le dresseur — pour la mini-carte. */
+export function playerTile() {
+  return { x: player.tx, y: player.ty };
 }
 
 /* --------------------------------------------------- chats sauvages ----- */
@@ -244,7 +250,7 @@ async function startEncounter(entry) {
 /* ---------------------------------------------------------- action A ---- */
 
 async function handlePress(button) {
-  if (!active || busy || dialogOpen() || button !== 'a') return;
+  if (!playing || busy || dialogOpen() || button !== 'a') return;
   const { x, y } = facingTile();
 
   const cat = catAt(x, y);
@@ -292,10 +298,9 @@ function frame(now) {
   raf = requestAnimationFrame(frame);
   const dt = Math.min(60, now - last);
   last = now;
-  if (!active) return;
   time += dt;
 
-  if (!busy && !dialogOpen()) {
+  if (playing && !busy && !dialogOpen()) {
     updatePlayer(dt);
     updateCats(dt);
   }
@@ -323,7 +328,8 @@ function drawHero(cam, p) {
   const x = Math.round(p.x - cam.x);
   const y = Math.round(p.y - cam.y);
   shadow(ctx, x, y);
-  ctx.drawImage(heroSprite(player.dir, player.frame), x, y);
+  // le sprite est plus haut qu'une tuile : on le cale par les pieds
+  ctx.drawImage(heroSprite(player.dir, player.frame), x, y - (HERO_H - TILE));
 }
 
 function drawWild(cam, w, pos) {
